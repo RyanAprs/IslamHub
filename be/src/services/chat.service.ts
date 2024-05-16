@@ -11,8 +11,8 @@ export const getAllChat = async () => {
     });
 };
 
-export const getChatByGroupId = async (group_id: string) => {
-  return await chatModel.find({ group_id: group_id });
+export const getChatByCommunityId = async (community_id: string) => {
+  return await chatModel.find({ community_id: community_id });
 };
 
 export const insertChat = async (payload: any) => {

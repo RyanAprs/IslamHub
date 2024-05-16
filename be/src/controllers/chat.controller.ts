@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import {
   getAllChat,
   getChatAndDelete,
-  getChatByGroupId,
+  getChatByCommunityId,
   insertChat,
 } from "../services/chat.service";
 import { v4 as uuidv4 } from "uuid";
@@ -11,7 +11,7 @@ export const getChats = async (req: Request, res: Response) => {
   const id = req.params.id;
 
   if (id) {
-    const chat = await getChatByGroupId(id);
+    const chat = await getChatByCommunityId(id);
     if (chat) {
       return res.status(200).send({
         status: true,
@@ -58,9 +58,9 @@ export const getChats = async (req: Request, res: Response) => {
 
 export const createChat = async (req: Request, res: Response) => {
   const chat_id = uuidv4();
-  const { user_id, group_id, chat, name } = req.body;
+  const { user_id, community_id, chat, name } = req.body;
 
-  if (!chat) {
+  if (!user_id || !community_id || !chat || !name) {
     return res.status(400).send({
       status: false,
       status_code: 400,
@@ -71,7 +71,7 @@ export const createChat = async (req: Request, res: Response) => {
   const chatData = {
     chat_id,
     user_id,
-    group_id,
+    community_id,
     chat,
     name,
   };
@@ -93,21 +93,21 @@ export const createChat = async (req: Request, res: Response) => {
   }
 };
 
-export const getChatByGroup = async (req: Request, res: Response) => {
-  const group_id = req.params.group_id;
+export const getChatByCommunity = async (req: Request, res: Response) => {
+  const community_id = req.params.community_id;
 
-  const chat = await getChatByGroupId(group_id);
-  if (chat) {
+  const chat = await getChatByCommunityId(community_id);
+  if (Array.isArray(chat) && chat.length > 0) {
     return res.status(200).send({
       status: true,
       status_code: 200,
-      message: "Get detail data chat successfully",
+      message: "Get data chat success",
       data: chat,
     });
   } else {
-    return res.status(404).send({
-      status: false,
-      status_code: 404,
+    return res.status(200).send({
+      status: true,
+      status_code: 200,
       message: "No chat posted",
       data: {},
     });

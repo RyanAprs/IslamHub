@@ -91,7 +91,7 @@ const ChatSection = () => {
         {chats && chats.length > 0 ? (
           chats.map((dataChat, index) => (
             <div className="p-2" key={index}>
-              <div className="p-4 bg-white rounded-xl flex justify-between items-center">
+              <div className="p-4 bg-white rounded-xl  flex justify-between items-center">
                 <div>
                   <h1>{dataChat.name}</h1>
                   <p>{dataChat.chat}</p>

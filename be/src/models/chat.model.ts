@@ -9,7 +9,7 @@ const chatSchema = new mongoose.Schema(
     user_id: {
       type: String,
     },
-    group_id: {
+    community_id: {
       type: String,
     },
     chat: {
