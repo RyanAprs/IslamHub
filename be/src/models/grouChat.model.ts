@@ -6,7 +6,7 @@ const groupChatSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
-    admin_id: {
+    user_id: {
       type: String,
     },
     title: {
