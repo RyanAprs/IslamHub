@@ -16,7 +16,7 @@ const DetailCommunity = () => {
   const fetchCommunityById = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/group-chat/${id}`
+        `http://localhost:3000/api/v1/community/${id}`
       );
       setCommunityTitle(response.data.data.title);
       setCommunityImage(response.data.data.image);

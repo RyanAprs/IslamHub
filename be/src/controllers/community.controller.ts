@@ -1,46 +1,46 @@
 import { Request, Response } from "express";
 import {
-  getAllGroupChat,
-  getGroupChatById,
-  insertGroupChat,
-} from "../services/groupChat.service";
+  getAllCommunity,
+  getCommunityById,
+  insertCommunity,
+} from "../services/community.service";
 import { v4 as uuidv4 } from "uuid";
 
-export const getGroupChats = async (req: Request, res: Response) => {
+export const getCommunities = async (req: Request, res: Response) => {
   const id = req.params.id;
 
   if (id) {
-    const groupChat = await getGroupChatById(id);
-    if (groupChat) {
+    const community = await getCommunityById(id);
+    if (community) {
       return res.status(200).send({
         status: true,
         status_code: 200,
-        message: "Get detail data group chat successfully",
-        data: groupChat,
+        message: "Get detail data community successfully",
+        data: community,
       });
     } else {
       return res.status(404).send({
         status: false,
         status_code: 404,
-        message: "No group chat posted",
+        message: "No community posted",
         data: {},
       });
     }
   } else {
     try {
-      const groupChats = await getAllGroupChat();
-      if (Array.isArray(groupChats) && groupChats.length > 0) {
+      const communities = await getAllCommunity();
+      if (Array.isArray(communities) && communities.length > 0) {
         return res.status(200).send({
           status: true,
           status_code: 200,
-          message: "Get data group chat success",
-          data: groupChats,
+          message: "Get data community success",
+          data: communities,
         });
       } else {
         return res.status(200).send({
           status: true,
           status_code: 200,
-          message: "No group chat posted",
+          message: "No community posted",
           data: {},
         });
       }
@@ -55,8 +55,8 @@ export const getGroupChats = async (req: Request, res: Response) => {
   }
 };
 
-export const createGroupChat = async (req: Request, res: Response) => {
-  const group_id = uuidv4();
+export const createCommunity = async (req: Request, res: Response) => {
+  const community_id = uuidv4();
   const { user_id, title, name } = req.body;
   const image = null;
 
@@ -68,8 +68,8 @@ export const createGroupChat = async (req: Request, res: Response) => {
     });
   }
 
-  const groupChatData = {
-    group_id,
+  const communityData = {
+    community_id,
     user_id,
     title,
     image,
@@ -77,12 +77,12 @@ export const createGroupChat = async (req: Request, res: Response) => {
   };
 
   try {
-    await insertGroupChat(groupChatData);
+    await insertCommunity(communityData);
     return res.status(200).json({
       status: true,
       status_code: 200,
       message: "created chat successfully",
-      data: groupChatData,
+      data: communityData,
     });
   } catch (error: any) {
     return res.status(422).send({

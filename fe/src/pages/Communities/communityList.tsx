@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const CommunityList = () => {
-  const [groups, setGroups] = useState([]);
+  const [communities, setCommunities] = useState([]);
 
   useEffect(() => {
     fetchCommunities();
@@ -12,9 +12,9 @@ const CommunityList = () => {
   const fetchCommunities = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/v1/group-chat"
+        "http://localhost:3000/api/v1/community"
       );
-      setGroups(response.data.data);
+      setCommunities(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -22,16 +22,18 @@ const CommunityList = () => {
   return (
     <div className="min-h-screen overflow-y-auto w-[200px] bg-gray-400 ">
       <div className="flex items-center justify-center p-4 bg-gray-500">
-        <Link to="/community" className="font-bold ">Communities</Link>
+        <Link to="/community" className="font-bold ">
+          Communities
+        </Link>
       </div>
-      {groups.map((group) => {
+      {communities.map((community) => {
         return (
           <Link
-            to={`/community/${group.group_id}`}
-            key={group._id}
+            to={`/community/${community.community_id}`}
+            key={community._id}
             className="flex p-2 hover:bg-gray-500"
           >
-            <h1>{group.title}</h1>
+            <h1>{community.title}</h1>
           </Link>
         );
       })}

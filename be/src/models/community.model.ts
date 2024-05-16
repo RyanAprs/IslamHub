@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-const groupChatSchema = new mongoose.Schema(
+const communitySchema = new mongoose.Schema(
   {
-    group_id: {
+    community_id: {
       type: String,
       unique: true,
     },
@@ -22,6 +22,6 @@ const groupChatSchema = new mongoose.Schema(
   { timestamps: true, _id: true }
 );
 
-const groupChatModel = mongoose.model("groupChats", groupChatSchema);
+const communityModel = mongoose.model("communities", communitySchema);
 
-export default groupChatModel;
+export default communityModel;
