@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FaArrowAltCircleRight, FaTrash } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 
-const ChatSection = () => {
+const ChatSection = ({ admin }) => {
   const [user_id, setUser_id] = useState();
   const [chat, setChat] = useState();
   const [dataChats, setDataChats] = useState([]);
@@ -140,10 +140,13 @@ const ChatSection = () => {
   return (
     <div className="flex flex-col flex-grow ">
       <div className="w-full flex-grow overflow-y-auto  bg-blue-500 h-[40px]">
+        <div className="flex items-center justify-center">
+          created by {admin}
+        </div>
         {dataChats && dataChats.length > 0 ? (
           dataChats.map((dataChat, index) => (
             <div className="p-2" key={index}>
-              <div className="p-4 bg-white rounded-xl  flex justify-between items-center">
+              <div className="p-2 bg-white rounded-xl  flex justify-between items-center">
                 <div>
                   <h1>{dataChat.name}</h1>
                   <p>{dataChat.chat}</p>
@@ -161,7 +164,7 @@ const ChatSection = () => {
             </div>
           ))
         ) : (
-          <div className="flex justify-center">
+          <div className="flex justify-center items-center">
             <h1>No Chat Posted</h1>
           </div>
         )}

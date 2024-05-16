@@ -77,9 +77,6 @@ const Header: React.FC = () => {
         <Link to="/" className="hover:text-gray-500 transition-all">
           <h1>Home</h1>
         </Link>
-        <Link to="/blog" className="hover:text-gray-500 transition-all">
-          <h1>Blogs</h1>
-        </Link>
         <Link to="/contact" className="hover:text-gray-500 transition-all">
           <h1>Contact</h1>
         </Link>
@@ -130,10 +127,10 @@ const Header: React.FC = () => {
                 </Link>
                 <nav className="text-left block md:hidden">
                   <Link
-                    to="/blog"
+                    to="/community"
                     className="px-6 py-2 block w-full text-gray-800 hover:bg-gray-200"
                   >
-                    <h1>Blogs</h1>
+                    <h1>Communites</h1>
                   </Link>
                   <Link
                     to="/contact"
@@ -159,10 +156,10 @@ const Header: React.FC = () => {
                 </Link>
                 <nav className="text-left block md:hidden">
                   <Link
-                    to="/blog"
+                    to="/community"
                     className="px-2 py-2 block w-full text-gray-800 hover:bg-gray-200"
                   >
-                    <h1>Blogs</h1>
+                    <h1>Communities</h1>
                   </Link>
                   <Link
                     to="/contact"

@@ -8,6 +8,8 @@ import ChatSection from "../../components/atoms/chatSection/chatSection";
 const DetailCommunity = () => {
   const [communityImage, setCommunityImage] = useState();
   const [communityTitle, setCommunityTitle] = useState();
+  const [admin, setAdmin] = useState();
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -20,6 +22,7 @@ const DetailCommunity = () => {
         `http://localhost:3000/api/v1/community/${id}`
       );
       setCommunityTitle(response.data.data.title);
+      setAdmin(response.data.data.name);
       setCommunityImage(response.data.data.image);
     } catch (error) {
       console.log(error);
@@ -30,7 +33,7 @@ const DetailCommunity = () => {
     <div className="flex">
       <CommunityList />
       <div className="flex flex-col w-full">
-        <nav className="bg-pink-800 h-15 w-full">
+        <nav className="bg-gray-500 h-15 w-full border-black border-[1px]">
           <ul className="flex px-3 items-center">
             {communityImage !== null ? (
               <button>
@@ -48,7 +51,7 @@ const DetailCommunity = () => {
             <li className="p-4 text-white">{communityTitle}</li>
           </ul>
         </nav>
-        <ChatSection />
+        <ChatSection admin={admin} />
       </div>
     </div>
   );
