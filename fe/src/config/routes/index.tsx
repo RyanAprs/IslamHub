@@ -19,7 +19,8 @@ import UpdateBlog from "../../pages/Blogs/updateBlog";
 import ResetPassword from "../../pages/ResetPassword/resetPassword";
 import Footer from "../../components/molecules/Footer/footer";
 import { useAuthContext } from "../context/useAuthContext";
-import Chat from "../../pages/Chat/chat";
+import DetailCommunity from "../../pages/Communities/detailCommunity";
+import Chat from "../../pages/Communities/chat";
 
 const RouteData = [
   {
@@ -47,8 +48,12 @@ const RouteData = [
     element: <BlogUser />,
   },
   {
-    path: "/chat",
+    path: "/community",
     element: <Chat />,
+  },
+  {
+    path: "/community/:id",
+    element: <DetailCommunity />,
   },
 ];
 
