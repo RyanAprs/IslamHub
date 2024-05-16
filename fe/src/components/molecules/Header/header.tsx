@@ -69,7 +69,7 @@ const Header: React.FC = () => {
       <div>
         <Link to="/">
           <h1 className="text-2xl font-bold text-white">
-            Ryan<span className="text-gray-500">Blogs</span>
+            Islam<span className="text-gray-500">Hub</span>
           </h1>
         </Link>
       </div>
@@ -82,6 +82,9 @@ const Header: React.FC = () => {
         </Link>
         <Link to="/contact" className="hover:text-gray-500 transition-all">
           <h1>Contact</h1>
+        </Link>
+        <Link to="/chat" className="hover:text-gray-500 transition-all">
+          <h1>Chat</h1>
         </Link>
       </nav>
 

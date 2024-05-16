@@ -19,6 +19,7 @@ import UpdateBlog from "../../pages/Blogs/updateBlog";
 import ResetPassword from "../../pages/ResetPassword/resetPassword";
 import Footer from "../../components/molecules/Footer/footer";
 import { useAuthContext } from "../context/useAuthContext";
+import Chat from "../../pages/Chat/chat";
 
 const RouteData = [
   {
@@ -45,10 +46,14 @@ const RouteData = [
     path: "/profile/:id/blog/:id",
     element: <BlogUser />,
   },
+  {
+    path: "/chat",
+    element: <Chat />,
+  },
 ];
 
 const Routing = () => {
-  const {token} = useAuthContext();
+  const { token } = useAuthContext();
 
   return (
     <Router>
