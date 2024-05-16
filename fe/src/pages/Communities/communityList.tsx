@@ -20,7 +20,7 @@ const CommunityList = () => {
     }
   };
   return (
-    <div className="min-h-screen overflow-y-auto w-[200px] bg-gray-400 ">
+    <div className="min-h-screen overflow-y-auto w-[200px] bg-gray-400 border-">
       <div className="flex items-center justify-center p-4 bg-gray-500">
         <Link to="/community" className="font-bold ">
           Communities
