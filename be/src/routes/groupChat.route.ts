@@ -1,9 +1,12 @@
 import { Router } from "express";
-import { getGroupChats } from "../controllers/groupChat.controller";
+import {
+  createGroupChat,
+  getGroupChats,
+} from "../controllers/groupChat.controller";
 
 export const GroupChatRoute: Router = Router();
 
 GroupChatRoute.get("/", getGroupChats);
-GroupChatRoute.get("/:id");
-GroupChatRoute.post("/");
+GroupChatRoute.get("/:id", getGroupChats);
+GroupChatRoute.post("/", createGroupChat);
 GroupChatRoute.delete("/:id");

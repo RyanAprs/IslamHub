@@ -15,7 +15,7 @@ const groupChatSchema = new mongoose.Schema(
     image: {
       type: String,
     },
-    admin_name: {
+    name: {
       type: String,
     },
   },
