@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 
-const commentSchema = new mongoose.Schema(
+const chatSchema = new mongoose.Schema(
   {
-    comment_id: {
+    chat_id: {
       type: String,
       unique: true,
     },
     user_id: {
       type: String,
     },
-    blog_id: {
+    group_id: {
       type: String,
     },
-    comment: {
+    chat: {
       type: String,
     },
     name: {
@@ -22,6 +22,6 @@ const commentSchema = new mongoose.Schema(
   { timestamps: true, _id: true }
 );
 
-const commentModel = mongoose.model("comments", commentSchema);
+const chatModel = mongoose.model("chats", chatSchema);
 
-export default commentModel;
+export default chatModel;

@@ -1,47 +1,47 @@
 import { Request, Response } from "express";
 import {
-  getAllComment,
-  getCommentAndDelete,
-  getCommentByBlogId,
-  insertComment,
-} from "../services/comment.service";
+  getAllChat,
+  getChatAndDelete,
+  getChatByGroupId,
+  insertChat,
+} from "../services/chat.service";
 import { v4 as uuidv4 } from "uuid";
 
-export const getComments = async (req: Request, res: Response) => {
+export const getChats = async (req: Request, res: Response) => {
   const id = req.params.id;
 
   if (id) {
-    const comment = await getCommentByBlogId(id);
-    if (comment) {
+    const chat = await getChatByGroupId(id);
+    if (chat) {
       return res.status(200).send({
         status: true,
         status_code: 200,
-        message: "Get detail data comment successfully",
-        data: comment,
+        message: "Get detail data chat successfully",
+        data: chat,
       });
     } else {
       return res.status(404).send({
         status: false,
         status_code: 404,
-        message: "No comment posted",
+        message: "No chat posted",
         data: {},
       });
     }
   } else {
     try {
-      const comments = await getAllComment();
-      if (Array.isArray(comments) && comments.length > 0) {
+      const chats = await getAllChat();
+      if (Array.isArray(chats) && chats.length > 0) {
         return res.status(200).send({
           status: true,
           status_code: 200,
-          message: "Get data comment success",
-          data: comments,
+          message: "Get data chat success",
+          data: chats,
         });
       } else {
         return res.status(200).send({
           status: true,
           status_code: 200,
-          message: "No comment posted",
+          message: "No chat posted",
           data: {},
         });
       }
@@ -56,33 +56,33 @@ export const getComments = async (req: Request, res: Response) => {
   }
 };
 
-export const createComment = async (req: Request, res: Response) => {
-  const comment_id = uuidv4();
-  const { user_id, blog_id, comment, name } = req.body;
+export const createChat = async (req: Request, res: Response) => {
+  const chat_id = uuidv4();
+  const { user_id, group_id, chat, name } = req.body;
 
-  if (!comment) {
+  if (!chat) {
     return res.status(400).send({
       status: false,
       status_code: 400,
-      message: "Comment field are required",
+      message: "chat field are required",
     });
   }
 
-  const commentData = {
-    comment_id,
+  const chatData = {
+    chat_id,
     user_id,
-    blog_id,
-    comment,
+    group_id,
+    chat,
     name,
   };
 
   try {
-    await insertComment(commentData);
+    await insertChat(chatData);
     return res.status(200).json({
       status: true,
       status_code: 200,
-      message: "created comment successfully",
-      data: commentData,
+      message: "created chat successfully",
+      data: chatData,
     });
   } catch (error: any) {
     return res.status(422).send({
@@ -93,37 +93,37 @@ export const createComment = async (req: Request, res: Response) => {
   }
 };
 
-export const getCommentByBlog = async (req: Request, res: Response) => {
-  const blog_id = req.params.blog_id;
+export const getChatByGroup = async (req: Request, res: Response) => {
+  const group_id = req.params.group_id;
 
-  const comment = await getCommentByBlogId(blog_id);
-  if (comment) {
+  const chat = await getChatByGroupId(group_id);
+  if (chat) {
     return res.status(200).send({
       status: true,
       status_code: 200,
-      message: "Get detail data comment successfully",
-      data: comment,
+      message: "Get detail data chat successfully",
+      data: chat,
     });
   } else {
     return res.status(404).send({
       status: false,
       status_code: 404,
-      message: "No comment posted",
+      message: "No chat posted",
       data: {},
     });
   }
 };
 
-export const deleteComment = async (req: Request, res: Response) => {
+export const deleteChat = async (req: Request, res: Response) => {
   const id = req.params.id;
 
   try {
-    const result = await getCommentAndDelete(id);
+    const result = await getChatAndDelete(id);
     if (result) {
       res.status(200).json({
         status: true,
         status_code: 200,
-        message: "Delete comment successfully",
+        message: "Delete chat successfully",
       });
     } else {
       res.status(404).json({
