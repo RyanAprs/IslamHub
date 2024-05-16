@@ -3,6 +3,7 @@ import CommunityList from "./communityList";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FaUsers } from "react-icons/fa";
+import ChatSection from "../../components/atoms/chatSection/chatSection";
 
 const DetailCommunity = () => {
   const [communityImage, setCommunityImage] = useState();
@@ -24,6 +25,7 @@ const DetailCommunity = () => {
       console.log(error);
     }
   };
+
   return (
     <div className="flex">
       <CommunityList />
@@ -46,7 +48,7 @@ const DetailCommunity = () => {
             <li className="p-4 text-white">{communityTitle}</li>
           </ul>
         </nav>
-        <div className="flex flex-col">Hello World</div>
+        <ChatSection />
       </div>
     </div>
   );
