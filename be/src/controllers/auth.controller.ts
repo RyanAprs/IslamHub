@@ -15,6 +15,7 @@ export const register = async (req: Request, res: Response) => {
   const { email, name, password } = req.body;
   const image = null;
   const bio = null;
+  const role = "user";
 
   if (req.body.email && !validator.isEmail(req.body.email)) {
     return res.status(400).send({
@@ -48,6 +49,7 @@ export const register = async (req: Request, res: Response) => {
     password: hashedPassword,
     image,
     bio,
+    role,
   };
 
   try {
