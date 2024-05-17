@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaArrowAltCircleRight, FaTrash } from "react-icons/fa";
+import { FaArrowAltCircleRight, FaTrash, FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 
 const ChatSection = ({ admin }) => {
   const [user_id, setUser_id] = useState();
+  const [userChatId, setUserChatId] = useState();
   const [chat, setChat] = useState();
   const [dataChats, setDataChats] = useState([]);
   const [error, setError] = useState();
@@ -22,7 +23,7 @@ const ChatSection = ({ admin }) => {
           `http://localhost:3000/api/v1/chat/${id}`
         );
         setDataChats(response.data.data);
-        console.log(response.data.data);
+        // console.log(response.data.data);
       } catch (error) {
         console.log(error);
       }
@@ -139,30 +140,68 @@ const ChatSection = ({ admin }) => {
 
   return (
     <div className="flex flex-col flex-grow ">
-      <div className="w-full flex-grow overflow-y-auto  bg-blue-500 h-[40px]">
+      <div className="w-full flex-grow overflow-y-auto  bg-gray-300 h-[40px]">
         <div className="flex items-center justify-center">
           created by {admin}
         </div>
         {dataChats && dataChats.length > 0 ? (
-          dataChats.map((dataChat, index) => (
-            <div className="p-2" key={index}>
-              <div className="p-2 bg-white rounded-xl  flex justify-between items-center">
-                <div>
-                  <h1>{dataChat.name}</h1>
-                  <p>{dataChat.chat}</p>
+          dataChats.map((dataChat, index) =>
+            dataChat.user_id === user_id ? (
+              <div
+                className="p-2 flex justify-end gap-2 items-start"
+                key={index}
+              >
+                <div className="p-2 bg-white rounded-l-xl rounded-br-xl flex gap-4 flex-row-reverse justify-start items-center">
+                  <div>
+                    {/* <h1>{dataChat.name}</h1> */}
+                    <p>{dataChat.chat}</p>
+                  </div>
+                  <div>
+                    {user_id === dataChat.user_id ? (
+                      <button onClick={() => handleDelete(dataChat.chat_id)}>
+                        <FaTrash />
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
-                <div>
-                  {user_id === dataChat.user_id ? (
-                    <button onClick={() => handleDelete(dataChat.chat_id)}>
-                      <FaTrash />
-                    </button>
-                  ) : (
-                    ""
-                  )}
+                
+              </div>
+            ) : (
+              <div
+                className="p-2 flex justify-start gap-2 items-start"
+                key={index}
+              >
+                <Link
+                  to={`/profile/${dataChat.user_id}`}
+                  className="h-7 w-7 bg-white flex items-center rounded-full justify-center cursor-pointer"
+                >
+                  <FaUser />
+                </Link>
+                <div className="p-2 bg-white rounded-r-xl rounded-bl-xl flex gap-4 justify-center items-center">
+                  <div>
+                    <Link
+                      to={`/profile/${dataChat.user_id}`}
+                      className="hover:underline cursor-pointer"
+                    >
+                      {dataChat.name}
+                    </Link>
+                    <p>{dataChat.chat}</p>
+                  </div>
+                  <div>
+                    {user_id === dataChat.user_id ? (
+                      <button onClick={() => handleDelete(dataChat.chat_id)}>
+                        <FaTrash />
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
+            )
+          )
         ) : (
           <div className="flex justify-center items-center">
             <h1>No Chat Posted</h1>
@@ -170,8 +209,8 @@ const ChatSection = ({ admin }) => {
         )}
       </div>
 
-      <div className="p-4 bg-gray-300">
-        {error && <p className="text-red-500 bg-gray-300">{error}</p>}
+      <div className="p-4 bg-gray-500">
+        {error && <p className="text-red-500 bg-gray-500">{error}</p>}
         {user_id ? (
           <div className="flex gap-3 ">
             <input
@@ -199,8 +238,8 @@ const ChatSection = ({ admin }) => {
       </div>
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <p>Are you sure you want to delete this chat?</p>
+          <div className="bg-white p-6 rounded-xl shadow-lg">
+            <p>Are you sure want to delete this chat?</p>
             <div className="flex justify-center mt-4">
               <button
                 onClick={confirmDelete}
