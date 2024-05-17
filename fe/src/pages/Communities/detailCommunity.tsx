@@ -15,6 +15,7 @@ const DetailCommunity = () => {
   const [showDeteleModal, setShowDeleteModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [error, setError] = useState();
+  const [imagePreview, setImagePreview] = useState(null);
 
   const { id } = useParams();
 
@@ -85,6 +86,12 @@ const DetailCommunity = () => {
   const confirmDelete = () => {};
 
   const handleUpdate = () => {};
+
+  const onImageUpload = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
 
   return (
     <div className="flex pt-[72px]">
@@ -170,7 +177,7 @@ const DetailCommunity = () => {
 
       {showUpdateModal && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-8 flex flex-col gap-4 rounded-lg shadow-lg">
+          <div className="bg-white p-8 flex flex-col gap-2 rounded-lg shadow-lg">
             <div className="flex items-center justify-center">
               <p>Update Community</p>
             </div>
@@ -183,16 +190,36 @@ const DetailCommunity = () => {
                 value={communityTitle}
                 onChange={(e) => setCommunityTitle(e.target.value)}
               />
+              {imagePreview && (
+                <img
+                  src={imagePreview}
+                  alt="Image Preview"
+                  className="mb-4 max-w-[150px]"
+                />
+              )}
+              {!imagePreview && (
+                <img
+                  src={`http://localhost:3000/${image}`}
+                  alt="Image Preview"
+                  className="mb-4 max-w-[150px]"
+                />
+              )}
+              <input
+                type="file"
+                placeholder="Image"
+                className="border-2 border-gray-300 rounded p-3 w-full"
+                onChange={onImageUpload}
+              />
               <div className="flex gap-4 justify-center mt-4">
                 <button
                   onClick={closeModal}
-                  className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors duration-300"
+                  className="bg-red-600 text-white px-3 py-2 rounded hover:bg-red-700 transition-colors duration-300"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleUpdate}
-                  className="bg-green-600 text-white px-4 py-2 rounded mr-2 hover:bg-green-700 transition-colors duration-300"
+                  className="bg-green-600 text-white px-3 py-2 rounded mr-2 hover:bg-green-700 transition-colors duration-300"
                 >
                   Update
                 </button>
