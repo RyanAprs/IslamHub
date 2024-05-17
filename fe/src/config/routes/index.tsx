@@ -21,6 +21,7 @@ import Footer from "../../components/molecules/Footer/footer";
 import { useAuthContext } from "../context/useAuthContext";
 import DetailCommunity from "../../pages/Communities/detailCommunity";
 import Chat from "../../pages/Communities/chat";
+import Video from "../../pages/Videos/video";
 
 const RouteData = [
   {
@@ -54,6 +55,10 @@ const RouteData = [
   {
     path: "/community/:id",
     element: <DetailCommunity />,
+  },
+  {
+    path: "/video",
+    element: <Video />,
   },
 ];
 

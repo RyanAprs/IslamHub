@@ -77,8 +77,8 @@ const Header: React.FC = () => {
         <Link to="/" className="hover:text-gray-500 transition-all">
           <h1>Home</h1>
         </Link>
-        <Link to="/contact" className="hover:text-gray-500 transition-all">
-          <h1>Contact</h1>
+        <Link to="/video" className="hover:text-gray-500 transition-all">
+          <h1>Video</h1>
         </Link>
         <Link to="/community" className="hover:text-gray-500 transition-all">
           <h1>Commmunities</h1>
@@ -133,10 +133,10 @@ const Header: React.FC = () => {
                     <h1>Communites</h1>
                   </Link>
                   <Link
-                    to="/contact"
+                    to="/video"
                     className="px-6 py-2 block w-full text-gray-800 hover:bg-gray-200"
                   >
-                    <h1>Contact</h1>
+                    <h1>Video</h1>
                   </Link>
                 </nav>
                 <button
@@ -162,10 +162,10 @@ const Header: React.FC = () => {
                     <h1>Communities</h1>
                   </Link>
                   <Link
-                    to="/contact"
+                    to="/video"
                     className="px-2 py-2 block w-full text-gray-800 hover:bg-gray-200"
                   >
-                    <h1>Contact</h1>
+                    <h1>Video</h1>
                   </Link>
                 </nav>
               </div>
