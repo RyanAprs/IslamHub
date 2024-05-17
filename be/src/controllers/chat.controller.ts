@@ -6,6 +6,7 @@ import {
   insertChat,
 } from "../services/chat.service";
 import { v4 as uuidv4 } from "uuid";
+import { getUserImage } from "../services/auth.service";
 
 export const getChats = async (req: Request, res: Response) => {
   const id = req.params.id;
@@ -68,15 +69,16 @@ export const createChat = async (req: Request, res: Response) => {
     });
   }
 
-  const chatData = {
-    chat_id,
-    user_id,
-    community_id,
-    chat,
-    name,
-  };
-
   try {
+    const userImage = await getUserImage(user_id);
+    const chatData = {
+      chat_id,
+      user_id,
+      community_id,
+      chat,
+      name,
+      image: userImage,
+    };
     await insertChat(chatData);
     return res.status(200).json({
       status: true,

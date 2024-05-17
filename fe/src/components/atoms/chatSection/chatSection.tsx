@@ -13,17 +13,18 @@ const ChatSection = ({ admin }) => {
   const [community_id, setCommunity_id] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [idChatToDelete, setIdChatToDelete] = useState();
+  const [user, setUser] = useState();
 
   const { id } = useParams();
 
   useEffect(() => {
-    const fetchComment = async () => {
+    const fetchChat = async () => {
       try {
         const response = await axios.get(
           `http://localhost:3000/api/v1/chat/${id}`
         );
         setDataChats(response.data.data);
-        // console.log(response.data.data);
+        console.log(response.data.data);
       } catch (error) {
         console.log(error);
       }
@@ -49,7 +50,7 @@ const ChatSection = ({ admin }) => {
     };
 
     setCommunity_id(id);
-    fetchComment();
+    fetchChat();
 
     const userData = getUserDataFromCookie();
     if (userData) {
@@ -80,6 +81,7 @@ const ChatSection = ({ admin }) => {
 
     const userData = getUserDataFromCookie();
     if (userData) {
+      setUser(userData);
       setUser_id(userData.user_id);
     }
   });
@@ -166,7 +168,6 @@ const ChatSection = ({ admin }) => {
                     )}
                   </div>
                 </div>
-                
               </div>
             ) : (
               <div
@@ -177,7 +178,15 @@ const ChatSection = ({ admin }) => {
                   to={`/profile/${dataChat.user_id}`}
                   className="h-7 w-7 bg-white flex items-center rounded-full justify-center cursor-pointer"
                 >
-                  <FaUser />
+                  {dataChat.image === null ? (
+                    <FaUser />
+                  ) : (
+                    <img
+                      src={`http://localhost:3000/${dataChat.image}`}
+                      alt=""
+                      className="rounded-full"
+                    />
+                  )}
                 </Link>
                 <div className="p-2 bg-white rounded-r-xl rounded-bl-xl flex gap-4 justify-center items-center">
                   <div>

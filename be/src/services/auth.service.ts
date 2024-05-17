@@ -14,6 +14,12 @@ export const getPassword = async (email: string) => {
   return password;
 };
 
+export const getUserImage = async (user_id: string) => {
+  const user = await authModel.findOne({ user_id });
+  const image = user?.image;
+  return image;
+};
+
 export const updateUserPassword = async (
   email: string,
   newPassword: string

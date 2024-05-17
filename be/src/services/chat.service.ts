@@ -1,3 +1,4 @@
+import authModel from "../models/auth.model";
 import chatModel from "../models/chat.model";
 
 export const getAllChat = async () => {

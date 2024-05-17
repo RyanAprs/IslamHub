@@ -148,9 +148,8 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center pt-[72px] ">
       <div className="min-h-screen w-full flex flex-col justify-center p-8 rounded shadow-lg gap-10">
-        {error && <p className="text-red-500">{error}</p>}
         <div className="flex items-center justify-center flex-col gap-2">
           {imagePreview ? (
             <img
@@ -163,6 +162,8 @@ const UpdateProfile = () => {
               <FaUser size={150} className="absolute" />
             </div>
           )}
+          {error && <p className="text-red-500">{error}</p>}
+
           <input
             type="file"
             placeholder="Image"
