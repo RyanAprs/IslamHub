@@ -143,7 +143,7 @@ const DetailCommunity = () => {
               {image !== null ? (
                 <button>
                   <img
-                    src={`http://localhost:3000/${image}`}
+                    src={`http://localhost:3000/communityImage/${image}`}
                     alt="user image"
                     className="h-[40px] w-[40px] object-cover rounded-full bg-gray-200"
                   />
@@ -239,7 +239,7 @@ const DetailCommunity = () => {
               )}
               {!imagePreview && (
                 <img
-                  src={`http://localhost:3000/${image}`}
+                  src={`http://localhost:3000/communityImage/${image}`}
                   alt="Image Preview"
                   className="mb-4 max-w-[150px]"
                 />
