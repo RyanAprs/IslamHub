@@ -1,15 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const CommunityList = () => {
   const [communities, setCommunities] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [selectedCommunityId, setSelectedCommunityId] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     fetchCommunities();
-  });
+  }, []);
+
+  useEffect(() => {
+    const currentCommunityId = location.pathname.split("/")[2];
+    setSelectedCommunityId(currentCommunityId);
+  }, [location]);
 
   const fetchCommunities = async () => {
     try {
@@ -31,18 +38,22 @@ const CommunityList = () => {
   };
 
   return (
-    <div className="min-h-screen overflow-y-auto w-[200px] bg-gray-400 border-black border-[1px] relative">
+    <div className="min-h-screen overflow-y-auto w-[200px] bg-gray-500 border-black border-[1px] p-2 relative">
       <div className="flex items-center justify-center p-4 bg-gray-500">
-        <Link to="/community" className="font-bold">
+        <Link to="/community" className="font-bold text-xl border-b-2 border-black w-full">
           Communities
         </Link>
       </div>
       {communities.map((community) => {
+        const isSelected = community.community_id === selectedCommunityId;
         return (
           <Link
             to={`/community/${community.community_id}`}
             key={community._id}
-            className="flex p-2 hover:bg-gray-500"
+            className={`flex p-3 rounded-xl transition-all mt-1 ${
+              isSelected ? "bg-gray-400" : "hover:bg-gray-400"
+            }`}
+            onClick={() => setSelectedCommunityId(community.community_id)}
           >
             <h1>{community.title}</h1>
           </Link>
@@ -50,7 +61,7 @@ const CommunityList = () => {
       })}
       <button
         onClick={handleShowModal}
-        className="absolute bg-gray-500 hover:bg-gray-600 p-4 rounded-full bottom-5 right-4"
+        className="absolute bg-gray-700 text-white hover:bg-gray-800 transition-all shadow-lg p-4 rounded-full bottom-5 right-4"
       >
         <FaPlus />
       </button>
