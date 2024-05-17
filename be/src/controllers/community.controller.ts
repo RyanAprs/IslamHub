@@ -60,11 +60,11 @@ export const createCommunity = async (req: Request, res: Response) => {
   const { user_id, title, name } = req.body;
   const image = null;
 
-  if (!title || !title || !name) {
+  if (!title || !name) {
     return res.status(400).send({
       status: false,
       status_code: 400,
-      message: "All fields are required",
+      message: "Community name field are required",
     });
   }
 

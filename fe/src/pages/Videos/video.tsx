@@ -147,9 +147,7 @@ const Video = () => {
                 <div>
                   <h1 className="text-2xl uppercase ">{video.title}</h1>
                 </div>
-                <div>
-                  {video.name} - 2 days ago
-                </div>
+                <div>{video.name} - 2 days ago</div>
               </div>
             </div>
           </Link>
