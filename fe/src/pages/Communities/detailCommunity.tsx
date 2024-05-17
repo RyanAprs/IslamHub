@@ -83,7 +83,20 @@ const DetailCommunity = () => {
     setShowUpdateModal(false);
   };
 
-  const confirmDelete = () => {};
+  const confirmDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/v1/community/${id}`
+      );
+      if (response.status === 200) {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("Request error:", error.message);
+    } finally {
+      setShowModal(false);
+    }
+  };
 
   const handleUpdate = () => {};
 
