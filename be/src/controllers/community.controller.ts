@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   getAllCommunity,
+  getCommunityAndDelete,
   getCommunityById,
   insertCommunity,
 } from "../services/community.service";
@@ -84,6 +85,34 @@ export const createCommunity = async (req: Request, res: Response) => {
       message: "created chat successfully",
       data: communityData,
     });
+  } catch (error: any) {
+    return res.status(422).send({
+      status: false,
+      status_code: 422,
+      message: error.message,
+    });
+  }
+};
+
+export const deleteCommunity = async (req: Request, res: Response) => {
+  const postId = req.params.id;
+
+  try {
+    const result = await getCommunityAndDelete(postId);
+    if (result) {
+      res.status(200).json({
+        status: true,
+        status_code: 200,
+        message: "Delete community successfully",
+      });
+    } else {
+      res.status(404).json({
+        status: false,
+        status_code: 404,
+        message: "Data not found",
+        data: {},
+      });
+    }
   } catch (error: any) {
     return res.status(422).send({
       status: false,
