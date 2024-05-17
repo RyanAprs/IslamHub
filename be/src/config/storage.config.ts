@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/");
+    cb(null, "uploads/communityImage");
   },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
@@ -18,7 +18,7 @@ const profileStorage = multer.diskStorage({
     cb(null, "profileImages/");
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname); 
+    cb(null, file.originalname);
   },
 });
 export { storage, profileStorage };

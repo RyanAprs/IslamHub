@@ -52,6 +52,12 @@ export const getCommunityAndDelete = async (id: string) => {
   }
 };
 
+export const getCommunityImage = async (id: string) => {
+  const community = await communityModel.findOne({ id });
+  const communityImage = community?.image;
+  return communityImage;
+};
+
 export const getCommuityAndUpdate = async (id: string, payload: any) => {
   return await communityModel.findOneAndUpdate(
     {
