@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import CommunityList from "./communityList";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FaEllipsisV, FaUsers } from "react-icons/fa";
+import { FaEllipsisV, FaUsers, FaWindowRestore } from "react-icons/fa";
 import ChatSection from "../../components/atoms/chatSection/chatSection";
 
 const DetailCommunity = () => {
@@ -16,6 +16,7 @@ const DetailCommunity = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [error, setError] = useState();
   const [imagePreview, setImagePreview] = useState(null);
+  const [name, setName] = useState();
 
   const { id } = useParams();
 
@@ -42,6 +43,7 @@ const DetailCommunity = () => {
     const userData = getUserDataFromCookie();
     if (userData) {
       setUser_id(userData.user_id);
+      setName(userData.name);
     }
   }, []);
 
@@ -98,8 +100,33 @@ const DetailCommunity = () => {
     }
   };
 
-  const handleUpdate = () => {};
+  const handleUpdate = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("title", communityTitle);
+      formData.append("name", name);
+      formData.append("user_id", user_id);
+      formData.append("image", image);
 
+      const response = await axios.put(
+        `http://localhost:3000/api/v1/community/${id}`,
+        formData
+      );
+      if (response.data.status_code === 200) {
+        window.location.reload();
+      } else {
+        console.log("Update community gagal");
+      }
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.message);
+      } else if (error.request) {
+        console.log("No response received from server:", error.request);
+      } else {
+        console.log("Request error:", error.message);
+      }
+    }
+  };
   const onImageUpload = (e) => {
     const file = e.target.files[0];
     setImage(file);

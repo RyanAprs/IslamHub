@@ -61,7 +61,7 @@ export const getCommunityImage = async (id: string) => {
 export const getCommuityAndUpdate = async (id: string, payload: any) => {
   return await communityModel.findOneAndUpdate(
     {
-      blog_id: id,
+      community_id: id,
     },
     {
       $set: payload,
