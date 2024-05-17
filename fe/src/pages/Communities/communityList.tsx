@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const CommunityList = () => {
   const [communities, setCommunities] = useState([]);
@@ -12,8 +12,6 @@ const CommunityList = () => {
   const [name, setName] = useState();
   const [error, setError] = useState();
   const location = useLocation();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const getUserDataFromCookie = () => {
@@ -82,8 +80,6 @@ const CommunityList = () => {
       );
       if (response.data.status_code === 200) {
         window.location.reload();
-        console.log("create community success");
-        console.log(response.data.data);
       } else {
         console.log("create community failed");
       }
