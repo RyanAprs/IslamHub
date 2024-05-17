@@ -30,7 +30,7 @@ const DetailCommunity = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex pt-[72px]">
       <CommunityList />
       <div className="flex flex-col w-full">
         <nav className="bg-gray-500 h-15 w-full border-black border-[1px]">

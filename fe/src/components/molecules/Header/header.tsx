@@ -65,7 +65,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="flex justify-between items-center py-4 px-8 bg-gray-800 text-white">
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-4 px-8 bg-gray-800 text-white shadow-lg">
       <div>
         <Link to="/">
           <h1 className="text-2xl font-bold text-white">
@@ -81,7 +81,7 @@ const Header: React.FC = () => {
           <h1>Videos</h1>
         </Link>
         <Link to="/community" className="hover:text-gray-500 transition-all">
-          <h1>Commmunities</h1>
+          <h1>Communities</h1>
         </Link>
       </nav>
 
@@ -103,7 +103,7 @@ const Header: React.FC = () => {
                 onClick={toggleDropdown}
                 className="cursor-pointer p-3 bg-gray-200 rounded-full"
               >
-                <FaUser className="text-black " />
+                <FaUser className="text-black" />
               </button>
             ))}
           {!user && (
@@ -111,7 +111,7 @@ const Header: React.FC = () => {
               onClick={toggleDropdown}
               className="cursor-pointer p-3 bg-gray-200 rounded-full"
             >
-              <FaUser className="text-black " />
+              <FaUser className="text-black" />
             </button>
           )}
         </div>
@@ -130,7 +130,7 @@ const Header: React.FC = () => {
                     to="/community"
                     className="px-6 py-2 block w-full text-gray-800 hover:bg-gray-200"
                   >
-                    <h1>Communites</h1>
+                    <h1>Communities</h1>
                   </Link>
                   <Link
                     to="/video"
