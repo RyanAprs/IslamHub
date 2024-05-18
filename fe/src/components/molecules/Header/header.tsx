@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
+import islamHubLogo from "../../../assets/islamHub_logo.png";
 
 const Header: React.FC = () => {
   const [user, setUser] = useState<any | null>(null);
@@ -68,9 +69,7 @@ const Header: React.FC = () => {
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-4 px-8 bg-gray-800 text-white shadow-lg">
       <div>
         <Link to="/">
-          <h1 className="text-2xl font-bold text-white">
-            Islam<span className="text-gray-500">Hub</span>
-          </h1>
+          <img src={islamHubLogo} alt="logo" className="h-10 w-10" />
         </Link>
       </div>
       <nav className="text-lg text-white hidden gap-8 font-bold md:flex">
