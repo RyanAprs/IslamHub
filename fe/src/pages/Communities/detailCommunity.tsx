@@ -134,7 +134,7 @@ const DetailCommunity = () => {
   };
 
   return (
-    <div className="flex pt-[72px]">
+    <div className="flex pt-[72px] min-h-screen">
       <CommunityList />
       <div className="flex flex-col w-full">
         <nav className="bg-gray-500 h-15 w-full border-black border-[1px]">
