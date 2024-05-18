@@ -91,7 +91,6 @@ const UpdateProfile = () => {
       if (response.status === 200) {
         const user = response.data.data;
         const expirationDate = new Date();
-        console.log(user);
         expirationDate.setDate(expirationDate.getDate() + 1);
         // Check if userData exists in cookies
         const existingUserData = getCookie("userData");

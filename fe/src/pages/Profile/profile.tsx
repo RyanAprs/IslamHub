@@ -9,6 +9,7 @@ const Profile = () => {
   const [image, setImage] = useState();
   const [bio, setBio] = useState();
   const [user, setUser] = useState();
+  const [userData, setUserData] = useState();
   const { id } = useParams();
 
   useEffect(() => {
@@ -37,7 +38,7 @@ const Profile = () => {
 
   useEffect(() => {
     getUserDetail();
-  });
+  }, [id]);
 
   const getUserDetail = async () => {
     try {
@@ -48,8 +49,15 @@ const Profile = () => {
       setName(response.data.data.name);
       setImage(response.data.data.image);
       setBio(response.data.data.bio);
+      setUserData(response.data.data);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const setItemUser = () => {
+    if (userData) {
+      localStorage.setItem("user", JSON.stringify(userData));
     }
   };
 
@@ -82,7 +90,7 @@ const Profile = () => {
           <>
             <Link
               to={`/profile/update/${userId}`}
-              // onClick={changeCookieData}
+              onClick={setItemUser}
               className="bg-gray-400 text-color-dark font-bold py-3 px-3 text-lg rounded"
             >
               Edit Profile

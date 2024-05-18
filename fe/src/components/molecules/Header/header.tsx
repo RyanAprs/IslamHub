@@ -60,9 +60,9 @@ const Header: React.FC = () => {
     document.cookie = `userData=; expires=${expiresUTC}; path=/;`;
 
     setUser(null);
+    window.location.reload();
     localStorage.removeItem("token");
     navigate("/login");
-    window.location.reload();
   };
 
   return (
