@@ -99,26 +99,28 @@ const CommunityList = () => {
       <div className="flex items-center justify-center p-4 bg-gray-500">
         <Link
           to="/community"
-          className="font-bold text-xl border-b-2 border-black w-full"
+          className="font-bold text-xl"
         >
           Communities
         </Link>
       </div>
-      {communities.map((community) => {
-        const isSelected = community.community_id === selectedCommunityId;
-        return (
-          <Link
-            to={`/community/${community.community_id}`}
-            key={community._id}
-            className={`flex p-3 rounded-xl transition-all mt-1 ${
-              isSelected ? "bg-gray-400" : "hover:bg-gray-400"
-            }`}
-            onClick={() => setSelectedCommunityId(community.community_id)}
-          >
-            <h1>{community.title}</h1>
-          </Link>
-        );
-      })}
+      <div className="overflow-y-auto h-[500px] border-t-[2px] border-black">
+        {communities.map((community) => {
+          const isSelected = community.community_id === selectedCommunityId;
+          return (
+            <Link
+              to={`/community/${community.community_id}`}
+              key={community._id}
+              className={`flex p-3 rounded-xl transition-all mt-1 ${
+                isSelected ? "bg-gray-400" : "hover:bg-gray-400"
+              }`}
+              onClick={() => setSelectedCommunityId(community.community_id)}
+            >
+              <h1>{community.title}</h1>
+            </Link>
+          );
+        })}
+      </div>
       <button
         onClick={handleShowModal}
         className="absolute bg-gray-700 text-white hover:bg-gray-800 transition-all shadow-lg p-4 rounded-full bottom-5 right-4"

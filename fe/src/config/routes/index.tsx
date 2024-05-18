@@ -22,6 +22,7 @@ import { useAuthContext } from "../context/useAuthContext";
 import DetailCommunity from "../../pages/Communities/detailCommunity";
 import Chat from "../../pages/Communities/chat";
 import Video from "../../pages/Videos/video";
+import DetailVideo from "../../pages/Videos/detailVideo";
 
 const RouteData = [
   {
@@ -59,6 +60,10 @@ const RouteData = [
   {
     path: "/video",
     element: <Video />,
+  },
+  {
+    path: "/video/:id",
+    element: <DetailVideo />,
   },
 ];
 

@@ -6,6 +6,7 @@ import { FaUser } from "react-icons/fa";
 
 const videos = [
   {
+    video_id: "1",
     title: "Testingg",
     video: "ryan.mp4",
     name: "ryan",
@@ -14,6 +15,7 @@ const videos = [
     comments: "testing comment",
   },
   {
+    video_id: "2",
     title: "Testingg",
     video: "ryan.mp4",
     name: "ryan",
@@ -22,6 +24,7 @@ const videos = [
     comments: "testing comment",
   },
   {
+    video_id: "3",
     title: "Testingg",
     video: "ryan.mp4",
     name: "ryan",
@@ -119,8 +122,7 @@ const Video = () => {
       <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-3  text-black  justify-center">
         {videos.map((video, index) => (
           <Link
-            // to={`detail/${video.video_id}`}
-            to=""
+            to={`/video/${video.video_id}`}
             key={index}
             className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded max-h-auto border-gray-500 border-[2px]"
           >
