@@ -59,33 +59,6 @@ const ChatSection = ({ admin }) => {
     }
   }, [id]);
 
-  useEffect(() => {
-    const getUserDataFromCookie = () => {
-      const cookieData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userData="));
-
-      if (cookieData) {
-        const userDataString = cookieData.split("=")[1];
-        try {
-          const userData = JSON.parse(decodeURIComponent(userDataString));
-          return userData;
-        } catch (error) {
-          console.error("Error parsing JSON from cookie:", error);
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const userData = getUserDataFromCookie();
-    if (userData) {
-      setUser(userData);
-      setUser_id(userData.user_id);
-    }
-  });
-
   const handleCreate = async () => {
     try {
       const response = await axios.post("http://localhost:3000/api/v1/chat", {
@@ -184,7 +157,7 @@ const ChatSection = ({ admin }) => {
                     <img
                       src={`http://localhost:3000/${dataChat.image}`}
                       alt=""
-                      className="rounded-full"
+                      className="rounded-full object-cover w-full h-full"
                     />
                   )}
                 </Link>
