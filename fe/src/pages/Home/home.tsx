@@ -1,57 +1,49 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import exampleImg from "../../assets/islamHub_logo.png";
 
 const Home = () => {
-  const [user, setUser] = useState();
-  useEffect(() => {
-    const getUserDataFromCookie = () => {
-      const cookieData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userData="));
-
-      if (cookieData) {
-        const userDataString = cookieData.split("=")[1];
-        try {
-          const userData = JSON.parse(decodeURIComponent(userDataString));
-          return userData;
-        } catch (error) {
-          console.error("Error parsing JSON from cookie:", error);
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const userData = getUserDataFromCookie();
-    if (userData) {
-      setUser(userData);
-    }
-  });
-
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center text-center px-4">
-      <h1 className="text-5xl font-bold text-green-600 mb-8">IslamHub</h1>
-      <h2 className="text-3xl font-bold text-gray-800 mb-4">
-        Temukan Komunitas Islam yang Inspiratif dan Konten Islami yang
-        Mencerahkan
-      </h2>
-      <p className="text-gray-600 text-lg mb-8 max-w-2xl">
-        IslamHub adalah platform yang dirancang khusus untuk memperkuat ikatan
-        komunitas muslim dan menyediakan konten Islami berkualitas tinggi.
-        Bergabunglah dengan komunitas, obrolan langsung, dan tonton video Islami
-        yang mendidik dan menginspirasi.
-      </p>
-      {user ? (
-        ""
-      ) : (
-        <Link
-          to="/register"
-          className="bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition duration-300"
-        >
-          Bergabung Sekarang
-        </Link>
-      )}
+    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row items-center justify-between px-4 md:px-32 gap-5">
+      <div className="font-poppins gap-6 md:gap-14 flex flex-col items-center md:items-start text-center md:text-left">
+        <div className="font-bold text-[24px]">IslamHub</div>
+        <div className="gap-4 flex flex-col">
+          <div className="text-[24px] font-semibold text-blue-800">
+            Halo, Selamat datang sobat
+          </div>
+          <div className="text-[32px] md:text-[48px] font-bold flex flex-col text-black">
+            <span>
+              Pelajarilah <span className="text-red-600">Agamamu</span>
+            </span>
+            <span>disini sobat Insyaallah</span>
+            <span>Berkah</span>
+          </div>
+          <div className="flex flex-col text-[16px] md:text-[18px]">
+            Belajarlah Dengan giat niscaya keberkahan <span>menyertaimu</span>
+          </div>
+          <div className="flex gap-4 md:gap-9 items-center font-bold flex-col md:flex-row">
+            <Link
+              className="bg-blue-600 text-white rounded-xl px-10 py-3"
+              to="/register"
+            >
+              Daftar
+            </Link>
+            <Link
+              className="bg-transparent border-blue-600 border-[2px] text-blue-600 rounded-xl px-10 py-3"
+              to="/login"
+            >
+              Masuk
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="flex justify-center md:justify-end">
+        <img
+          className="w-60 h-60 md:w-80 md:h-80"
+          src={exampleImg}
+          alt="IslamHub Logo"
+        />
+      </div>
     </div>
   );
 };

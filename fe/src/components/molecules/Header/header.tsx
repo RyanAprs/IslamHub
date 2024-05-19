@@ -66,13 +66,11 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-4 px-8 bg-gray-800 text-white shadow-lg">
-      <div>
-        <Link to="/">
-          <img src={islamHubLogo} alt="logo" className="h-10 w-10" />
-        </Link>
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-4 px-8 bg-transparent text-black shadow-lg">
+      <div className="font-poppins text-black">
+        <h1 className="font-bold">IslamHub</h1>
       </div>
-      <nav className="text-lg text-white hidden gap-8 font-bold md:flex">
+      <nav className="text-lg text-black hidden gap-8 font-bold md:flex">
         <Link to="/" className="hover:text-gray-500 transition-all">
           <h1>Home</h1>
         </Link>
