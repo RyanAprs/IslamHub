@@ -109,25 +109,15 @@ const Video = () => {
 
   const VideoList = () => (
     <>
-      <div className="flex items-center justify-end">
-        {user === null ? null : (
-          <Link
-            to="/blog/create"
-            className="bg-gray-500 p-2 rounded mb-4 flex items-center"
-          >
-            <h1>Create Video</h1>
-          </Link>
-        )}
-      </div>
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-3  text-black  justify-center">
+      <div className="grid sm:grid-cols-2 md:grid-cols-3  grid-cols-1 gap-3  text-black  justify-center">
         {videos.map((video, index) => (
           <Link
             to={`/video/${video.video_id}`}
             key={index}
-            className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded max-h-auto border-gray-500 border-[2px]"
+            className="shadow-lg cursor-pointer bg-gray-300 p-4 flex flex-col items-start rounded-xl max-h-auto border-gray-400 border-[2px]"
           >
             <img
-              className="h-[200px] w-full object-cover rounded border-gray-500 shadow-md border-[2px]"
+              className="h-[200px] w-full object-cover rounded border-gray-400 shadow-md border-[2px]"
               src={`http://localhost:3000/${video.video}`}
               alt="video image"
             />
@@ -160,23 +150,25 @@ const Video = () => {
 
   return (
     <>
-      <div className="px-4 py-20 flex flex-col gap-3 min-h-screen">
+      <div className="px-4 py-20 flex bg-main-gradient pt-[140px] flex-col gap-8 min-h-screen">
         <div>
           <input
             type="text"
-            placeholder="Search video..."
-            className="border-none p-2 w-full focus:outline-none text-black rounded-full"
+            placeholder="Cari video..."
+            className="border-none py-4 w-full focus:outline-none text-black rounded-full"
             // onChange={({ target }) => search(target.value)}
           />
         </div>
 
-        {Array.isArray(videos) && videos.length > 0 ? (
-          <VideoList />
-        ) : (
-          <div className="min-h-screen flex justify-center">
-            <h1>No Video Posted</h1>
-          </div>
-        )}
+        <div>
+          {Array.isArray(videos) && videos.length > 0 ? (
+            <VideoList />
+          ) : (
+            <div className="min-h-screen flex justify-center">
+              <h1>No Video Posted</h1>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

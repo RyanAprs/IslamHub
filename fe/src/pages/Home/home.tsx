@@ -30,9 +30,9 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-main-gradient flex flex-col md:flex-row items-center justify-between p-8 md:px-32 gap-5">
+    <div className="min-h-screen bg-main-gradient flex flex-col md:flex-row items-center justify-between p-8 md:px-32 gap-5 pt-[100px]">
       <div className="font-poppins gap-6 md:gap-14 flex flex-col items-center md:items-start text-center md:text-left">
-        {!user ? <div className="font-bold text-[24px]">IslamHub</div> : ""}
+        {/* {!user ? <div className="font-bold text-[24px]">IslamHub</div> : ""} */}
         <div className="gap-4 flex flex-col">
           <div className="text-[24px] font-semibold text-blue-800">
             Halo, Selamat datang <span>{user ? `${user.name}` : "sobat"}</span>

@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 py-4">
+    <footer className="bg-blue-600 py-4">
       <div className="container mx-auto flex justify-between items-center">
-        <p className="text-white">&copy; 2024 IslamHub</p>
+        <p className="text-white font-bold">&copy; 2024 IslamHub</p>
         <div className="flex space-x-4 text-white">
           <Link to="https://www.instagram.com/rreiyyan/">
             <FaInstagram size={25} />

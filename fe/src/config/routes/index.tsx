@@ -26,7 +26,7 @@ import DetailVideo from "../../pages/Videos/detailVideo";
 
 const RouteData = [
   {
-    // path: "/",
+    path: "/",
     element: <Home />,
   },
   {
@@ -76,7 +76,7 @@ const Routing = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route
+        {/* <Route
           path="/"
           element={
             token ? (
@@ -90,7 +90,7 @@ const Routing = () => {
               </>
             )
           }
-        />
+        /> */}
         <Route
           path="/blog/update/:id"
           element={
