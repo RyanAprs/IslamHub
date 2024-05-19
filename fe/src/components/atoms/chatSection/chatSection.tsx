@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaArrowAltCircleRight, FaTrash, FaUser } from "react-icons/fa";
+import { FaArrowRight, FaTrash, FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 
 const ChatSection = ({ admin }) => {
@@ -115,7 +115,7 @@ const ChatSection = ({ admin }) => {
 
   return (
     <div className="flex flex-col flex-grow ">
-      <div className="w-full flex-grow overflow-y-auto  bg-gray-300 h-[40px]">
+      <div className="w-full flex-grow overflow-y-auto  bg-main-gradient h-[40px]">
         <div className="flex items-center justify-center">
           created by {admin}
         </div>
@@ -191,8 +191,8 @@ const ChatSection = ({ admin }) => {
         )}
       </div>
 
-      <div className="p-4 bg-gray-500">
-        {error && <p className="text-red-500 bg-gray-500">{error}</p>}
+      <div className="p-4 bg-blue-200">
+        {error && <p className="text-white bg-blue-500">{error}</p>}
         {user_id ? (
           <div className="flex gap-3 ">
             <input
@@ -203,16 +203,16 @@ const ChatSection = ({ admin }) => {
               onChange={(e) => setChat(e.target.value)}
             />
             <button
-              className="bg-gray-400 py-2 px-6 rounded"
+              className="bg-white py-2 px-6 rounded-xl"
               onClick={handleCreate}
             >
-              <FaArrowAltCircleRight size={40} />
+              <FaArrowRight size={40} />
             </button>
           </div>
         ) : (
           <div className="flex justify-center gap-5 items-center">
             <h4>You Should Login For Chat</h4>
-            <Link to="/login" className="bg-gray-400 px-3 py-2 rounded">
+            <Link to="/login" className="bg-blue-400 px-3 py-2 rounded">
               Login
             </Link>
           </div>

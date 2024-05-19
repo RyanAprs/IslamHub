@@ -6,7 +6,7 @@ const backButton = ({ path }) => {
     <>
       <Link
         to={path}
-        className="bg-gray-500 p-2 rounded mb-4 flex justify-center items-center gap-2 "
+        className="bg-blue-500 p-2 rounded-xl mb-4 flex justify-center items-center gap-2 "
       >
         <FaArrowLeft />
         Back

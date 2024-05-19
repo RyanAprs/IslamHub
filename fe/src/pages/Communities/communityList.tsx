@@ -104,13 +104,13 @@ const CommunityList = () => {
       <div
         className={`overflow-y-auto ${
           isSidebarOpen
-            ? "bg-gray-500 w-[200px] border-black border-[1px] p-2"
-            : "bg-gray-200 w-0 p-0 border-0"
+            ? "bg-blue-500 w-[200px] border-black border-[1px] p-2"
+            : "bg-blue-200 w-0 p-0 border-0"
         } relative transition-all duration-300`}
       >
         {isSidebarOpen && (
           <>
-            <div className="flex items-center justify-between p-4 bg-gray-500">
+            <div className="flex items-center justify-between p-4 bg-blue-500">
               <div
                 onClick={toggleSidebar}
                 className="cursor-pointer flex items-center justify-center"
@@ -130,7 +130,7 @@ const CommunityList = () => {
                     to={`/community/${community.community_id}`}
                     key={community._id}
                     className={`flex p-3 rounded-xl transition-all mt-1 ${
-                      isSelected ? "bg-gray-400" : "hover:bg-gray-400"
+                      isSelected ? "bg-blue-400" : "hover:bg-blue-400"
                     }`}
                     onClick={() =>
                       setSelectedCommunityId(community.community_id)
@@ -143,7 +143,7 @@ const CommunityList = () => {
             </div>
             <button
               onClick={handleShowModal}
-              className="absolute bg-gray-700 text-white hover:bg-gray-800 transition-all shadow-lg p-4 rounded-full bottom-5 right-4"
+              className="absolute bg-blue-700 text-white hover:bg-blue-800 transition-all shadow-lg p-4 rounded-full bottom-5 right-4"
             >
               <FaPlus />
             </button>
@@ -198,7 +198,7 @@ const CommunityList = () => {
       {!isSidebarOpen && (
         <button
           onClick={toggleSidebar}
-          className="top-32 fixed left-0 bg-gray-700 text-white px-2 py-2 rounded-r-full z-50 transition-all duration-300"
+          className="top-32 fixed left-0 bg-blue-700 text-white px-2 py-2 rounded-r-full z-50 transition-all duration-300"
         >
           <FaBars />
         </button>

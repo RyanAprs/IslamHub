@@ -62,7 +62,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="mt-8 text-color-primary h-screen text-2xl flex flex-col justify-center items-center">
+    <div className="bg-main-gradient pt-[50px] text-color-primary h-screen text-2xl flex flex-col justify-center items-center">
       {image !== null ? (
         <img
           src={`http://localhost:3000/${image}`}
@@ -82,7 +82,7 @@ const Profile = () => {
         {(user && user.user_id !== userId) || user === null ? (
           <Link
             to={`/profile/${userId}/blog/${id}`}
-            className="bg-gray-400 text-color-dark font-bold py-3 px-3 text-lg rounded"
+            className="bg-blue-400 text-color-dark font-bold py-3 px-3 text-lg rounded-xl"
           >
             Blog
           </Link>
@@ -91,13 +91,13 @@ const Profile = () => {
             <Link
               to={`/profile/update/${userId}`}
               onClick={setItemUser}
-              className="bg-gray-400 text-color-dark font-bold py-3 px-3 text-lg rounded"
+              className="bg-blue-400 text-color-dark font-bold py-3 px-3 text-lg rounded-xl"
             >
               Edit Profile
             </Link>
             <Link
               to={`/profile/${userId}/blog/${user && user.user_id}`}
-              className="bg-gray-400 text-color-dark font-bold py-3 px-3 text-lg rounded"
+              className="bg-blue-400 text-color-dark font-bold py-3 px-3 text-lg rounded-xl"
             >
               My Blog
             </Link>

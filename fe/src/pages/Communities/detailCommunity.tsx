@@ -134,10 +134,10 @@ const DetailCommunity = () => {
   };
 
   return (
-    <div className="flex pt-[72px] min-h-screen">
+    <div className="flex pt-[115px] min-h-screen">
       <CommunityList />
       <div className="flex flex-col w-full">
-        <nav className="bg-gray-500 h-15 w-full border-black border-[1px]">
+        <nav className="bg-blue-500 h-15 w-full border-black border-[1px]">
           <div className="flex px-3 items-center justify-between">
             <div className="flex items-center pl-2">
               {image !== null ? (

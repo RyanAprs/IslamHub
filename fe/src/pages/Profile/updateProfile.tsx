@@ -147,7 +147,7 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="flex items-center justify-center pt-[72px] ">
+    <div className="flex items-center bg-main-gradient justify-center pt-[75px] ">
       <div className="min-h-screen w-full flex flex-col justify-center p-8 rounded shadow-lg gap-10">
         <div className="flex items-center justify-center flex-col gap-2">
           {imagePreview ? (
@@ -166,27 +166,27 @@ const UpdateProfile = () => {
           <input
             type="file"
             placeholder="Image"
-            className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
+            className="border-2 border-blue-300 rounded-xl p-4 mb-4 w-full"
             onChange={onImageUpload}
           />
           <input
             type="text"
             placeholder="Name"
-            className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
+            className="border-2 border-blue-300 rounded-xl p-4 mb-4 w-full"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <input
             type="email"
             placeholder="Email"
-            className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
+            className="border-2 border-blue-300 rounded-xl p-4 mb-4 w-full"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="text"
             placeholder="Bio"
-            className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
+            className="border-2 border-blue-300 rounded-xl p-4 mb-4 w-full"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
           />
@@ -195,7 +195,7 @@ const UpdateProfile = () => {
             <BackButton path={`/profile/${id}`} />
             <button
               onClick={handleUpdate}
-              className="bg-gray-500 p-2 rounded mb-4 flex justify-center items-center gap-2"
+              className="bg-blue-500 p-2 rounded-xl mb-4 flex justify-center items-center gap-2"
             >
               <FaSave />
               Update
