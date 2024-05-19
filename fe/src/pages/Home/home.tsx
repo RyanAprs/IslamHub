@@ -1,10 +1,9 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import exampleImg from "../../assets/islamHub_logo.png";
+import quranImg from "../../assets/quran.png";
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row items-center justify-between px-4 md:px-32 gap-5">
+    <div className="min-h-screen bg-main-gradient flex flex-col md:flex-row items-center justify-between p-8 md:px-32 gap-5">
       <div className="font-poppins gap-6 md:gap-14 flex flex-col items-center md:items-start text-center md:text-left">
         <div className="font-bold text-[24px]">IslamHub</div>
         <div className="gap-4 flex flex-col">
@@ -39,8 +38,8 @@ const Home = () => {
       </div>
       <div className="flex justify-center md:justify-end">
         <img
-          className="w-60 h-60 md:w-80 md:h-80"
-          src={exampleImg}
+          className="w-60 h-60 md:w-96 md:h-96"
+          src={quranImg}
           alt="IslamHub Logo"
         />
       </div>
