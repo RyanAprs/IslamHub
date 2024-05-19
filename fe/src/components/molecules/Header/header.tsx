@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
-import islamHubLogo from "../../../assets/islamHub_logo.png";
 
 const Header: React.FC = () => {
   const [user, setUser] = useState<any | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -66,109 +66,128 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-4 px-8 bg-transparent text-black shadow-lg">
-      <div className="font-poppins text-black">
+    <header className="fixed font-poppins top-0 left-0 right-0 z-50 flex justify-between items-center py-8 px-16 bg-transparent text-black shadow-lg">
+      <div className="font-poppins text-[24px] text-black">
         <h1 className="font-bold">IslamHub</h1>
       </div>
-      <nav className="text-lg text-black hidden gap-8 font-bold md:flex">
-        <Link to="/" className="hover:text-gray-500 transition-all">
-          <h1>Home</h1>
-        </Link>
-        <Link to="/video" className="hover:text-gray-500 transition-all">
-          <h1>Videos</h1>
-        </Link>
-        <Link to="/community" className="hover:text-gray-500 transition-all">
-          <h1>Communities</h1>
-        </Link>
-      </nav>
+      <div className="flex gap-16 items-center text-[24px]">
+        <div className="text-lg text-black hidden gap-16 font-bold md:flex">
+          <Link
+            to="/"
+            className={`hover:text-gray-500 transition-all ${
+              location.pathname === "/" ? "text-white" : ""
+            }`}
+          >
+            <h1>Home</h1>
+          </Link>
+          <Link
+            to="/video"
+            className={`hover:text-gray-500 transition-all ${
+              location.pathname === "/video" ? "text-white" : ""
+            }`}
+          >
+            <h1>Videos</h1>
+          </Link>
+          <Link
+            to="/community"
+            className={`hover:text-gray-500 transition-all ${
+              location.pathname === "/community" ? "text-white" : ""
+            }`}
+          >
+            <h1>Communities</h1>
+          </Link>
+        </div>
 
-      <div className="relative" ref={dropdownRef}>
-        <div className="flex items-center">
-          {user && user.name && <p className="mr-2">{user.name}</p>}
-          {user && user.image !== null && (
-            <button onClick={toggleDropdown}>
-              <img
-                src={`http://localhost:3000/${user.image}`}
-                alt="user image"
-                className="h-[40px] w-[40px] object-cover rounded-full bg-gray-200"
-              />
-            </button>
-          )}
-          {!user ||
-            (user.image === null && (
+        <div className="relative" ref={dropdownRef}>
+          <div className="flex items-center gap-4">
+            {user && user.name && (
+              <p className="font-bold text-[20px]">{user.name}</p>
+            )}
+            {user && user.image !== null && (
+              <button onClick={toggleDropdown}>
+                <img
+                  src={`http://localhost:3000/${user.image}`}
+                  alt="user image"
+                  className="h-[50px] w-[50px] object-cover rounded-full bg-gray-200"
+                />
+              </button>
+            )}
+            {!user ||
+              (user.image === null && (
+                <button
+                  onClick={toggleDropdown}
+                  className="cursor-pointer p-3 bg-gray-200 rounded-full"
+                >
+                  <FaUser className="text-black" />
+                </button>
+              ))}
+            {!user && (
               <button
                 onClick={toggleDropdown}
                 className="cursor-pointer p-3 bg-gray-200 rounded-full"
               >
                 <FaUser className="text-black" />
               </button>
-            ))}
-          {!user && (
-            <button
-              onClick={toggleDropdown}
-              className="cursor-pointer p-3 bg-gray-200 rounded-full"
-            >
-              <FaUser className="text-black" />
-            </button>
-          )}
-        </div>
-        {isOpen && (
-          <div className="absolute top-full right-0 mt-2 bg-white border border-gray-300 rounded shadow-lg">
-            {user ? (
-              <div className="flex flex-col">
-                <Link
-                  to={`/profile/${user.user_id}`}
-                  className="px-6 py-2 block w-full text-left text-gray-800 hover:bg-gray-200"
-                >
-                  Profile
-                </Link>
-                <nav className="text-left block md:hidden">
-                  <Link
-                    to="/community"
-                    className="px-6 py-2 block w-full text-gray-800 hover:bg-gray-200"
-                  >
-                    <h1>Communities</h1>
-                  </Link>
-                  <Link
-                    to="/video"
-                    className="px-6 py-2 block w-full text-gray-800 hover:bg-gray-200"
-                  >
-                    <h1>Videos</h1>
-                  </Link>
-                </nav>
-                <button
-                  onClick={handleLogout}
-                  className="px-6 py-2 block w-full text-left text-gray-800 hover:bg-gray-200"
-                >
-                  Logout
-                </button>
-              </div>
-            ) : (
-              <div className="flex flex-col">
-                <Link
-                  to="/login"
-                  className="block w-full text-left px-2 py-2 text-gray-800 hover:bg-gray-200"
-                >
-                  Login
-                </Link>
-                <nav className="text-left block md:hidden">
-                  <Link
-                    to="/community"
-                    className="px-2 py-2 block w-full text-gray-800 hover:bg-gray-200"
-                  >
-                    <h1>Communities</h1>
-                  </Link>
-                  <Link
-                    to="/video"
-                    className="px-2 py-2 block w-full text-gray-800 hover:bg-gray-200"
-                  >
-                    <h1>Videos</h1>
-                  </Link>
-                </nav>
-              </div>
             )}
           </div>
-        )}
+          {isOpen && (
+            <div className="absolute top-full right-0 mt-2 bg-transparent border border-blue-300 rounded shadow-lg">
+              {user ? (
+                <div className="flex flex-col">
+                  <Link
+                    to={`/profile/${user.user_id}`}
+                    className="px-6 py-2 block w-full text-left text-gray-800 hover:bg-gray-200"
+                  >
+                    Profile
+                  </Link>
+                  <nav className="text-left block md:hidden">
+                    <Link
+                      to="/community"
+                      className="px-6 py-2 block w-full text-gray-800 hover:bg-gray-200"
+                    >
+                      <h1>Communities</h1>
+                    </Link>
+                    <Link
+                      to="/video"
+                      className="px-6 py-2 block w-full text-gray-800 hover:bg-gray-200"
+                    >
+                      <h1>Videos</h1>
+                    </Link>
+                  </nav>
+                  <button
+                    onClick={handleLogout}
+                    className="px-6 py-2 block w-full text-left text-gray-800 hover:bg-gray-200"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col">
+                  <Link
+                    to="/login"
+                    className="block w-full text-left px-2 py-2 text-gray-800 hover:bg-gray-200"
+                  >
+                    Login
+                  </Link>
+                  <nav className="text-left block md:hidden">
+                    <Link
+                      to="/community"
+                      className="px-2 py-2 block w-full text-gray-800 hover:bg-gray-200"
+                    >
+                      <h1>Communities</h1>
+                    </Link>
+                    <Link
+                      to="/video"
+                      className="px-2 py-2 block w-full text-gray-800 hover:bg-gray-200"
+                    >
+                      <h1>Videos</h1>
+                    </Link>
+                  </nav>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

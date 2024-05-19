@@ -76,7 +76,21 @@ const Routing = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            token ? (
+              <>
+                <Header />
+                <Home />
+              </>
+            ) : (
+              <>
+                <Home />
+              </>
+            )
+          }
+        />
         <Route
           path="/blog/update/:id"
           element={
