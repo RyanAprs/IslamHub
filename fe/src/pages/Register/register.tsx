@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import quranImg from "../../assets/quran.png";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +11,7 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
       const response = await axios.post(
         "http://localhost:3000/api/v1/auth/register",
@@ -39,47 +40,66 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-slate-800 h-screen w-full md:h-[550px] md:w-[550px] flex flex-col justify-center p-8 rounded shadow-lg gap-10">
-        <div className="flex justify-center">
-          <h1 className="text-white text-3xl mb-4 font-semibold">Sign Up</h1>
+    <div className="min-h-screen bg-main-gradient flex flex-col md:flex-row items-center justify-between p-8 md:px-32 gap-5">
+      <div className="font-poppins gap-2 md:gap-14 flex flex-col items-center md:items-start text-center md:text-left">
+        <div className="font-bold text-[24px]">IslamHub</div>
+        <div className="bg-transparent border-blue-600 border-2 h-screen w-full md:h-auto md:w-[556px] flex flex-col justify-center p-10 rounded-xl shadow-lg gap-10">
+          {error && <p className="text-red-500">{error}</p>}
+          <div className=" flex flex-col gap-2">
+            <div>
+              <label htmlFor="" className="font-bold">
+                Masukkan Nama
+              </label>
+              <input
+                type="text"
+                className="border-[1px] border-blue-500 bg-transparent rounded-xl p-4 mb-4 w-full mt-3"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <label htmlFor="" className="font-bold">
+                Email
+              </label>
+              <input
+                type="email"
+                className="border-[1px] border-blue-500 bg-transparent rounded-xl p-4 mb-4 w-full mt-3"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <label htmlFor="" className="font-bold">
+                Password
+              </label>
+              <input
+                type="password"
+                className="border-[1px] border-blue-500 bg-transparent rounded-xl p-4 mb-4 w-full mt-3"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="flex md:flex-row md:items-start flex-col items-center justify-between">
+              <div className="text-black ">
+                Sudah punya akun?{" "}
+                <Link className="text-blue-600" to="/login">
+                  Masuk
+                </Link>
+              </div>
+              <div className="flex items-end">
+                <button
+                  onClick={handleRegister}
+                  className="bg-blue-600 text-black font-bold px-4 py-2 w-[192px] h-[60px] rounded-xl hover:bg-blue-700 transition-colors duration-300"
+                >
+                  Daftar
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        {error && <p className="text-red-500">{error}</p>}
-        <div className="flex items-center justify-center flex-col gap-2">
-          <input
-            type="text"
-            placeholder="Name"
-            className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button
-            onClick={handleLogin}
-            className="bg-blue-500 text-white w-full px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300"
-          >
-            Register
-          </button>
-          <p className="text-white mt-3">
-            already have an account?{" "}
-            <Link className="underline text-blue-500" to="/login">
-              SignIn
-            </Link>
-          </p>
-        </div>
+      </div>
+      <div className="hidden justify-center md:flex md:justify-end">
+        <img
+          className="w-60 h-60 md:w-96 md:h-96"
+          src={quranImg}
+          alt="IslamHub Logo"
+        />
       </div>
     </div>
   );
