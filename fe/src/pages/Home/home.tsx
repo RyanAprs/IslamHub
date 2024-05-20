@@ -30,7 +30,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-main-gradient flex flex-col md:flex-row items-center justify-between p-8 md:px-32 gap-5 pt-[100px]">
+    <div className="min-h-screen bg-main-gradient flex flex-col md:flex-row items-center justify-between p-8 md:px-32 gap-5 pt-[140px] md:pt-[100px]">
       <div className="font-poppins gap-6 md:gap-14 flex flex-col items-center md:items-start text-center md:text-left">
         {/* {!user ? <div className="font-bold text-[24px]">IslamHub</div> : ""} */}
         <div className="gap-4 flex flex-col">

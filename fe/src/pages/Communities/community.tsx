@@ -149,11 +149,11 @@ const Chat = () => {
     <>
       <div className="px-4 py-20 flex bg-main-gradient pt-[140px] flex-col gap-8 min-h-screen">
         <div className="flex justify-center items-center ">
-          <div className=" rounded-full flex items-center justify-center border-black border-2">
+          <div className=" rounded-full flex items-center md:w-[454px] w-full h-auto md:h-[71px] justify-center border-black border-2">
             <input
               type="text"
               placeholder="Cari Komunitas..."
-              className="border-none py-4 pl-4  border-black w-[454px] h-[71px] focus:outline-none text-black  rounded-full"
+              className="border-none py-4 pl-4 w-full h-auto md:h-[68px] border-black focus:outline-none text-black  rounded-full"
               onChange={({ target }) => search(target.value)}
             />
           </div>
@@ -170,9 +170,9 @@ const Chat = () => {
         </div>
         <button
           onClick={handleShowModal}
-          className="absolute bg-blue-700 text-white hover:bg-blue-800 transition-all shadow-lg p-4 rounded-full bottom-5 right-4"
+          className=" fixed bg-blue-700 text-white hover:bg-blue-800 transition-all shadow-lg p-6 rounded-full bottom-5 right-4"
         >
-          <FaPlus />
+          <FaPlus className="" />
         </button>
         {showModal && (
           <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
