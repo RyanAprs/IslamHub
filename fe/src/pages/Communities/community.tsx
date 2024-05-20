@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { FaPlus, FaUsers } from "react-icons/fa";
 import { formatDistanceToNow, parseISO } from "date-fns";
+import Pagination from "../../components/molecules/Pagination/pagination";
 
 const Chat = () => {
   const [communities, setCommunities] = useState([]);
@@ -49,7 +50,6 @@ const Chat = () => {
         "http://localhost:3000/api/v1/community"
       );
       const data = response.data.data;
-      console.log(data);
       setCommunities(data);
     } catch (error) {
       console.log(error);
@@ -145,7 +145,7 @@ const Chat = () => {
   );
 
   return (
-    <div className="px-4 py-20 flex bg-main-gradient pt-[140px] flex-col gap-8 min-h-screen">
+    <div className="px-4 py-20 flex bg-main-gradient pt-[100px] md:pt-[140px] flex-col gap-8 min-h-screen">
       <div className="flex justify-center items-center">
         <div className="rounded-full flex items-center md:w-[454px] w-full h-auto md:h-[71px] justify-center border-black border-2">
           <input
@@ -219,6 +219,7 @@ const Chat = () => {
           </div>
         </div>
       )}
+      <Pagination />
     </div>
   );
 };

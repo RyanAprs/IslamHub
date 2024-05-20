@@ -8,7 +8,7 @@ const CommunityList = () => {
   const [selectedCommunityId, setSelectedCommunityId] = useState(null);
 
   const location = useLocation();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -82,7 +82,7 @@ const CommunityList = () => {
       {!isSidebarOpen && (
         <button
           onClick={toggleSidebar}
-          className="top-32 fixed left-0 bg-blue-700 text-white px-2 py-2 rounded-r-full z-50 transition-all duration-300"
+          className="top-32 fixed left-0 bg-blue-700 text-white p-4  rounded-r-full z-50 transition-all duration-300"
         >
           <FaBars />
         </button>

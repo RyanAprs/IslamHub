@@ -150,7 +150,7 @@ const Video = () => {
 
   return (
     <>
-      <div className="px-4 py-20 flex bg-main-gradient pt-[140px] flex-col gap-8 min-h-screen">
+      <div className="px-4 py-20 flex bg-main-gradient pt-[100px] md:pt-[140px] flex-col gap-8 min-h-screen">
         <div className="border-[1px] border-black  rounded-full">
           <input
             type="text"
@@ -169,6 +169,7 @@ const Video = () => {
             </div>
           )}
         </div>
+        <Pagination />
       </div>
     </>
   );

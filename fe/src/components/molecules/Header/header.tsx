@@ -154,32 +154,32 @@ const Header: React.FC = () => {
             )}
           </div>
           {isOpen && (
-            <div className="absolute top-full right-0 mt-2 bg-transparent border border-blue-300 rounded shadow-lg">
+            <div className="absolute top-full right-0 mt-2 bg-blue-500 border border-blue-300 rounded-xl shadow-lg">
               {user ? (
                 <div className="flex flex-col">
                   <Link
                     to={`/profile/${user.user_id}`}
-                    className="px-6 py-2 block w-full text-left text-gray-800 hover:bg-gray-200"
+                    className="px-6 py-2 block w-full text-left text-black hover:bg-blue-400"
                   >
                     Profile
                   </Link>
                   <nav className="text-left block md:hidden">
                     <Link
                       to="/community"
-                      className="px-6 py-2 block w-full text-gray-800 hover:bg-gray-200"
+                      className="px-6 py-2 block w-full text-black hover:bg-blue-400"
                     >
                       <h1>Communities</h1>
                     </Link>
                     <Link
                       to="/video"
-                      className="px-6 py-2 block w-full text-gray-800 hover:bg-gray-200"
+                      className="px-6 py-2 block w-full text-black hover:bg-blue-400"
                     >
                       <h1>Videos</h1>
                     </Link>
                   </nav>
                   <button
                     onClick={handleLogout}
-                    className="px-6 py-2 block w-full text-left text-gray-800 hover:bg-gray-200"
+                    className="px-6 py-2 block w-full text-left text-black hover:bg-blue-400"
                   >
                     Logout
                   </button>
@@ -188,20 +188,20 @@ const Header: React.FC = () => {
                 <div className="flex flex-col">
                   <Link
                     to="/login"
-                    className="block w-full text-left px-2 py-2 text-gray-800 hover:bg-gray-200"
+                    className="block w-full text-left px-2 py-2 text-black hover:bg-blue-400"
                   >
                     Login
                   </Link>
                   <nav className="text-left block md:hidden">
                     <Link
                       to="/community"
-                      className="px-2 py-2 block w-full text-gray-800 hover:bg-gray-200"
+                      className="px-2 py-2 block w-full text-black hover:bg-blue-400"
                     >
                       <h1>Communities</h1>
                     </Link>
                     <Link
                       to="/video"
-                      className="px-2 py-2 block w-full text-gray-800 hover:bg-gray-200"
+                      className="px-2 py-2 block w-full text-black hover:bg-blue-400"
                     >
                       <h1>Videos</h1>
                     </Link>
