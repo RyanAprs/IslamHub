@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import chatModel from "../models/chat.model";
 import communityModel from "../models/community.model";
 
-
 export const getAllCommunity = async (
   req: Request,
   res: Response,
@@ -20,6 +19,7 @@ export const getAllCommunity = async (
 
     const community = await communityModel
       .find()
+      .sort({ createdAt: -1 })
       .skip(
         (parseInt(currentPage.toString()) - 1) * parseInt(perPage.toString())
       )
