@@ -4,10 +4,27 @@ import { FaUser } from "react-icons/fa";
 
 const Header: React.FC = () => {
   const [user, setUser] = useState<any | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -66,7 +83,11 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed font-poppins top-0 left-0 right-0 z-50 flex justify-between items-center py-8 px-16 bg-transparent text-black shadow-lg">
+    <header
+      className={`fixed font-poppins top-0 left-0 right-0 z-50 flex justify-between items-center py-8 px-16 text-black shadow-lg transition-colors duration-300 ${
+        isScrolled ? "bg-blue-600" : "bg-transparent"
+      }`}
+    >
       <div className="font-poppins text-[24px] text-black">
         <h1 className="font-bold">IslamHub</h1>
       </div>
