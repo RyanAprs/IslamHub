@@ -4,6 +4,7 @@ import communityModel from "../models/community.model";
 export const getAllCommunity = async () => {
   return await communityModel
     .find()
+    .sort({ createdAt: -1 })
     .then((data) => {
       return data;
     })
