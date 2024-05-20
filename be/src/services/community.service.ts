@@ -13,6 +13,10 @@ export const getAllCommunity = async () => {
     });
 };
 
+export const getCommunityByTitle = async (q: string) => {
+  return await communityModel.find({ title: { $regex: new RegExp(q, "i") } });
+};
+
 export const insertCommunity = async (payload: any) => {
   return await communityModel.create(payload);
 };

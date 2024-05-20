@@ -9,6 +9,7 @@ import {
 export const CommunityRoute: Router = Router();
 
 CommunityRoute.get("/", getCommunities);
+CommunityRoute.get("/search", getCommunities);
 CommunityRoute.get("/:id", getCommunities);
 CommunityRoute.post("/", createCommunity);
 CommunityRoute.put("/:id", updateCommunity);

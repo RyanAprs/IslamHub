@@ -4,6 +4,7 @@ import {
   getCommuityAndUpdate,
   getCommunityAndDelete,
   getCommunityById,
+  getCommunityByTitle,
   getCommunityImage,
   insertCommunity,
 } from "../services/community.service";
@@ -12,6 +13,7 @@ import { uploadAsync } from "../config/upload.config";
 
 export const getCommunities = async (req: Request, res: Response) => {
   const id = req.params.id;
+  const q = req.query.query as string;
 
   if (id) {
     const community = await getCommunityById(id);
@@ -22,6 +24,23 @@ export const getCommunities = async (req: Request, res: Response) => {
         message: "Get detail data community successfully",
         data: community,
       });
+    } else if (q) {
+      const community = await getCommunityByTitle(q);
+      if (community) {
+        return res.status(200).send({
+          status: true,
+          status_code: 200,
+          message: "Get search community successfully",
+          data: community,
+        });
+      } else {
+        return res.status(404).send({
+          status: false,
+          status_code: 404,
+          message: "Data not found",
+          data: {},
+        });
+      }
     } else {
       return res.status(404).send({
         status: false,
