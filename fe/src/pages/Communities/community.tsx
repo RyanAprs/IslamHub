@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { FaPlus, FaUsers } from "react-icons/fa";
+import { formatDistanceToNow, parseISO } from "date-fns";
 
 const Chat = () => {
   const [communities, setCommunities] = useState([]);
@@ -47,8 +48,9 @@ const Chat = () => {
       const response = await axios.get(
         "http://localhost:3000/api/v1/community"
       );
-      setCommunities(response.data.data);
-      console.log(response.data.data);
+      const data = response.data.data;
+      console.log(data);
+      setCommunities(data);
     } catch (error) {
       console.log(error);
     }
@@ -100,7 +102,6 @@ const Chat = () => {
           }
         );
         setCommunities(response.data.data);
-        console.log(response.data.data);
       } else if (q.length === 0) {
         fetchCommunities();
       }
@@ -110,120 +111,115 @@ const Chat = () => {
   };
 
   const CommunityList = () => (
-    <>
-      <div className="grid sm:grid-cols-2 md:grid-cols-3  grid-cols-1 gap-3  text-black  justify-center">
-        {communities.map((community, index) => (
-          <Link
-            to={`/community/${community.community_id}`}
-            key={index}
-            className="shadow-lg cursor-pointer bg-gray-300 p-4 flex flex-col items-start rounded-xl max-h-auto border-gray-400 border-[2px]"
-          >
-            {community && community.image !== null ? (
-              <img
-                className="h-[200px] w-full object-cover rounded border-gray-400 shadow-md border-[2px]"
-                src={`http://localhost:3000/communityImage/${community.image}`}
-                alt="community image"
-              />
-            ) : (
-              <div className="h-[200px] flex justify-center items-center w-full object-cover rounded border-gray-400 shadow-md border-[2px]">
-                <FaUsers size={200} />
-              </div>
-            )}
-            <hr className="mt-3" />
-
-            <div className="flex gap-2 items-start justify-start">
-              <div className="">
-                <div>
-                  <h1 className="text-2xl uppercase ">{community.title}</h1>
-                </div>
-                <div>{community.name} - 2 days ago</div>
+    <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-3 text-black justify-center">
+      {communities.map((community, index) => (
+        <Link
+          to={`/community/${community.community_id}`}
+          key={index}
+          className="shadow-lg cursor-pointer bg-gray-300 p-4 flex flex-col items-start rounded-xl max-h-auto border-gray-400 border-[2px]"
+        >
+          {community && community.image !== null ? (
+            <img
+              className="h-[200px] w-full object-cover rounded border-gray-400 shadow-md border-[2px]"
+              src={`http://localhost:3000/communityImage/${community.image}`}
+              alt="community image"
+            />
+          ) : (
+            <div className="h-[200px] flex justify-center items-center w-full object-cover rounded border-gray-400 shadow-md border-[2px]">
+              <FaUsers size={200} />
+            </div>
+          )}
+          <hr className="mt-3" />
+          <div className="flex gap-2 items-start justify-start">
+            <div>
+              <h1 className="text-2xl uppercase">{community.title}</h1>
+              <div>
+                {community.name} -{" "}
+                {formatDistanceToNow(parseISO(community.createdAt))} ago
               </div>
             </div>
-          </Link>
-        ))}
-      </div>
-    </>
+          </div>
+        </Link>
+      ))}
+    </div>
   );
 
   return (
-    <>
-      <div className="px-4 py-20 flex bg-main-gradient pt-[140px] flex-col gap-8 min-h-screen">
-        <div className="flex justify-center items-center ">
-          <div className=" rounded-full flex items-center md:w-[454px] w-full h-auto md:h-[71px] justify-center border-black border-2">
-            <input
-              type="text"
-              placeholder="Cari Komunitas..."
-              className="border-none py-4 pl-4 w-full h-auto md:h-[68px] border-black focus:outline-none text-black  rounded-full"
-              onChange={({ target }) => search(target.value)}
-            />
-          </div>
+    <div className="px-4 py-20 flex bg-main-gradient pt-[140px] flex-col gap-8 min-h-screen">
+      <div className="flex justify-center items-center">
+        <div className="rounded-full flex items-center md:w-[454px] w-full h-auto md:h-[71px] justify-center border-black border-2">
+          <input
+            type="text"
+            placeholder="Cari Komunitas..."
+            className="border-none py-4 pl-4 w-full h-auto md:h-[68px] border-black focus:outline-none text-black rounded-full"
+            onChange={({ target }) => search(target.value)}
+          />
         </div>
-
-        <div>
-          {Array.isArray(communities) && communities.length > 0 ? (
-            <CommunityList />
-          ) : (
-            <div className="min-h-screen flex justify-center">
-              <h1>No Community Posted</h1>
-            </div>
-          )}
-        </div>
-        <button
-          onClick={handleShowModal}
-          className=" fixed bg-blue-700 text-white hover:bg-blue-800 transition-all shadow-lg p-6 rounded-full bottom-5 right-4"
-        >
-          <FaPlus className="" />
-        </button>
-        {showModal && (
-          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-8 flex flex-col gap-4 rounded-lg shadow-lg">
-              <div className="flex items-center justify-center">
-                <p>Create Community</p>
-              </div>
-              {user_id ? (
-                <div className="flex items-center justify-center flex-col gap-2">
-                  <div className="text-red-500">{error}</div>
-                  <input
-                    type="text"
-                    placeholder="Community Name"
-                    className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                  />
-                  <div className="flex gap-4 justify-center mt-4">
-                    <button
-                      onClick={closeModal}
-                      className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors duration-300"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      onClick={handleCreate}
-                      className="bg-green-600 text-white px-4 py-2 rounded mr-2 hover:bg-green-700 transition-colors duration-300"
-                    >
-                      Create
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex justify-center gap-5 items-center">
-                  <h4>Login to create a community</h4>
-                  <Link to="/login" className="bg-blue-400 px-3 py-2 rounded">
-                    Login
-                  </Link>
-                  <button
-                    onClick={closeModal}
-                    className="bg-red-600 px-3 py-2 rounded"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              )}
-            </div>
+      </div>
+      <div>
+        {Array.isArray(communities) && communities.length > 0 ? (
+          <CommunityList />
+        ) : (
+          <div className="min-h-screen flex justify-center">
+            <h1>No Community Posted</h1>
           </div>
         )}
       </div>
-    </>
+      <button
+        onClick={handleShowModal}
+        className="fixed bg-blue-700 text-white hover:bg-blue-800 transition-all shadow-lg p-6 rounded-full bottom-5 right-4"
+      >
+        <FaPlus />
+      </button>
+      {showModal && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-8 flex flex-col gap-4 rounded-lg shadow-lg">
+            <div className="flex items-center justify-center">
+              <p>Create Community</p>
+            </div>
+            {user_id ? (
+              <div className="flex items-center justify-center flex-col gap-2">
+                <div className="text-red-500">{error}</div>
+                <input
+                  type="text"
+                  placeholder="Community Name"
+                  className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <div className="flex gap-4 justify-center mt-4">
+                  <button
+                    onClick={closeModal}
+                    className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors duration-300"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleCreate}
+                    className="bg-green-600 text-white px-4 py-2 rounded mr-2 hover:bg-green-700 transition-colors duration-300"
+                  >
+                    Create
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex justify-center gap-5 items-center">
+                <h4>Login to create a community</h4>
+                <Link to="/login" className="bg-blue-400 px-3 py-2 rounded">
+                  Login
+                </Link>
+                <button
+                  onClick={closeModal}
+                  className="bg-red-600 px-3 py-2 rounded"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
