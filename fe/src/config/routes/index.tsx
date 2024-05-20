@@ -20,7 +20,7 @@ import ResetPassword from "../../pages/ResetPassword/resetPassword";
 import Footer from "../../components/molecules/Footer/footer";
 import { useAuthContext } from "../context/useAuthContext";
 import DetailCommunity from "../../pages/Communities/detailCommunity";
-import Chat from "../../pages/Communities/chat";
+import Chat from "../../pages/Communities/community";
 import Video from "../../pages/Videos/video";
 import DetailVideo from "../../pages/Videos/detailVideo";
 

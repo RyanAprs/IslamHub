@@ -24,28 +24,28 @@ export const getCommunities = async (req: Request, res: Response) => {
         message: "Get detail data community successfully",
         data: community,
       });
-    } else if (q) {
-      const community = await getCommunityByTitle(q);
-      if (community) {
-        return res.status(200).send({
-          status: true,
-          status_code: 200,
-          message: "Get search community successfully",
-          data: community,
-        });
-      } else {
-        return res.status(404).send({
-          status: false,
-          status_code: 404,
-          message: "Data not found",
-          data: {},
-        });
-      }
     } else {
       return res.status(404).send({
         status: false,
         status_code: 404,
         message: "No community posted",
+        data: {},
+      });
+    }
+  } else if (q) {
+    const community = await getCommunityByTitle(q);
+    if (community) {
+      return res.status(200).send({
+        status: true,
+        status_code: 200,
+        message: "Get search community successfully",
+        data: community,
+      });
+    } else {
+      return res.status(404).send({
+        status: false,
+        status_code: 404,
+        message: "Data not found",
         data: {},
       });
     }

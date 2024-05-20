@@ -88,6 +88,27 @@ const Chat = () => {
     }
   };
 
+  const search = async (q) => {
+    try {
+      if (q.length > 0) {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/community/search`,
+          {
+            params: {
+              query: q,
+            },
+          }
+        );
+        setCommunities(response.data.data);
+        console.log(response.data.data);
+      } else if (q.length === 0) {
+        fetchCommunities();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const CommunityList = () => (
     <>
       <div className="grid sm:grid-cols-2 md:grid-cols-3  grid-cols-1 gap-3  text-black  justify-center">
@@ -133,7 +154,7 @@ const Chat = () => {
               type="text"
               placeholder="Cari Komunitas..."
               className="border-none py-4 pl-4  border-black w-[454px] h-[71px] focus:outline-none text-black  rounded-full"
-              // onChange={({ target }) => search(target.value)}
+              onChange={({ target }) => search(target.value)}
             />
           </div>
         </div>
@@ -143,7 +164,7 @@ const Chat = () => {
             <CommunityList />
           ) : (
             <div className="min-h-screen flex justify-center">
-              <h1>No Video Posted</h1>
+              <h1>No Community Posted</h1>
             </div>
           )}
         </div>
@@ -187,9 +208,15 @@ const Chat = () => {
               ) : (
                 <div className="flex justify-center gap-5 items-center">
                   <h4>Login to create a community</h4>
-                  <Link to="/login" className="bg-gray-400 px-3 py-2 rounded">
+                  <Link to="/login" className="bg-blue-400 px-3 py-2 rounded">
                     Login
                   </Link>
+                  <button
+                    onClick={closeModal}
+                    className="bg-red-600 px-3 py-2 rounded"
+                  >
+                    Cancel
+                  </button>
                 </div>
               )}
             </div>
