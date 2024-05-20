@@ -50,31 +50,10 @@ export const getCommunities = async (req: Request, res: Response) => {
       });
     }
   } else {
-    try {
-      const communities = await getAllCommunity();
-      if (Array.isArray(communities) && communities.length > 0) {
-        return res.status(200).send({
-          status: true,
-          status_code: 200,
-          message: "Get data community success",
-          data: communities,
-        });
-      } else {
-        return res.status(200).send({
-          status: true,
-          status_code: 200,
-          message: "No community posted",
-          data: {},
-        });
-      }
-    } catch (error) {
-      return res.status(500).send({
-        status: false,
-        status_code: 500,
-        message: "Internal Server Error",
-        data: {},
-      });
-    }
+    return await getAllCommunity(req, res, (error) => {
+      console.log(error);
+      return res.status(500).json({ message: "Internal Server Error" });
+    });
   }
 };
 

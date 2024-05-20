@@ -9,6 +9,8 @@ const Chat = () => {
   const [communities, setCommunities] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [user_id, setUser_id] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
@@ -42,15 +44,16 @@ const Chat = () => {
 
   useEffect(() => {
     fetchCommunities();
-  }, []);
+  }, [currentPage]);
 
   const fetchCommunities = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/v1/community"
+        `http://localhost:3000/api/v1/community?page=${currentPage}&perPage=12`
       );
       const data = response.data.data;
       setCommunities(data);
+      setTotalPages(response.data.total_page);
     } catch (error) {
       console.log(error);
     }
@@ -102,12 +105,17 @@ const Chat = () => {
           }
         );
         setCommunities(response.data.data);
+        setTotalPages(1);
       } else if (q.length === 0) {
         fetchCommunities();
       }
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   const CommunityList = () => (
@@ -219,7 +227,11 @@ const Chat = () => {
           </div>
         </div>
       )}
-      <Pagination />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

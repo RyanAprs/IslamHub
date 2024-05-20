@@ -1,16 +1,56 @@
+import { NextFunction, Request, Response } from "express";
 import chatModel from "../models/chat.model";
 import communityModel from "../models/community.model";
 
-export const getAllCommunity = async () => {
-  return await communityModel
-    .find()
-    .sort({ createdAt: -1 })
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+
+export const getAllCommunity = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const currentPage = req.query.page || 1;
+  const perPage = req.query.perPage || 5;
+  let totalItems;
+
+  try {
+    const count = await communityModel.countDocuments();
+    totalItems = count;
+
+    const totalPages = Math.ceil(Number(totalItems) / Number(perPage));
+
+    const community = await communityModel
+      .find()
+      .skip(
+        (parseInt(currentPage.toString()) - 1) * parseInt(perPage.toString())
+      )
+      .limit(parseInt(perPage.toString()));
+
+    if (Array.isArray(community) && community.length > 0) {
+      return res.status(200).json({
+        status: true,
+        status_code: 200,
+        message: "Get data community successfully",
+        data: community,
+        total_data: totalItems,
+        per_page: parseInt(perPage.toString()),
+        current_page: parseInt(currentPage.toString()),
+        total_page: totalPages,
+      });
+    } else {
+      return res.status(200).json({
+        status: true,
+        status_code: 200,
+        message: "Get data community successfully",
+        data: "No community posted",
+        total_data: totalItems,
+        per_page: parseInt(perPage.toString()),
+        current_page: parseInt(currentPage.toString()),
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
 };
 
 export const getCommunityByTitle = async (q: string) => {
