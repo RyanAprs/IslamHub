@@ -6,9 +6,9 @@ import {
   getChatByCommunity,
 } from "../controllers/chat.controller"
 
-export const ChatRoute: Router = Router();
+export const ChatRouter: Router = Router();
 
-ChatRoute.get("/", getChats);
-ChatRoute.get("/:community_id", getChatByCommunity);
-ChatRoute.post("/", createChat);
-ChatRoute.delete("/:id", deleteChat);
+ChatRouter.get("/", getChats);
+ChatRouter.get("/:community_id", getChatByCommunity);
+ChatRouter.post("/", createChat);
+ChatRouter.delete("/:id", deleteChat);

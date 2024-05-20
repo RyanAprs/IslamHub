@@ -6,11 +6,11 @@ import {
   updateCommunity,
 } from "../controllers/community.controller";
 
-export const CommunityRoute: Router = Router();
+export const CommunityRouter: Router = Router();
 
-CommunityRoute.get("/", getCommunities);
-CommunityRoute.get("/search", getCommunities);
-CommunityRoute.get("/:id", getCommunities);
-CommunityRoute.post("/", createCommunity);
-CommunityRoute.put("/:id", updateCommunity);
-CommunityRoute.delete("/:id", deleteCommunity);
+CommunityRouter.get("/", getCommunities);
+CommunityRouter.get("/search", getCommunities);
+CommunityRouter.get("/:id", getCommunities);
+CommunityRouter.post("/", createCommunity);
+CommunityRouter.put("/:id", updateCommunity);
+CommunityRouter.delete("/:id", deleteCommunity);
