@@ -63,10 +63,10 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-slate-800 h-screen w-full md:h-[550px] md:w-[550px] flex flex-col justify-center p-8 rounded shadow-lg gap-10">
+    <div className="min-h-screen bg-main-gradient flex items-center justify-center">
+      <div className="bg-transparent h-screen w-full md:h-[550px] md:w-[550px] flex flex-col justify-center p-8 rounded-xl border-2 border-blue-500 shadow-xl gap-10">
         <div className="flex justify-center">
-          <h1 className="text-white text-3xl mb-4 font-semibold">
+          <h1 className="text-blue-500 text-3xl mb-4 font-semibold">
             Reset Password
           </h1>
         </div>
@@ -76,7 +76,7 @@ const ResetPassword = () => {
             <input
               type="email"
               placeholder="Email"
-              className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
+              className="border-2 border-gray-300 rounded-xl p-4 mb-4 w-full"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -85,7 +85,7 @@ const ResetPassword = () => {
             <input
               type="password"
               placeholder="New Password"
-              className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
+              className="border-2 border-gray-300 rounded-xl p-4 mb-4 w-full"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -95,7 +95,7 @@ const ResetPassword = () => {
             <BackButton path={"/login"} />
             <button
               onClick={handleContinue}
-              className="bg-gray-500 p-2 rounded mb-4 flex justify-center items-center gap-2"
+              className="bg-green-500 p-2 rounded-xl mb-4 flex justify-center items-center gap-2"
             >
               {showPasswordInput ? "Reset Password" : "Continue"}
             </button>
