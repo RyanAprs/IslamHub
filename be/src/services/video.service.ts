@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import videoModel from "../models/video.model";
+import authModel from "../models/auth.model";
 
 export const getAllVideo = async (
   req: Request,
@@ -60,3 +61,36 @@ export const getVideoById = async (id: string) => {
   return await videoModel.findOne({ video_id: id });
 };
 
+export const getVideoByUserId = async (
+  user_video_id: string,
+  user_id: string
+) => {
+  try {
+    const userVideId = await videoModel.findOne({
+      user_video_id: user_video_id,
+    });
+    const userId = await authModel.findOne({ user_id: user_id });
+
+    if (userId && userVideId && userVideId.user_video_id === user_video_id) {
+      return await videoModel
+        .find({ user_video_id: user_video_id })
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      return await videoModel
+        .find({ user_video_id: user_video_id })
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
