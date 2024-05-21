@@ -94,3 +94,7 @@ export const getVideoByUserId = async (
     console.log(error);
   }
 };
+
+export const insertVideo = async (payload: any) => {
+  return await videoModel.create(payload);
+};

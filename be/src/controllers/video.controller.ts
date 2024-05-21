@@ -4,7 +4,10 @@ import {
   getVideoById,
   getVideoByTitle,
   getVideoByUserId,
+  insertVideo,
 } from "../services/video.service";
+import { v4 as uuidv4 } from "uuid";
+import { getNameForVideo, getImageForVideo } from "../services/user.service";
 
 export const getVideo = async (req: Request, res: Response) => {
   const id = req.params.id;
@@ -80,4 +83,45 @@ export const getVideoByUser = async (req: Request, res: Response) => {
   }
 };
 
-export const createVideo = async (req: Request, res: Response) => {};
+export const createVideo = async (req: Request, res: Response) => {
+  const video_id = uuidv4();
+  const { user_video_id, title, description, video } = req.body;
+
+  if (!title || !description || !video || !user_video_id) {
+    return res.status(400).send({
+      status: false,
+      status_code: 400,
+      message: "All fields are required",
+    });
+  }
+
+  const name = await getNameForVideo(user_video_id);
+  const imgUser = await getImageForVideo(user_video_id);
+
+  const videoData = {
+    video_id,
+    user_video_id,
+    title,
+    description,
+    video,
+    name,
+    user_image: imgUser,
+  };
+
+  try {
+    await insertVideo(videoData);
+    return res.status(200).send({
+      status: true,
+      status_code: 200,
+      message: "video created successfully",
+      data: videoData,
+    });
+  } catch (error: any) {
+    return res.status(422).send({
+      status: false,
+      status_code: 422,
+      message: error.message || "An error occurred",
+      data: {},
+    });
+  }
+};
