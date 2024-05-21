@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
+import { BsGear } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
 
 const Profile = () => {
@@ -62,48 +63,55 @@ const Profile = () => {
   };
 
   return (
-    <div className="bg-main-gradient pt-[50px] text-color-primary h-screen text-2xl flex flex-col justify-center items-center">
-      {image !== null ? (
-        <img
-          src={`http://localhost:3000/${image}`}
-          alt="profile picture"
-          className="w-[250px] h-[250px] bg-white shadow-lg object-cover mt-3  border-black  rounded-full"
-        />
-      ) : (
-        <div className=" relative w-[250px] h-[250px] shadow-lg object-cover mt-3  border-black rounded-full flex justify-center items-center">
-          <FaUser size={150} className="absolute" />
+    <div className="flex flex-col gap-16 bg-main-gradient pt-[160px] px-32 text-color-primary min-h-screen text-2xl font-poppins">
+      <div className="flex justify-between items-start">
+        <div className="flex gap-8">
+          <div>
+            {image !== null ? (
+              <img
+                src={`http://localhost:3000/${image}`}
+                alt="profile picture"
+                className="w-[300px] h-[300px] bg-white shadow-lg object-cover mt-3  border-black  rounded-full"
+              />
+            ) : (
+              <div className=" relative w-[250px] h-[250px] shadow-lg object-cover mt-3  border-black rounded-full flex justify-center items-center">
+                <FaUser size={150} className="absolute" />
+              </div>
+            )}
+          </div>
+          <div className="flex flex-col justify-between pt-8">
+            <div className="flex flex-col gap-8">
+              <h5 className="text-[60px] font-bold">{name}</h5>
+              <p>
+                {bio !== "" ? (
+                  <p className="text-[25px]">{bio}</p>
+                ) : (
+                  <p className="text-[25px]">Belum ada bio.</p>
+                )}
+              </p>
+            </div>
+            <div className="py-8 flex flex-wrap gap-4 ">
+              {(user && user.user_id !== userId) || user === null ? (
+                ""
+              ) : (
+                <>
+                  <Link
+                    to={`/profile/update/${userId}`}
+                    onClick={setItemUser}
+                    className="bg-blue-600 text-color-dark font-bold py-3 px-4 text-lg rounded-xl"
+                  >
+                    Edit Profile
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
         </div>
-      )}
-      <h5 className="text-4xl font-bold">
-        <span className="text-color-accent">{name}</span>
-      </h5>
-      <p>{bio !== null ? <p className="text-lg">{bio}</p> : null} </p>
-      <div className="py-8 flex flex-wrap gap-4">
-        {(user && user.user_id !== userId) || user === null ? (
-          <Link
-            to={`/profile/${userId}/blog/${id}`}
-            className="bg-blue-400 text-color-dark font-bold py-3 px-3 text-lg rounded-xl"
-          >
-            Blog
-          </Link>
-        ) : (
-          <>
-            <Link
-              to={`/profile/update/${userId}`}
-              onClick={setItemUser}
-              className="bg-blue-400 text-color-dark font-bold py-3 px-3 text-lg rounded-xl"
-            >
-              Edit Profile
-            </Link>
-            <Link
-              to={`/profile/${userId}/blog/${user && user.user_id}`}
-              className="bg-blue-400 text-color-dark font-bold py-3 px-3 text-lg rounded-xl"
-            >
-              My Blog
-            </Link>
-          </>
-        )}
+        <div className="cursor-pointer">
+          <BsGear size={40} />
+        </div>
       </div>
+      <div className="underline font-bold flex ml-16 text-[25px]">Videos</div>
     </div>
   );
 };
