@@ -3,13 +3,22 @@ import { useEffect, useState } from "react";
 import { FaSave } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import BackButton from "../../components/atoms/backButton/backButton";
+import { storage } from "../../firebase";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { v4 } from "uuid";
 
 const CreateVideo = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [user_video_id, setUser_video_id] = useState("");
-  const [video, setVideo] = useState("");
+  const [video, setVideo] = useState();
   const [error, setError] = useState("");
+  const [progress, setProgress] = useState();
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -42,45 +51,59 @@ const CreateVideo = () => {
 
   const handleCreate = async () => {
     try {
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("description", description);
-      formData.append("user_video_id", user_video_id);
-      formData.append("video", video);
+      if (video == null) {
+        console.log("Video tidak tersedia");
+        return;
+      }
 
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/video",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+      const videoRef = ref(storage, `videos/${video.name + v4()}`);
+      const uploadTask = uploadBytesResumable(videoRef, video);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progress);
+        },
+        (error) => {
+          console.error("Upload video gagal:", error);
+        },
+        async () => {
+          try {
+            // Get the download URL
+            const downloadURL = await getDownloadURL(videoRef);
+
+            const response = await axios.post(
+              "http://localhost:3000/api/v1/video",
+              {
+                user_video_id,
+                title,
+                description,
+                video: downloadURL, // Send the URL instead of the video object
+              }
+            );
+
+            if (response.data.status_code === 200) {
+              navigate(`/profile/${user_video_id}`);
+              console.log("Video berhasil dibuat:", response.data.data);
+            } else {
+              console.log("Gagal membuat video");
+            }
+          } catch (error: any) {
+            if (error.response) {
+              setError(error.response.data.message);
+            } else if (error.request) {
+              console.error("No response received from server:", error.request);
+            } else {
+              console.error("Error lainnya:", error.message);
+            }
+          }
         }
       );
-
-      if (response.data.status_code === 200) {
-        navigate(`/profile/${id}`);
-        console.log(response.data.data);
-        console.log("create video berhasil");
-      } else {
-        console.log("create video gagal");
-      }
-    } catch (error: any) {
-      if (error.response) {
-        setError(error.response.data.message);
-      } else if (error.request) {
-        console.log("No response received from server:", error.request);
-      } else {
-        console.log("Request error:", error.message);
-      }
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
-
-  //   const onImageUpload = (e) => {
-  //     const file = e.target.files[0];
-  //     setImage(file);
-  //     setImagePreview(URL.createObjectURL(file));
-  //   };
 
   return (
     <div className="flex flex-col items-center gap-8  justify-center pt-[140px]">
@@ -101,11 +124,16 @@ const CreateVideo = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+          {progress ? (
+            <p className="text-green-600">uploading {progress} %</p>
+          ) : (
+            ""
+          )}
           <input
             type="file"
-            placeholder="Image"
+            placeholder="video"
             className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
-            onChange={(e) => setVideo(e.target.value)}
+            onChange={(e) => setVideo(e.target.files[0])}
           />
           <div className="flex gap-4">
             <BackButton path={`/profile/${user_video_id}`} />

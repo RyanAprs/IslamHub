@@ -87,7 +87,7 @@ export const createVideo = async (req: Request, res: Response) => {
   const video_id = uuidv4();
   const { user_video_id, title, description, video } = req.body;
 
-  if (!title || !description || !video || !user_video_id) {
+  if (!title || !description || !user_video_id) {
     return res.status(400).send({
       status: false,
       status_code: 400,
@@ -104,7 +104,7 @@ export const createVideo = async (req: Request, res: Response) => {
     title,
     description,
     video,
-    name,
+    name: name,
     user_image: imgUser,
   };
 
