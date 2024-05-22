@@ -23,6 +23,7 @@ import DetailCommunity from "../../pages/Communities/detailCommunity";
 import Chat from "../../pages/Communities/community";
 import Video from "../../pages/Videos/video";
 import DetailVideo from "../../pages/Videos/detailVideo";
+import CreateVideo from "../../pages/Videos/createVideo";
 
 const RouteData = [
   {
@@ -98,6 +99,20 @@ const Routing = () => {
               <>
                 <Header />
                 <UpdateBlog />
+                <Footer />
+              </>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route
+          path="/video/create"
+          element={
+            token ? (
+              <>
+                <Header />
+                <CreateVideo />
                 <Footer />
               </>
             ) : (

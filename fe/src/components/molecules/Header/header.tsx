@@ -165,16 +165,16 @@ const Header: React.FC = () => {
                   </Link>
                   <nav className="text-left block md:hidden">
                     <Link
-                      to="/community"
-                      className="px-6 py-2 block w-full text-black hover:bg-blue-400"
-                    >
-                      <h1>Communities</h1>
-                    </Link>
-                    <Link
                       to="/video"
                       className="px-6 py-2 block w-full text-black hover:bg-blue-400"
                     >
                       <h1>Videos</h1>
+                    </Link>
+                    <Link
+                      to="/community"
+                      className="px-6 py-2 block w-full text-black hover:bg-blue-400"
+                    >
+                      <h1>Communities</h1>
                     </Link>
                   </nav>
                   <button

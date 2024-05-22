@@ -111,7 +111,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="cursor-pointer mt-4 md:mt-0">
+        <div className="cursor-pointer mt-4 md:mt-0 hidden md:flex ">
           <BsGear size={40} />
         </div>
       </div>
