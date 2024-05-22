@@ -3,36 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/molecules/Pagination/pagination";
 import { FaUser } from "react-icons/fa";
-
-const videos = [
-  {
-    video_id: "1",
-    title: "Testingg",
-    video: "ryan.mp4",
-    name: "ryan",
-    user_image: "ryan.jpg",
-    description: "ini adalah video testing",
-    comments: "testing comment",
-  },
-  {
-    video_id: "2",
-    title: "Testingg",
-    video: "ryan.mp4",
-    name: "ryan",
-    user_image: "ryan.jpg",
-    description: "ini adalah video testing",
-    comments: "testing comment",
-  },
-  {
-    video_id: "3",
-    title: "Testingg",
-    video: "ryan.mp4",
-    name: "ryan",
-    user_image: "ryan.jpg",
-    description: "ini adalah video testing",
-    comments: "testing comment",
-  },
-];
+import { formatDistanceToNow, parseISO } from "date-fns";
 
 const Video = () => {
   const [videoData, setVideoData] = useState([]);
@@ -40,46 +11,45 @@ const Video = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [user, setUser] = useState();
 
-  // useEffect(() => {
-  //   const getUserDataFromCookie = () => {
-  //     const cookieData = document.cookie
-  //       .split("; ")
-  //       .find((row) => row.startsWith("userData="));
+  useEffect(() => {
+    const getUserDataFromCookie = () => {
+      const cookieData = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("userData="));
 
-  //     if (cookieData) {
-  //       const userDataString = cookieData.split("=")[1];
-  //       try {
-  //         const userData = JSON.parse(decodeURIComponent(userDataString));
-  //         return userData;
-  //       } catch (error) {
-  //         console.error("Error parsing JSON from cookie:", error);
-  //         return null;
-  //       }
-  //     } else {
-  //       return null;
-  //     }
-  //   };
+      if (cookieData) {
+        const userDataString = cookieData.split("=")[1];
+        try {
+          const userData = JSON.parse(decodeURIComponent(userDataString));
+          return userData;
+        } catch (error) {
+          console.error("Error parsing JSON from cookie:", error);
+          return null;
+        }
+      } else {
+        return null;
+      }
+    };
 
-  //   const userData = getUserDataFromCookie();
-  //   setUser(userData);
-  // }, []);
+    const userData = getUserDataFromCookie();
+    setUser(userData);
+  }, []);
 
-  // useEffect(() => {
-  //   fetchBlogs();
-  // }, [currentPage]);
+  useEffect(() => {
+    fetchVideos();
+  }, [currentPage]);
 
-  // const fetchBlogs = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:3000/api/v1/blog?page=${currentPage}&perPage=4`
-  //     );
-  //     setBlogs(response.data.data);
-
-  //     setTotalPages(response.data.total_page);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const fetchVideos = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/video?page=${currentPage}&perPage=12`
+      );
+      setVideoData(response.data.data);
+      setTotalPages(response.data.total_page);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // const search = async (q) => {
   //   try {
@@ -110,17 +80,19 @@ const Video = () => {
   const VideoList = () => (
     <>
       <div className="grid sm:grid-cols-2 md:grid-cols-3  grid-cols-1 gap-3  text-black  justify-center">
-        {videos.map((video, index) => (
+        {videoData.map((video, index) => (
           <Link
             to={`/video/${video.video_id}`}
             key={index}
             className="shadow-lg cursor-pointer bg-gray-300 p-4 flex flex-col items-start rounded-xl max-h-auto border-gray-400 border-[2px]"
           >
-            <img
+            <video
               className="h-[200px] w-full object-cover rounded border-gray-400 shadow-md border-[2px]"
-              src={`http://localhost:3000/${video.video}`}
-              alt="video image"
-            />
+              controls 
+            >
+              <source src={video.video} type="video/mp4" />{" "}
+              Your browser does not support the video tag.
+            </video>
             <hr className="mt-3" />
 
             <div className="flex gap-2 items-start justify-start">
@@ -139,7 +111,13 @@ const Video = () => {
                 <div>
                   <h1 className="text-2xl uppercase ">{video.title}</h1>
                 </div>
-                <div>{video.name} - 2 days ago</div>
+                <div className="flex gap-2  ">
+                  <Link to={`/profile/${video.user_video_id}`}>
+                    {video.name}{" "}
+                  </Link>
+                  <p>-</p>
+                  <p>{formatDistanceToNow(parseISO(video.createdAt))} ago</p>
+                </div>
               </div>
             </div>
           </Link>
@@ -159,9 +137,8 @@ const Video = () => {
             // onChange={({ target }) => search(target.value)}
           />
         </div>
-
         <div>
-          {Array.isArray(videos) && videos.length > 0 ? (
+          {Array.isArray(videoData) && videoData.length > 0 ? (
             <VideoList />
           ) : (
             <div className="min-h-screen flex justify-center">
@@ -169,7 +146,11 @@ const Video = () => {
             </div>
           )}
         </div>
-        <Pagination />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />{" "}
       </div>
     </>
   );

@@ -4,12 +4,7 @@ import { FaSave } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import BackButton from "../../components/atoms/backButton/backButton";
 import { storage } from "../../firebase";
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { v4 } from "uuid";
 
 const CreateVideo = () => {
@@ -70,7 +65,6 @@ const CreateVideo = () => {
         },
         async () => {
           try {
-            // Get the download URL
             const downloadURL = await getDownloadURL(videoRef);
 
             const response = await axios.post(
@@ -79,7 +73,7 @@ const CreateVideo = () => {
                 user_video_id,
                 title,
                 description,
-                video: downloadURL, // Send the URL instead of the video object
+                video: downloadURL,
               }
             );
 
