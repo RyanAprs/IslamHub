@@ -84,7 +84,7 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`fixed font-poppins top-0 left-0 right-0 z-50 flex justify-between items-center py-4 md:py-8 px-5 md:px-16 text-black shadow-lg transition-colors duration-300 ${
+      className={`fixed font-poppins top-0 left-0 right-0 z-50 flex justify-between items-center py-4 md:py-4 px-5 md:px-10 text-black shadow-lg transition-colors duration-300 ${
         isScrolled ? "bg-blue-600" : "bg-transparent"
       }`}
     >
