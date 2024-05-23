@@ -51,27 +51,26 @@ const Video = () => {
     }
   };
 
-  // const search = async (q) => {
-  //   try {
-  //     if (q.length > 0) {
-  //       const response = await axios.get(
-  //         `http://localhost:3000/api/v1/blog/search`,
-  //         {
-  //           params: {
-  //             query: q,
-  //           },
-  //         }
-  //       );
-  //       setBlogs(response.data.data);
-  //       console.log(response.data.data);
-  //       setTotalPages(1);
-  //     } else if (q.length === 0) {
-  //       fetchBlogs();
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const search = async (q) => {
+    try {
+      if (q.length > 0) {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/video/search`,
+          {
+            params: {
+              query: q,
+            },
+          }
+        );
+        setVideoData(response.data.data);
+        setTotalPages(1);
+      } else if (q.length === 0) {
+        fetchVideos();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -88,10 +87,10 @@ const Video = () => {
           >
             <video
               className="h-[200px] w-full object-cover rounded border-gray-400 shadow-md border-[2px]"
-              controls 
+              controls
             >
-              <source src={video.video} type="video/mp4" />{" "}
-              Your browser does not support the video tag.
+              <source src={video.video} type="video/mp4" /> Your browser does
+              not support the video tag.
             </video>
             <hr className="mt-3" />
 
@@ -134,7 +133,7 @@ const Video = () => {
             type="text"
             placeholder="Cari video..."
             className="border-none py-4 pl-4  border-black w-full focus:outline-none text-black  rounded-full"
-            // onChange={({ target }) => search(target.value)}
+            onChange={({ target }) => search(target.value)}
           />
         </div>
         <div>
