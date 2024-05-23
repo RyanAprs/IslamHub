@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { BsGear } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
+import VideoUser from "./videoUser";
 
 const Profile = () => {
   const [userId, setUserId] = useState();
@@ -63,7 +64,7 @@ const Profile = () => {
   // };
 
   return (
-    <div className="flex flex-col gap-4 md:gap-16 bg-main-gradient pt-[120px] md:pt-[160px] px-8 md:px-32 text-color-primary min-h-screen text-2xl font-poppins">
+    <div className="flex flex-col gap-3 md:gap-16 bg-main-gradient pt-[120px] md:pt-[160px] pb-8 px-8 md:px-32 text-color-primary min-h-screen text-2xl font-poppins">
       <div className="flex justify-center  md:justify-between items-start">
         <div className="flex flex-col md:flex-row md:gap-8">
           <div className="flex justify-center">
@@ -89,7 +90,7 @@ const Profile = () => {
                 {bio !== "" ? bio : "Belum ada bio."}
               </p>
             </div>
-            <div className="py-8 flex flex-wrap gap-4">
+            <div className="md:py-6 py-3 flex flex-wrap gap-4">
               {(user && user.user_id !== userId) || user === null ? (
                 ""
               ) : (
@@ -115,8 +116,13 @@ const Profile = () => {
           <BsGear size={40} />
         </div>
       </div>
-      <div className="underline font-bold flex ml-8 md:ml-16 text-[20px] md:text-[25px]">
-        Videos
+      <div className="flex flex-col gap-4">
+        <div className="underline font-bold flex ml-8 md:ml-16 text-[20px] md:text-[25px]">
+          Videos
+        </div>
+        <div>
+          <VideoUser />
+        </div>
       </div>
     </div>
   );

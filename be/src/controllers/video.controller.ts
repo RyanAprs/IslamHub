@@ -64,14 +64,14 @@ export const getVideoByUser = async (req: Request, res: Response) => {
       return res.status(200).send({
         status: true,
         status_code: 200,
-        message: "Get data chat success",
+        message: "Get data video by user id success",
         data: video,
       });
     } else {
       return res.status(200).send({
         status: true,
         status_code: 200,
-        message: "No chat posted",
+        message: "No video posted",
         data: {},
       });
     }

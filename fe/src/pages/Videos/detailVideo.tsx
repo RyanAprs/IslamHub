@@ -61,7 +61,7 @@ const DetailVideo = () => {
   }, [id]);
 
   return (
-    <div className="min-h-screen pt-[100px] md:pt-[100px] flex flex-col md:p-2">
+    <div className="min-h-screen pt-[100px] md:pt-[100px] bg-main-gradient flex flex-col md:p-2">
       <div className="flex md:px-4 px-1">
         <BackButton path="/video" />
       </div>
