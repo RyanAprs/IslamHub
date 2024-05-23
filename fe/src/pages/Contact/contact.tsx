@@ -34,7 +34,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen pt-[100px] bg-main-gradient flex items-center justify-center">
       <div className="h-screen w-full md:h-[550px] md:w-[550px] flex flex-col justify-center p-8 rounded gap-10">
         <div className="flex justify-center items-center">
           <h1 className="text-black text-3xl mb-4 font-semibold">
@@ -47,16 +47,16 @@ const Contact = () => {
           <div className="flex items-center justify-center flex-col gap-2">
             <input
               type="text"
-              placeholder="Your Name"
-              className="border-2  rounded p-4 mb-4 w-full"
+              placeholder="Name"
+              className="border-2 border-blue-300  rounded-xl p-4 mb-4 w-full"
               name="from_name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <input
               type="email"
-              placeholder="Your Email"
-              className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
+              placeholder="Email"
+              className="border-2 border-blue-300 rounded-xl p-4 mb-4 w-full"
               value={email}
               name="from_email"
               onChange={(e) => setEmail(e.target.value)}
@@ -64,13 +64,13 @@ const Contact = () => {
             <textarea
               placeholder="Message"
               name="message"
-              className="border-2 border-gray-300 rounded p-4 mb-4 w-full h-[150px]"
+              className="border-2 border-blue-300 rounded-xl p-4 mb-4 w-full h-[150px]"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
             <button
               type="submit"
-              className="bg-gray-500 w-full text-white px-4 py-4 rounded hover:bg-gray-600 transition-colors duration-300"
+              className="bg-blue-500 w-full text-white px-4 py-4 rounded-xl hover:bg-blue-600 transition-colors duration-300"
             >
               Send
             </button>

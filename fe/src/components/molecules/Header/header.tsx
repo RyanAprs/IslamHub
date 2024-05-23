@@ -119,6 +119,14 @@ const Header: React.FC = () => {
           >
             <h1>Communities</h1>
           </Link>
+          <Link
+            to="/contact"
+            className={`hover:text-gray-500 transition-all ${
+              location.pathname === "/contact" ? "text-white" : ""
+            }`}
+          >
+            <h1>Contact</h1>
+          </Link>
         </div>
 
         <div className="relative" ref={dropdownRef}>
@@ -175,6 +183,12 @@ const Header: React.FC = () => {
                       className="px-6 py-2 block w-full text-black hover:bg-blue-400"
                     >
                       <h1>Communities</h1>
+                    </Link>
+                    <Link
+                      to="/contact"
+                      className="px-6 py-2 block w-full text-black hover:bg-blue-400"
+                    >
+                      <h1>Contact</h1>
                     </Link>
                   </nav>
                   <button
