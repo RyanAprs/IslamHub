@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   getAllVideo,
+  getVideoAndDelete,
   getVideoById,
   getVideoByTitle,
   getVideoByUserId,
@@ -122,6 +123,34 @@ export const createVideo = async (req: Request, res: Response) => {
       status_code: 422,
       message: error.message || "An error occurred",
       data: {},
+    });
+  }
+};
+
+export const deleteVideo = async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  try {
+    const result = await getVideoAndDelete(id);
+    if (result) {
+      res.status(200).json({
+        status: true,
+        status_code: 200,
+        message: "Delete video successfully",
+      });
+    } else {
+      res.status(404).json({
+        status: false,
+        status_code: 404,
+        message: "Data not found",
+        data: {},
+      });
+    }
+  } catch (error: any) {
+    return res.status(422).send({
+      status: false,
+      status_code: 422,
+      message: error.message,
     });
   }
 };

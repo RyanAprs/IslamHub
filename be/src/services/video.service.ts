@@ -98,3 +98,11 @@ export const getVideoByUserId = async (
 export const insertVideo = async (payload: any) => {
   return await videoModel.create(payload);
 };
+
+export const getVideoAndDelete = async (id: string) => {
+  try {
+    return await videoModel.findOneAndDelete({ video_id: id });
+  } catch (error) {
+    throw error;
+  }
+};
