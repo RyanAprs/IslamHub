@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaPen, FaTrash, FaUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import BackButton from "../../components/atoms/backButton/backButton";
 import { formatDistanceToNow, parseISO } from "date-fns";
+import { storage } from "../../firebase";
+import { ref, deleteObject } from "firebase/storage";
 
 const DetailVideo = () => {
   const { id } = useParams();
@@ -17,6 +19,8 @@ const DetailVideo = () => {
   const [user, setUser] = useState(null);
   const [createdAt, setCreatedAt] = useState("");
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUserDataFromCookie = () => {
@@ -48,7 +52,6 @@ const DetailVideo = () => {
         const response = await axios.get(
           `http://localhost:3000/api/v1/video/${id}`
         );
-        console.log(response.data.data);
         setVideo(response.data.data.video);
         setUserVideoId(response.data.data.user_video_id);
         setUserImage(response.data.data.user_image);
@@ -63,6 +66,32 @@ const DetailVideo = () => {
 
     fetchVideoById();
   }, [id]);
+
+  const handleDelete = async () => {
+    setShowModal(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      const videoRef = ref(storage, video);
+      await deleteObject(videoRef);
+
+      const response = await axios.delete(
+        `http://localhost:3000/api/v1/video/${id}`
+      );
+      if (response.status === 200) {
+        navigate("/video");
+      }
+    } catch (error) {
+      console.log("Request error:", error.message);
+    } finally {
+      setShowModal(false);
+    }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <div className="min-h-screen pt-[100px] md:pt-[100px] bg-main-gradient flex flex-col md:p-2">
@@ -138,7 +167,10 @@ const DetailVideo = () => {
       </div>
       {(user && user.user_id !== userVideoId) || !user ? null : (
         <div className="flex justify-center items-center gap-4 p-4">
-          <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors duration-300 flex gap-2 items-center">
+          <button
+            onClick={handleDelete}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors duration-300 flex gap-2 items-center"
+          >
             <FaTrash />
             Delete
           </button>
@@ -149,6 +181,28 @@ const DetailVideo = () => {
         </div>
       )}
       <div className="p-4 rounded mt-4">{/* <CommentSection /> */}</div>
+
+      {showModal && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <p>Are you sure you want to delete this blog?</p>
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={confirmDelete}
+                className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600 transition-colors duration-300"
+              >
+                Yes
+              </button>
+              <button
+                onClick={closeModal}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300"
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
