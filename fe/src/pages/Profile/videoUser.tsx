@@ -83,11 +83,16 @@ const VideoUser = () => {
                   <h1 className="text-[25px] uppercase ">{video.title}</h1>
                 </div>
                 <div className="flex gap-2  ">
-                  <Link className="md:text-[20px] text-[15px]" to={`/profile/${video.user_video_id}`}>
+                  <Link
+                    className="md:text-[20px] text-[15px]"
+                    to={`/profile/${video.user_video_id}`}
+                  >
                     {video.name}{" "}
                   </Link>
                   <p>-</p>
-                  <p className="md:text-[20px] text-[15px]">{formatDistanceToNow(parseISO(video.createdAt))} ago</p>
+                  <p className="md:text-[20px] text-[15px]">
+                    {formatDistanceToNow(parseISO(video.createdAt))} ago
+                  </p>
                 </div>
               </div>
             </div>

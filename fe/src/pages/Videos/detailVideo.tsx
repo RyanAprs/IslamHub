@@ -113,7 +113,7 @@ const DetailVideo = () => {
               <p>Loading video...</p>
             )}
           </div>
-          <div className=" px-4 md:px-24 flex flex-col gap-5">
+          <div className="md:pl-40 flex flex-col gap-5">
             <div>
               <div>
                 <div className="md:text-3xl text-2xl font-bold">{title}</div>
@@ -121,7 +121,7 @@ const DetailVideo = () => {
                   {createdAt ? (
                     <p>{formatDistanceToNow(parseISO(createdAt))} ago</p>
                   ) : (
-                    <p>Loading date...</p>
+                    ""
                   )}
                 </div>
               </div>
@@ -185,7 +185,7 @@ const DetailVideo = () => {
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <p>Are you sure you want to delete this blog?</p>
+            <p>Are you sure you want to delete this video?</p>
             <div className="flex justify-center mt-4">
               <button
                 onClick={confirmDelete}

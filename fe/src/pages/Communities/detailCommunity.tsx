@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import CommunityList from "./communityList";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FaEllipsisV, FaUsers, FaWindowRestore } from "react-icons/fa";
+import { FaEllipsisV, FaTimes, FaUsers, FaWindowRestore } from "react-icons/fa";
 import ChatSection from "../../components/atoms/chatSection/chatSection";
 
 const DetailCommunity = () => {
@@ -134,7 +134,7 @@ const DetailCommunity = () => {
   };
 
   return (
-    <div className="flex md:pt-[115px] pt-[85px] min-h-screen">
+    <div className="flex pt-[80px] min-h-screen">
       <CommunityList />
       <div className="flex flex-col w-full">
         <nav className="bg-blue-500 h-15 w-full border-black border-[1px]">
@@ -172,22 +172,29 @@ const DetailCommunity = () => {
 
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-8 flex flex-col gap-4 rounded-lg shadow-lg">
-            <div className="flex items-center justify-center flex-col gap-2">
-              <div className="flex gap-4 justify-center mt-4">
-                <button
-                  onClick={handleUpdatModal}
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-300"
-                >
-                  Update
-                </button>
-                <button
-                  onClick={handleDeleteModal}
-                  className="bg-green-600 text-white px-4 py-2 rounded mr-2 hover:bg-green-700 transition-colors duration-300"
-                >
-                  Delete
-                </button>
+          <div className="bg-white flex p-4  shadow-lg">
+            <div className="p-10 flex  rounded-lg">
+              <div className="flex items-center justify-center flex-col gap-2">
+                <div className="flex gap-4 justify-center mt-4">
+                  <button
+                    onClick={handleUpdatModal}
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-300"
+                  >
+                    Update
+                  </button>
+                  <button
+                    onClick={handleDeleteModal}
+                    className="bg-green-600 text-white px-4 py-2 rounded mr-2 hover:bg-green-700 transition-colors duration-300"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
+            </div>
+            <div>
+              <button onClick={closeModal}>
+                <FaTimes size={25} />
+              </button>
             </div>
           </div>
         </div>
