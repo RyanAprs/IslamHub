@@ -40,14 +40,14 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-main-gradient flex flex-col md:flex-row items-center justify-between p-8 md:px-32 gap-5">
-      <div className="font-poppins gap-2 md:gap-14 flex flex-col items-center md:items-start text-center md:text-left">
+    <div className="min-h-screen bg-main-gradient flex flex-col md:flex-row items-center justify-center md:justify-between md:p-8 md:px-32 gap-5">
+      <div className="font-poppins gap-2 md:gap-14 flex flex-col items-center md:items-start text-center md:text-left p-2">
         <div className="font-bold text-[24px]">IslamHub</div>
-        <div className="bg-transparent border-blue-600 border-2 h-screen w-full md:h-auto md:w-[556px] flex flex-col justify-center p-10 rounded-xl shadow-lg gap-10">
+        <div className=" border-blue-600 border-2  w-full md:h-auto md:w-[556px] flex flex-col justify-center p-10 rounded-xl md:shadow-lg gap-10">
           {error && <p className="text-red-500">{error}</p>}
-          <div className=" flex flex-col gap-2">
-            <div>
-              <label htmlFor="" className="font-bold">
+          <div className=" flex flex-col gap-2 ">
+            <div >
+              <label htmlFor="" className="font-bold ">
                 Masukkan Nama
               </label>
               <input
