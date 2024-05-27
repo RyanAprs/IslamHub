@@ -2,7 +2,7 @@ import Routing from "./config/routes";
 
 function App() {
   return (
-    <div className="bg-gray-200 min-h-screen">
+    <div className="bg-main-gradient min-h-screen">
       <Routing />
     </div>
   );
