@@ -26,9 +26,9 @@ export const AdminAuthContextProvider = ({ children }) => {
 
     if (adminToken && userItem) {
       try {
-        const userData = JSON.parse(userItem);
-        if (userData.role === "admin") {
+        if (userItem === "admin") {
           dispatch({ type: "ADMIN_LOGIN", payload: adminToken });
+          
         } else {
           dispatch({ type: "ADMIN_LOGOUT" });
         }
@@ -47,4 +47,3 @@ export const AdminAuthContextProvider = ({ children }) => {
     </AdminAuthContext.Provider>
   );
 };
-

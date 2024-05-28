@@ -1,18 +1,11 @@
 import { Request, Response } from "express";
-import {
-  getCounCommunity,
-  getCountUser,
-  getCountVideo,
-} from "../services/dashboardAdmin.service";
+import { getCountData } from "../services/dashboardAdmin.service";
 
-export const countUser = async (req: Request, res: Response) => {
-  return await getCountUser(req, res);
-};
-
-export const countCommunity = async (req: Request, res: Response) => {
-  return await getCounCommunity(req, res);
-};
-
-export const countVideo = async (req: Request, res: Response) => {
-  return await getCountVideo(req, res);
+export const getTotalData = async (req: Request, res: Response) => {
+  try {
+    return await getCountData(req, res);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
 };
