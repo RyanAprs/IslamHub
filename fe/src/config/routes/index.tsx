@@ -4,6 +4,8 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { useAuthContext } from "../context/useAuthContext";
+import { useAdminAuthContext } from "../context/useAdminAuthContext";
 import Login from "../../pages/Login/login";
 import Register from "../../pages/Register/register";
 import Header from "../../components/molecules/Header/header";
@@ -18,12 +20,14 @@ import CreateBlog from "../../pages/Blogs/createBlog";
 import UpdateBlog from "../../pages/Blogs/updateBlog";
 import ResetPassword from "../../pages/ResetPassword/resetPassword";
 import Footer from "../../components/molecules/Footer/footer";
-import { useAuthContext } from "../context/useAuthContext";
 import DetailCommunity from "../../pages/Communities/detailCommunity";
 import Chat from "../../pages/Communities/community";
 import Video from "../../pages/Videos/video";
 import DetailVideo from "../../pages/Videos/detailVideo";
 import CreateVideo from "../../pages/Videos/createVideo";
+import AdminDashboard from "../../pages/Admin/adminDashboard";
+import AdminLogin from "../../pages/Admin/adminLogin";
+import NotFound from "../../pages/notFound/notFound";
 
 const RouteData = [
   {
@@ -68,8 +72,16 @@ const RouteData = [
   },
 ];
 
+const AdminRouteData = [
+  {
+    path: "/admin/dashboard",
+    element: <AdminDashboard />,
+  },
+];
+
 const Routing = () => {
   const { token } = useAuthContext();
+  const { adminToken, role } = useAdminAuthContext();
 
   return (
     <Router>
@@ -77,6 +89,8 @@ const Routing = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+
+        {/* User Authenticated Routes */}
         <Route
           path="/blog/update/:id"
           element={
@@ -134,21 +148,39 @@ const Routing = () => {
           }
         />
 
-        {RouteData.map((route, index) => {
-          return (
-            <Route
-              key={index}
-              path={route.path}
-              element={
-                <>
-                  <Header />
-                  {route.element}
-                  <Footer />
-                </>
-              }
-            />
-          );
-        })}
+        {/* Admin login */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/not-found" element={<NotFound />} />
+
+        {/* Admin Authenticated Routes */}
+        {AdminRouteData.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            element={
+              adminToken && role === "admin" ? (
+                <>{route.element}</>
+              ) : (
+                <Navigate to="/not-found" />
+              )
+            }
+          />
+        ))}
+
+        {/* Public Routes */}
+        {RouteData.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            element={
+              <>
+                <Header />
+                {route.element}
+                <Footer />
+              </>
+            }
+          />
+        ))}
       </Routes>
     </Router>
   );

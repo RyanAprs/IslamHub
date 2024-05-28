@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useAuthContext } from "../context/useAuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAdminAuthContext } from "../context/useAdminAuthContext";
 
-export const useLogin = () => {
+export const useAdminLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
-  const { dispatch } = useAuthContext();
+  const { dispatch } = useAdminAuthContext();
   const navigate = useNavigate();
 
   const login = async (email, password) => {
@@ -22,7 +22,7 @@ export const useLogin = () => {
         }
       );
       if (response.data.status_code === 200) {
-        navigate("/");
+        navigate("/admin/dashboard");
         const user = response.data.data;
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);
@@ -32,10 +32,10 @@ export const useLogin = () => {
 
         const role = response.data.data.role;
 
-        const token = response.data.token;
-        localStorage.setItem("token", token);
+        const adminToken = response.data.token;
+        localStorage.setItem("adminToken", adminToken);
         localStorage.setItem("role", role);
-        dispatch({ type: "LOGIN", payload: token });
+        dispatch({ type: "ADMIN_LOGIN", payload: adminToken });
       } else {
         console.log("login gagal");
       }

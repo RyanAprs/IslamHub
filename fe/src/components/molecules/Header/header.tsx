@@ -78,6 +78,7 @@ const Header: React.FC = () => {
 
     setUser(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     navigate("/login");
   };
 
