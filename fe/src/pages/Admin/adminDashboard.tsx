@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaHandshake, FaUsers, FaVideo } from "react-icons/fa";
+import SideBar from "./sideBar";
 
 const AdminDashboard = () => {
   const [totalDataUser, setTotalDataUser] = useState({
@@ -44,9 +45,10 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="">
-      <div className="grid sm:grid-cols-2 md:grid-cols-4 grid-cols-1 gap-6 text-black justify-center p-8">
-        <div className="shadow-lg h-52 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
+    <div className="flex min-h-screen">
+      <SideBar />
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-6 text-black justify-center p-8">
+        <div className="shadow-lg h-48 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
           <div className="flex flex-col gap-4 items-center text-xl font-bold">
             <h2>{totalDataUser.title}</h2>
             <p>{totalDataUser.total_data}</p>
@@ -55,7 +57,7 @@ const AdminDashboard = () => {
             <FaUsers size={90} />
           </div>
         </div>
-        <div className="shadow-lg h-52 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
+        <div className="shadow-lg  h-48 cursor-pointer bg-blue-300 p-4 flex gap-6  items-center justify-around rounded-xl border-blue-400 border-[2px]">
           <div className="flex flex-col gap-4 items-center text-xl font-bold">
             <h2>{totalDataCommunity.title}</h2>
             <p>{totalDataCommunity.total_data}</p>
@@ -64,7 +66,7 @@ const AdminDashboard = () => {
             <FaHandshake size={90} />
           </div>
         </div>
-        <div className="shadow-lg h-52 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
+        <div className="shadow-lg h-48 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
           <div className="flex flex-col gap-4 items-center text-xl font-bold">
             <h2>{totalDataVideo.title}</h2>
             <p>{totalDataVideo.total_data}</p>
