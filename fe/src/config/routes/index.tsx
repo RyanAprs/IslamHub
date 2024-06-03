@@ -28,6 +28,7 @@ import CreateVideo from "../../pages/Videos/createVideo";
 import AdminDashboard from "../../pages/Admin/adminDashboard";
 import AdminLogin from "../../pages/Admin/adminLogin";
 import NotFound from "../../pages/notFound/notFound";
+import TotalUser from "../../pages/Admin/stats/totalUser";
 
 const RouteData = [
   {
@@ -76,6 +77,10 @@ const AdminRouteData = [
   {
     path: "/admin/dashboard",
     element: <AdminDashboard />,
+  },
+  {
+    path: "/admin/dashboard/users",
+    element: <TotalUser />,
   },
 ];
 
