@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { FaBars, FaTimes, FaUser } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
+import { FaBars, FaSignOutAlt, FaTimes, FaUser } from "react-icons/fa";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const SideBarAdmin = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<any | null>(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -34,6 +35,19 @@ const SideBarAdmin = () => {
     const userData = getUserDataFromCookie();
     setUser(userData);
   }, []);
+
+  const handleLogout = () => {
+    const now = new Date();
+    const expiresDate = new Date(now.getTime() + 24 * 60 * 60 * 100);
+
+    const expiresUTC = expiresDate.toUTCString();
+    document.cookie = `userData=; expires=${expiresUTC}; path=/;`;
+
+    setUser(null);
+    localStorage.removeItem("adminToken");
+    localStorage.removeItem("role");
+    navigate("/admin/login");
+  };
 
   return (
     <div className="relative min-h-screen">
@@ -75,47 +89,56 @@ const SideBarAdmin = () => {
                 )}
                 <div>{user && user.name}</div>
               </div>
-              <div className="overflow-y-auto h-screen border-black">
-                <Link
-                  to="/admin/dashboard"
-                  className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
-                    location.pathname === "/admin/dashboard"
-                      ? "bg-blue-400"
-                      : ""
-                  }`}
+              <div className="overflow-y-auto h-screen border-black ">
+                <div>
+                  <Link
+                    to="/admin/dashboard"
+                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
+                      location.pathname === "/admin/dashboard"
+                        ? "bg-blue-400"
+                        : ""
+                    }`}
+                  >
+                    <h1>Dashboard</h1>
+                  </Link>
+                  <Link
+                    to="/admin/dashboard/users"
+                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
+                      location.pathname === "/admin/dashboard/users"
+                        ? "bg-blue-400"
+                        : ""
+                    }`}
+                  >
+                    <h1>Users</h1>
+                  </Link>
+                  <Link
+                    to=""
+                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
+                      location.pathname === "/admin/dashboard/communities"
+                        ? "bg-blue-400"
+                        : ""
+                    }`}
+                  >
+                    <h1>Communities</h1>
+                  </Link>
+                  <Link
+                    to=""
+                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
+                      location.pathname === "/admin/dashboard/videos"
+                        ? "bg-blue-400"
+                        : ""
+                    }`}
+                  >
+                    <h1>Videos</h1>
+                  </Link>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center justify-between px-4 py-2 mt-8 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
                 >
-                  <h1>Dashboard</h1>
-                </Link>
-                <Link
-                  to="/admin/dashboard/users"
-                  className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
-                    location.pathname === "/admin/dashboard/users"
-                      ? "bg-blue-400"
-                      : ""
-                  }`}
-                >
-                  <h1>Users</h1>
-                </Link>
-                <Link
-                  to=""
-                  className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
-                    location.pathname === "/admin/dashboard/communities"
-                      ? "bg-blue-400"
-                      : ""
-                  }`}
-                >
-                  <h1>Communities</h1>
-                </Link>
-                <Link
-                  to=""
-                  className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
-                    location.pathname === "/admin/dashboard/videos"
-                      ? "bg-blue-400"
-                      : ""
-                  }`}
-                >
-                  <h1>Videos</h1>
-                </Link>
+                  <span>Logout</span>
+                  <FaSignOutAlt />
+                </button>
               </div>
             </div>
           </>

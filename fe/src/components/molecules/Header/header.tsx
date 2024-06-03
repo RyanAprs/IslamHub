@@ -97,7 +97,7 @@ const Header: React.FC = () => {
         <div className="text-lg text-black hidden gap-16 font-bold md:flex">
           <Link
             to="/"
-            className={`hover:text-blue-500 transition-all ${
+            className={`hover:text-gray-500 transition-all ${
               location.pathname === "/" ? "text-white" : ""
             }`}
           >
@@ -105,7 +105,7 @@ const Header: React.FC = () => {
           </Link>
           <Link
             to="/video"
-            className={`hover:text-blue-500 transition-all ${
+            className={`hover:text-gray-500 transition-all ${
               location.pathname === "/video" ? "text-white" : ""
             }`}
           >
@@ -113,7 +113,7 @@ const Header: React.FC = () => {
           </Link>
           <Link
             to="/community"
-            className={`hover:text-blue-500 transition-all ${
+            className={`hover:text-gray-500 transition-all ${
               location.pathname === "/community" ? "text-white" : ""
             }`}
           >
@@ -121,7 +121,7 @@ const Header: React.FC = () => {
           </Link>
           <Link
             to="/contact"
-            className={`hover:text-blue-500 transition-all ${
+            className={`hover:text-gray-500 transition-all ${
               location.pathname === "/contact" ? "text-white" : ""
             }`}
           >
@@ -139,7 +139,7 @@ const Header: React.FC = () => {
                 <img
                   src={`http://localhost:3000/${user.image}`}
                   alt="user image"
-                  className="h-[50px] w-[50px] object-cover rounded-full bg-blue-200"
+                  className="h-[50px] w-[50px] object-cover rounded-full bg-gray-200"
                 />
               </button>
             )}
@@ -147,7 +147,7 @@ const Header: React.FC = () => {
               (user.image === null && (
                 <button
                   onClick={toggleDropdown}
-                  className="cursor-pointer p-3 bg-blue-200 rounded-full"
+                  className="cursor-pointer p-3 bg-gray-200 rounded-full"
                 >
                   <FaUser className="text-black" />
                 </button>
@@ -155,7 +155,7 @@ const Header: React.FC = () => {
             {!user && (
               <button
                 onClick={toggleDropdown}
-                className="cursor-pointer p-3 bg-blue-200 rounded-full"
+                className="cursor-pointer p-3 bg-gray-200 rounded-full"
               >
                 <FaUser className="text-black" />
               </button>
