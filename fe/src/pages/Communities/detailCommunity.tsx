@@ -5,6 +5,9 @@ import axios from "axios";
 import { FaEllipsisV, FaTimes, FaUsers } from "react-icons/fa";
 import ChatSection from "../../components/atoms/chatSection/chatSection";
 import Cookies from "js-cookie";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../../firebase";
+import { v4 } from "uuid";
 
 const DetailCommunity = () => {
   const [image, setImage] = useState();
@@ -15,9 +18,12 @@ const DetailCommunity = () => {
   const [showModal, setShowModal] = useState(false);
   const [showDeteleModal, setShowDeleteModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const [name, setName] = useState();
+  const [progress, setProgress] = useState(0);
+  const [imageUrl, setImageUrl] = useState("");
+  const [dataImage, setDataImage] = useState();
 
   const { id } = useParams();
 
@@ -38,9 +44,10 @@ const DetailCommunity = () => {
           `http://localhost:3000/api/v1/community/${id}`
         );
         setCommunityTitle(response.data.data.title);
+        console.log(response.data.data);
         setAdmin(response.data.data.name);
         setAdminId(response.data.data.user_id);
-        setImage(response.data.data.image);
+        setDataImage(response.data.data.image);
       } catch (error) {
         console.log(error);
       }
@@ -84,24 +91,74 @@ const DetailCommunity = () => {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    if (!file) {
+      setError("No file selected");
+      return;
+    }
+    setImage(file);
+    setImagePreview(URL.createObjectURL(file));
+
+    const validExtensions = ["image/jpg", "image/jpeg", "image/png"];
+
+    if (!validExtensions.includes(file.type)) {
+      setError(
+        "Invalid file type. Please select a valid image file (JPG, JPEG, PNG)."
+      );
+      return;
+    }
+
+    setError("");
+
+    const imageRef = ref(storage, `images/${file.name + v4()}`);
+    const uploadTask = uploadBytesResumable(imageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progress);
+      },
+      (error) => {
+        console.error("Upload image gagal:", error);
+      },
+      async () => {
+        try {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          setImageUrl(downloadURL);
+        } catch (error) {
+          console.error("Error getting download URL:", error);
+        }
+      }
+    );
+  };
+
   const handleUpdate = async () => {
     try {
-      const formData = new FormData();
-      formData.append("title", communityTitle);
-      formData.append("name", name);
-      formData.append("user_id", user_id);
-      formData.append("image", image);
+      const data = {
+        title: communityTitle,
+        name: name,
+        user_id: user_id,
+        image: imageUrl,
+      };
 
       const response = await axios.put(
         `http://localhost:3000/api/v1/community/${id}`,
-        formData
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       if (response.data.status_code === 200) {
         window.location.reload();
       } else {
         console.log("Update community gagal");
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error.response) {
         setError(error.response.data.message);
       } else if (error.request) {
@@ -111,11 +168,6 @@ const DetailCommunity = () => {
       }
     }
   };
-  const onImageUpload = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
-    setImagePreview(URL.createObjectURL(file));
-  };
 
   return (
     <div className="flex pt-[80px] min-h-screen">
@@ -124,10 +176,10 @@ const DetailCommunity = () => {
         <nav className="bg-blue-500 h-15 w-full border-black border-[1px]">
           <div className="flex px-3 items-center justify-between">
             <div className="flex items-center pl-2">
-              {image !== null ? (
+              {dataImage !== null ? (
                 <button>
                   <img
-                    src={`http://localhost:3000/communityImage/${image}`}
+                    src={dataImage}
                     alt="user image"
                     className="h-[40px] w-[40px] object-cover rounded-full bg-gray-200"
                   />
@@ -230,16 +282,26 @@ const DetailCommunity = () => {
               )}
               {!imagePreview && (
                 <img
-                  src={`http://localhost:3000/communityImage/${image}`}
+                  src={dataImage}
                   alt="Image Preview"
                   className="mb-4 max-w-[150px]"
                 />
+              )}
+              {progress > 0 && progress < 100 && (
+                <div className="w-full bg-gray-200 rounded-full">
+                  <div
+                    className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                    style={{ width: `${progress}%` }}
+                  >
+                    {progress.toFixed(2)}%
+                  </div>
+                </div>
               )}
               <input
                 type="file"
                 placeholder="Image"
                 className="border-2 border-gray-300 rounded p-3 w-full"
-                onChange={onImageUpload}
+                onChange={handleImageChange}
               />
               <div className="flex gap-4 justify-center mt-4">
                 <button

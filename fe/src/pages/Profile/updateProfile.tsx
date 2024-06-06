@@ -80,7 +80,6 @@ const UpdateProfile = () => {
     }
 
     setError("");
-    setImage(file);
 
     const imageRef = ref(storage, `images/${file.name + v4()}`);
     const uploadTask = uploadBytesResumable(imageRef, file);
@@ -107,7 +106,6 @@ const UpdateProfile = () => {
 
   const handleUpdate = async () => {
     try {
-      // Susun objek data yang akan dikirim
       const data = {
         user_id: userId,
         name: name || "",
@@ -115,8 +113,6 @@ const UpdateProfile = () => {
         bio: bio || "",
         image: imageUrl,
       };
-
-      // Kirim data ke server dalam format JSON
       const response = await axios.put(
         `http://localhost:3000/api/v1/user/${id}`,
         data,
@@ -195,7 +191,16 @@ const UpdateProfile = () => {
             </div>
           )}
           {error && <p className="text-red-500">{error}</p>}
-
+          {progress > 0 && progress < 100 && (
+            <div className="w-full bg-gray-200 rounded-full">
+              <div
+                className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                style={{ width: `${progress}%` }}
+              >
+                {progress.toFixed(2)}%
+              </div>
+            </div>
+          )}
           <input
             type="file"
             placeholder="Image"
@@ -234,17 +239,6 @@ const UpdateProfile = () => {
               Update
             </button>
           </div>
-
-          {progress > 0 && progress < 100 && (
-            <div className="w-full bg-gray-200 rounded-full">
-              <div
-                className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                style={{ width: `${progress}%` }}
-              >
-                {progress.toFixed(2)}%
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>

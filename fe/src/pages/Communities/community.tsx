@@ -113,7 +113,7 @@ const Chat = () => {
           {community && community.image !== null ? (
             <img
               className="h-[200px] w-full object-cover rounded border-gray-400 shadow-md border-[2px]"
-              src={`http://localhost:3000/communityImage/${community.image}`}
+              src={community.image}
               alt="community image"
             />
           ) : (
