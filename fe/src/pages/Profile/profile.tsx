@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { BsGear } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
+import Cookies from "js-cookie";
 import VideoUser from "./videoUser";
 
 const Profile = () => {
@@ -11,31 +12,15 @@ const Profile = () => {
   const [image, setImage] = useState();
   const [bio, setBio] = useState();
   const [user, setUser] = useState();
-  const [userData, setUserData] = useState();
   const { id } = useParams();
 
   useEffect(() => {
-    const getUserDataFromCookie = () => {
-      const cookieData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userData="));
+    const userCookie = Cookies.get("userData");
 
-      if (cookieData) {
-        const userDataString = cookieData.split("=")[1];
-        try {
-          const userData = JSON.parse(decodeURIComponent(userDataString));
-          return userData;
-        } catch (error) {
-          console.error("Error parsing JSON from cookie:", error);
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const userData = getUserDataFromCookie();
-    setUser(userData);
+    if (userCookie) {
+      const userDataObj = JSON.parse(userCookie);
+      setUser(userDataObj);
+    }
   }, []);
 
   useEffect(() => {
@@ -51,17 +36,10 @@ const Profile = () => {
       setName(response.data.data.name);
       setImage(response.data.data.image);
       setBio(response.data.data.bio);
-      setUserData(response.data.data);
     } catch (error) {
       console.log(error);
     }
   };
-
-  // const setItemUser = () => {
-  //   if (userData) {
-  //     localStorage.setItem("user", JSON.stringify(userData));
-  //   }
-  // };
 
   return (
     <div className="flex flex-col gap-3 md:gap-16 bg-main-gradient pt-[120px] md:pt-[160px] pb-8 px-8 md:px-32 text-color-primary min-h-screen text-2xl font-poppins">
@@ -70,7 +48,7 @@ const Profile = () => {
           <div className="flex justify-center">
             {image !== null ? (
               <img
-                src={`http://localhost:3000/${image}`}
+                src={image}
                 alt="profile picture"
                 className="w-[200px] h-[200px] md:w-[300px] md:h-[300px] bg-white shadow-lg object-cover mt-3 border-black rounded-full"
               />

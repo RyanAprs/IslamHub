@@ -3,6 +3,10 @@ import { useEffect, useState } from "react";
 import { FaSave, FaUser } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import BackButton from "../../components/atoms/backButton/backButton";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../../firebase";
+import { v4 } from "uuid";
+import Cookies from "js-cookie";
 
 const UpdateProfile = () => {
   const [error, setError] = useState("");
@@ -13,31 +17,18 @@ const UpdateProfile = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [user, setUser] = useState(null);
   const [userId, setUserId] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [imageUrl, setImageUrl] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getUserDataFromCookie = () => {
-      const cookieData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userData="));
+    const userCookie = Cookies.get("userData");
 
-      if (cookieData) {
-        const userDataString = cookieData.split("=")[1];
-        try {
-          const userData = JSON.parse(decodeURIComponent(userDataString));
-          return userData;
-        } catch (error) {
-          console.error("Error parsing JSON from cookie:", error);
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const userData = getUserDataFromCookie();
-    setUser(userData);
+    if (userCookie) {
+      const userDataObj = JSON.parse(userCookie);
+      setUser(userDataObj);
+    }
   }, []);
 
   useEffect(() => {
@@ -55,7 +46,7 @@ const UpdateProfile = () => {
           setEmail(userData.email);
           setBio(userData.bio);
           if (userData.image !== null) {
-            setImagePreview(`http://localhost:3000/${userData.image}`);
+            setImagePreview(userData.image);
           }
         } else {
           console.error("Failed to fetch user data");
@@ -69,21 +60,69 @@ const UpdateProfile = () => {
     getUserById();
   }, [id]);
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    if (!file) {
+      setError("No file selected");
+      return;
+    }
+    setImage(file);
+    setImagePreview(URL.createObjectURL(file));
+
+    const validExtensions = ["image/jpg", "image/jpeg", "image/png"];
+
+    if (!validExtensions.includes(file.type)) {
+      setError(
+        "Invalid file type. Please select a valid image file (JPG, JPEG, PNG)."
+      );
+      return;
+    }
+
+    setError("");
+    setImage(file);
+
+    const imageRef = ref(storage, `images/${file.name + v4()}`);
+    const uploadTask = uploadBytesResumable(imageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progress);
+      },
+      (error) => {
+        console.error("Upload image gagal:", error);
+      },
+      async () => {
+        try {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          setImageUrl(downloadURL);
+        } catch (error) {
+          console.error("Error getting download URL:", error);
+        }
+      }
+    );
+  };
+
   const handleUpdate = async () => {
     try {
-      const formData = new FormData();
-      formData.append("user_id", userId);
-      formData.append("name", name || "");
-      formData.append("email", email || "");
-      formData.append("bio", bio || "");
-      formData.append("image", image);
+      // Susun objek data yang akan dikirim
+      const data = {
+        user_id: userId,
+        name: name || "",
+        email: email || "",
+        bio: bio || "",
+        image: imageUrl,
+      };
 
+      // Kirim data ke server dalam format JSON
       const response = await axios.put(
         `http://localhost:3000/api/v1/user/${id}`,
-        formData,
+        data,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
           },
         }
       );
@@ -92,13 +131,13 @@ const UpdateProfile = () => {
         const user = response.data.data;
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);
-        // Check if userData exists in cookies
+
+        // Cek apakah userData sudah ada di cookies
         const existingUserData = getCookie("userData");
         let updatedUserData;
 
         if (existingUserData) {
           const parsedUserData = JSON.parse(existingUserData);
-
           updatedUserData = { ...parsedUserData, ...user };
         } else {
           updatedUserData = user;
@@ -113,7 +152,7 @@ const UpdateProfile = () => {
       } else {
         setError("Failed to update user data");
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error.response) {
         setError(error.response.data.message);
       } else if (error.request) {
@@ -140,12 +179,6 @@ const UpdateProfile = () => {
     return null;
   }
 
-  const onImageUpload = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
-    setImagePreview(URL.createObjectURL(file));
-  };
-
   return (
     <div className="flex items-center bg-main-gradient justify-center pt-[75px] ">
       <div className="min-h-screen w-full flex flex-col justify-center p-8 rounded shadow-lg gap-10">
@@ -167,7 +200,7 @@ const UpdateProfile = () => {
             type="file"
             placeholder="Image"
             className="border-2 border-blue-300 rounded-xl p-4 mb-4 w-full"
-            onChange={onImageUpload}
+            onChange={handleImageChange}
           />
           <input
             type="text"
@@ -201,6 +234,17 @@ const UpdateProfile = () => {
               Update
             </button>
           </div>
+
+          {progress > 0 && progress < 100 && (
+            <div className="w-full bg-gray-200 rounded-full">
+              <div
+                className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                style={{ width: `${progress}%` }}
+              >
+                {progress.toFixed(2)}%
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -60,12 +60,10 @@ export const getUsers = async (req: Request, res: Response) => {
 };
 
 export const updateUser = async (req: Request, res: Response) => {
-  try {
-    await profileUploadAsync(req, res);
-
+  
       const id = req.params.id;
-      const { name, email, bio, user_id } = req.body;
-      const image = req.file ? req.file.originalname : null;
+      const { name, email, bio, user_id, image } = req.body;
+      // const image = req.file ? req.file.originalname : null;
 
       let imagePrevious;
 
@@ -109,28 +107,32 @@ export const updateUser = async (req: Request, res: Response) => {
       bio,
     };
 
-    const user = await getUserAndUpdate(id, userData);
-    if (user) {
-      return res.status(200).send({
-        status: true,
-        status_code: 200,
-        message: "User updated successfully",
-        data: userData,
-      });
-    } else {
-      return res.status(404).json({
+    try {
+      const user = await getUserAndUpdate(id, userData);
+      if (user) {
+        return res.status(200).send({
+          status: true,
+          status_code: 200,
+          message: "User updated successfully",
+          data: userData,
+        });
+      } else {
+        return res.status(404).json({
+          status: false,
+          status_code: 404,
+          message: "Data not found",
+          data: {},
+        });
+      }
+    } catch (error: any) {
+      return res.status(422).send({
         status: false,
-        status_code: 404,
-        message: "Data not found",
+        status_code: 422,
+        message: error.message || "An error occurred",
         data: {},
       });
     }
-  } catch (error: any) {
-    return res.status(422).send({
-      status: false,
-      status_code: 422,
-      message: error.message || "An error occurred",
-      data: {},
-    });
-  }
+
+    
+  
 };

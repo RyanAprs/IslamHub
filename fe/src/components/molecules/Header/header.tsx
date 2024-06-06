@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const Header: React.FC = () => {
   const [user, setUser] = useState<any | null>(null);
+  const [userImage, setUserImage] = useState("");
+  const [userId, setUserId] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -45,28 +50,29 @@ const Header: React.FC = () => {
   };
 
   useEffect(() => {
-    const getUserDataFromCookie = () => {
-      const cookieData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userData="));
+    const userCookie = Cookies.get("userData");
 
-      if (cookieData) {
-        const userDataString = cookieData.split("=")[1];
-        try {
-          const userData = JSON.parse(decodeURIComponent(userDataString));
-          return userData;
-        } catch (error) {
-          console.error("Error parsing JSON from cookie:", error);
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const userData = getUserDataFromCookie();
-    setUser(userData);
+    if (userCookie) {
+      const userDataObj = JSON.parse(userCookie);
+      setUser(userDataObj);
+      setUserId(userDataObj.user_id);
+    }
   }, []);
+
+  useEffect(() => {
+    getUserDetail();
+  }, [userId]);
+
+  const getUserDetail = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/user/${userId}`
+      );
+      setUserImage(response.data.data.image);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleLogout = () => {
     const now = new Date();
@@ -134,25 +140,15 @@ const Header: React.FC = () => {
             {user && user.name && (
               <p className="font-bold text-[20px]">{user.name}</p>
             )}
-            {user && user.image !== null && (
+            {user && userImage !== null ? (
               <button onClick={toggleDropdown}>
                 <img
-                  src={`http://localhost:3000/${user.image}`}
+                  src={userImage}
                   alt="user image"
                   className="h-[50px] w-[50px] object-cover rounded-full bg-gray-200"
                 />
               </button>
-            )}
-            {!user ||
-              (user.image === null && (
-                <button
-                  onClick={toggleDropdown}
-                  className="cursor-pointer p-3 bg-gray-200 rounded-full"
-                >
-                  <FaUser className="text-black" />
-                </button>
-              ))}
-            {!user && (
+            ) : (
               <button
                 onClick={toggleDropdown}
                 className="cursor-pointer p-3 bg-gray-200 rounded-full"
