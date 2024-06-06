@@ -7,6 +7,7 @@ import axios from "axios";
 const Header: React.FC = () => {
   const [user, setUser] = useState<any | null>(null);
   const [userImage, setUserImage] = useState("");
+  const [name, setName] = useState("");
   const [userId, setUserId] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
@@ -69,6 +70,7 @@ const Header: React.FC = () => {
         `http://localhost:3000/api/v1/user/${userId}`
       );
       setUserImage(response.data.data.image);
+      setName(response.data.data.name);
     } catch (error) {
       console.log(error);
     }
@@ -137,8 +139,8 @@ const Header: React.FC = () => {
 
         <div className="relative" ref={dropdownRef}>
           <div className="flex items-center gap-4">
-            {user && user.name && (
-              <p className="font-bold text-[20px]">{user.name}</p>
+            {user && name && (
+              <p className="font-bold text-[20px]">{name}</p>
             )}
             {user && userImage !== null ? (
               <button onClick={toggleDropdown}>

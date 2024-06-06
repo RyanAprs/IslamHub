@@ -2,8 +2,9 @@ import { useParams } from "react-router-dom";
 import CommunityList from "./communityList";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FaEllipsisV, FaTimes, FaUsers, FaWindowRestore } from "react-icons/fa";
+import { FaEllipsisV, FaTimes, FaUsers } from "react-icons/fa";
 import ChatSection from "../../components/atoms/chatSection/chatSection";
+import Cookies from "js-cookie";
 
 const DetailCommunity = () => {
   const [image, setImage] = useState();
@@ -21,29 +22,12 @@ const DetailCommunity = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    const getUserDataFromCookie = () => {
-      const cookieData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userData="));
+    const userCookie = Cookies.get("userData");
 
-      if (cookieData) {
-        const userDataString = cookieData.split("=")[1];
-        try {
-          const userData = JSON.parse(decodeURIComponent(userDataString));
-          return userData;
-        } catch (error) {
-          console.error("Error parsing JSON from cookie:", error);
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const userData = getUserDataFromCookie();
-    if (userData) {
-      setUser_id(userData.user_id);
-      setName(userData.name);
+    if (userCookie) {
+      const userDataObj = JSON.parse(userCookie);
+      setUser_id(userDataObj.user_id);
+      setName(userDataObj.name);
     }
   }, []);
 

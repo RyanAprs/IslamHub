@@ -4,6 +4,7 @@ import axios from "axios";
 import { FaPlus, FaUsers } from "react-icons/fa";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import Pagination from "../../components/molecules/Pagination/pagination";
+import Cookies from "js-cookie";
 
 const Chat = () => {
   const [communities, setCommunities] = useState([]);
@@ -16,29 +17,12 @@ const Chat = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const getUserDataFromCookie = () => {
-      const cookieData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userData="));
+    const userCookie = Cookies.get("userData");
 
-      if (cookieData) {
-        const userDataString = cookieData.split("=")[1];
-        try {
-          const userData = JSON.parse(decodeURIComponent(userDataString));
-          return userData;
-        } catch (error) {
-          console.error("Error parsing JSON from cookie:", error);
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const userData = getUserDataFromCookie();
-    if (userData) {
-      setUser_id(userData.user_id);
-      setName(userData.name);
+    if (userCookie) {
+      const userDataObj = JSON.parse(userCookie);
+      setUser_id(userDataObj.user_id);
+      setName(userDataObj.name);
     }
   }, []);
 

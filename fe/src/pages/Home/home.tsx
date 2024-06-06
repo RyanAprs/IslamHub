@@ -1,32 +1,18 @@
 import { Link } from "react-router-dom";
 import quranImg from "../../assets/quran.png";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 const Home = () => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    const getUserDataFromCookie = () => {
-      const cookieData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userData="));
+    const userCookie = Cookies.get("userData");
 
-      if (cookieData) {
-        const userDataString = cookieData.split("=")[1];
-        try {
-          const userData = JSON.parse(decodeURIComponent(userDataString));
-          return userData;
-        } catch (error) {
-          console.error("Error parsing JSON from cookie:", error);
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const userData = getUserDataFromCookie();
-    setUser(userData);
+    if (userCookie) {
+      const userDataObj = JSON.parse(userCookie);
+      setUser(userDataObj);
+    }
   }, []);
 
   return (

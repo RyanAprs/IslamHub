@@ -7,14 +7,13 @@ import BackButton from "../../components/atoms/backButton/backButton";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { storage } from "../../firebase";
 import { ref, deleteObject } from "firebase/storage";
+import Cookies from "js-cookie";
 
 const DetailVideo = () => {
   const { id } = useParams();
   const [video, setVideo] = useState(null);
   const [userVideoId, setUserVideoId] = useState(null);
-  const [userImage, setUserImage] = useState(null);
   const [title, setTitle] = useState("");
-  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [user, setUser] = useState(null);
   const [createdAt, setCreatedAt] = useState("");
@@ -22,28 +21,18 @@ const DetailVideo = () => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
+  const [userId, setUserId] = useState();
+  const [image, setImage] = useState();
+  const [name, setName] = useState();
+
   useEffect(() => {
-    const getUserDataFromCookie = () => {
-      const cookieData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userData="));
+    const userCookie = Cookies.get("userData");
 
-      if (cookieData) {
-        const userDataString = cookieData.split("=")[1];
-        try {
-          const userData = JSON.parse(decodeURIComponent(userDataString));
-          return userData;
-        } catch (error) {
-          console.error("Error parsing JSON from cookie:", error);
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const userData = getUserDataFromCookie();
-    setUser(userData);
+    if (userCookie) {
+      const userDataObj = JSON.parse(userCookie);
+      setUserId(userDataObj.user_id);
+      setUser(userDataObj);
+    }
   }, []);
 
   useEffect(() => {
@@ -53,10 +42,8 @@ const DetailVideo = () => {
           `http://localhost:3000/api/v1/video/${id}`
         );
         setVideo(response.data.data.video);
-        setUserVideoId(response.data.data.user_video_id);
-        setUserImage(response.data.data.user_image);
+        setUserVideoId(response.data.data.user_video_id); 
         setTitle(response.data.data.title);
-        setName(response.data.data.name);
         setDescription(response.data.data.description);
         setCreatedAt(response.data.data.createdAt);
       } catch (error) {
@@ -66,6 +53,22 @@ const DetailVideo = () => {
 
     fetchVideoById();
   }, [id]);
+
+    useEffect(() => {
+      getUserDetail();
+    }, [userId]);
+
+    const getUserDetail = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/user/${userId}`
+        );
+        setImage(response.data.data.image);
+        setName(response.data.data.name);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
   const handleDelete = async () => {
     setShowModal(true);
@@ -149,9 +152,9 @@ const DetailVideo = () => {
             >
               <div className="flex gap-5 mb-3 items-center">
                 <div className="rounded-full bg-slate-300 border-black border-[1px]">
-                  {userImage ? (
+                  {image ? (
                     <img
-                      src={`http://localhost:3000/${userImage}`}
+                      src={image}
                       alt="user image"
                       className="rounded-full w-[50px] h-[50px] object-cover"
                     />

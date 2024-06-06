@@ -2,10 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaArrowRight, FaTrash, FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const ChatSection = ({ admin }) => {
   const [user_id, setUser_id] = useState();
-  const [userChatId, setUserChatId] = useState();
   const [chat, setChat] = useState();
   const [dataChats, setDataChats] = useState([]);
   const [error, setError] = useState();
@@ -13,7 +13,6 @@ const ChatSection = ({ admin }) => {
   const [community_id, setCommunity_id] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [idChatToDelete, setIdChatToDelete] = useState();
-  const [user, setUser] = useState();
 
   const { id } = useParams();
 
@@ -24,38 +23,20 @@ const ChatSection = ({ admin }) => {
           `http://localhost:3000/api/v1/chat/${id}`
         );
         setDataChats(response.data.data);
-        console.log(response.data.data);
       } catch (error) {
         console.log(error);
-      }
-    };
-
-    const getUserDataFromCookie = () => {
-      const cookieData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userData="));
-
-      if (cookieData) {
-        const userDataString = cookieData.split("=")[1];
-        try {
-          const userData = JSON.parse(decodeURIComponent(userDataString));
-          return userData;
-        } catch (error) {
-          console.error("Error parsing JSON from cookie:", error);
-          return null;
-        }
-      } else {
-        return null;
       }
     };
 
     setCommunity_id(id);
     fetchChat();
 
-    const userData = getUserDataFromCookie();
-    if (userData) {
-      setUser_id(userData.user_id);
-      setName(userData.name);
+    const userCookie = Cookies.get("userData");
+
+    if (userCookie) {
+      const userDataObj = JSON.parse(userCookie);
+      setUser_id(userDataObj.user_id);
+      setName(userDataObj.name);
     }
   }, [id]);
 
@@ -74,7 +55,7 @@ const ChatSection = ({ admin }) => {
       } else {
         console.log("create chat gagal");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
 
       if (error.response) {

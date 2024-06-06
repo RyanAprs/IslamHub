@@ -90,42 +90,39 @@ export const createCommunity = async (req: Request, res: Response) => {
     return res.status(422).send({
       status: false,
       status_code: 422,
-      message: error.message,
+      message: error,
     });
   }
 };
 
 export const updateCommunity = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const { title, name, user_id, image } = req.body;
+
+  let imagePrevious;
+
+  if (image) {
+    imagePrevious = image;
+  } else {
+    imagePrevious = await getCommunityImage(id);
+  }
+
+  if (!title || !name || !user_id) {
+    return res.status(400).send({
+      status: false,
+      status_code: 400,
+      message: "All fields are required",
+    });
+  }
+
+  const communityData = {
+    user_id,
+    title,
+    name,
+    image: imagePrevious,
+  };
+
   try {
-    await uploadAsync(req, res);
-
-    const id = req.params.id;
-    const { title, name, user_id } = req.body;
-    const image = req.file ? req.file.filename : null;
-
-    let imagePrevious;
-
-    if (image) {
-      imagePrevious = image;
-    } else {
-      imagePrevious = await getCommunityImage(id);
-    }
-
-    if (!title || !name || !user_id) {
-      return res.status(400).send({
-        status: false,
-        status_code: 400,
-        message: "All fields are required",
-      });
-    }
-
-    const communityData = {
-      user_id,
-      title,
-      name,
-      image: imagePrevious,
-    };
-
     const community = await getCommuityAndUpdate(id, communityData);
     if (community) {
       return res.status(200).send({
@@ -142,11 +139,11 @@ export const updateCommunity = async (req: Request, res: Response) => {
         data: {},
       });
     }
-  } catch (error: any) {
+  } catch (error) {
     return res.status(422).send({
       status: false,
       status_code: 422,
-      message: error.message || "An error occurred",
+      message: error || "An error occurred",
       data: {},
     });
   }
