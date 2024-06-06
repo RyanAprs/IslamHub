@@ -1,11 +1,16 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CommunityList from "./communityList";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FaEllipsisV, FaTimes, FaUsers } from "react-icons/fa";
 import ChatSection from "../../components/atoms/chatSection/chatSection";
 import Cookies from "js-cookie";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { storage } from "../../firebase";
 import { v4 } from "uuid";
 
@@ -24,6 +29,8 @@ const DetailCommunity = () => {
   const [progress, setProgress] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
   const [dataImage, setDataImage] = useState();
+
+  const navigate = useNavigate();
 
   const { id } = useParams();
 
@@ -78,11 +85,20 @@ const DetailCommunity = () => {
 
   const confirmDelete = async () => {
     try {
+      if (dataImage) {
+        const imageRef = ref(storage, dataImage);
+        // Pastikan bahwa dataImage bukan referensi root
+        if (imageRef.fullPath !== "") {
+          await deleteObject(imageRef);
+        }
+      }
+
       const response = await axios.delete(
         `http://localhost:3000/api/v1/community/${id}`
       );
+
       if (response.status === 200) {
-        window.location.reload();
+        navigate("/community");
       }
     } catch (error) {
       console.log("Request error:", error.message);
