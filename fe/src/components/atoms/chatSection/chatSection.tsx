@@ -22,7 +22,9 @@ const ChatSection = ({ admin }) => {
         const response = await axios.get(
           `http://localhost:3000/api/v1/chat/${id}`
         );
-        setDataChats(response.data.data);
+        const data = response.data.data;
+        setDataChats(data);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -90,6 +92,7 @@ const ChatSection = ({ admin }) => {
     }
   };
 
+
   const closeModal = () => {
     setShowModal(false);
   };
@@ -136,7 +139,7 @@ const ChatSection = ({ admin }) => {
                     <FaUser />
                   ) : (
                     <img
-                      src={`http://localhost:3000/${dataChat.image}`}
+                      src={dataChat.image}
                       alt=""
                       className="rounded-full object-cover w-full h-full"
                     />

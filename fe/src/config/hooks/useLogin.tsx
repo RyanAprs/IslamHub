@@ -31,10 +31,12 @@ export const useLogin = () => {
         )}; expires=${expirationDate.toUTCString()}`;
 
         const role = response.data.data.role;
+        const userId = response.data.data.user_id;
 
         const token = response.data.token;
         localStorage.setItem("token", token);
         localStorage.setItem("role", role);
+        localStorage.setItem("userId", userId);
         dispatch({ type: "LOGIN", payload: token });
       } else {
         console.log("login gagal");

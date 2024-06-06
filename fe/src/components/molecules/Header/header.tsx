@@ -60,14 +60,16 @@ const Header: React.FC = () => {
     }
   }, []);
 
+  const id = localStorage.getItem("userId");
+
   useEffect(() => {
     getUserDetail();
-  }, [userId]);
+  }, [id]);
 
   const getUserDetail = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/user/${userId}`
+        `http://localhost:3000/api/v1/user/${id}`
       );
       setUserImage(response.data.data.image);
       setName(response.data.data.name);
@@ -87,6 +89,7 @@ const Header: React.FC = () => {
     setUser(null);
     localStorage.removeItem("token");
     localStorage.removeItem("role");
+    localStorage.removeItem("userId");
     navigate("/login");
   };
 
@@ -139,9 +142,7 @@ const Header: React.FC = () => {
 
         <div className="relative" ref={dropdownRef}>
           <div className="flex items-center gap-4">
-            {user && name && (
-              <p className="font-bold text-[20px]">{name}</p>
-            )}
+            {user && name && <p className="font-bold text-[20px]">{name}</p>}
             {user && userImage !== null ? (
               <button onClick={toggleDropdown}>
                 <img

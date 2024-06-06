@@ -6,6 +6,7 @@ import BackButton from "../../components/atoms/backButton/backButton";
 import { storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { v4 } from "uuid";
+import Cookies from "js-cookie";
 
 const CreateVideo = () => {
   const [title, setTitle] = useState("");
@@ -18,28 +19,11 @@ const CreateVideo = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getUserDataFromCookie = () => {
-      const cookieData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userData="));
+    const userCookie = Cookies.get("userData");
 
-      if (cookieData) {
-        const userDataString = cookieData.split("=")[1];
-        try {
-          const userData = JSON.parse(decodeURIComponent(userDataString));
-          return userData;
-        } catch (error) {
-          console.error("Error parsing JSON from cookie:", error);
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const userData = getUserDataFromCookie();
-    if (userData) {
-      setUserVideoId(userData.user_id);
+    if (userCookie) {
+      const userDataObj = JSON.parse(userCookie);
+      setUserVideoId(userDataObj.user_id);
     }
   }, []);
 
@@ -102,11 +86,10 @@ const CreateVideo = () => {
 
       if (response.data.status_code === 200) {
         navigate(`/profile/${userVideoId}`);
-        console.log("Video berhasil dibuat:", response.data.data);
       } else {
         console.log("Gagal membuat video");
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error.response) {
         setError(error.response.data.message);
       } else if (error.request) {

@@ -3,35 +3,39 @@ import { formatDistanceToNow, parseISO } from "date-fns";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
+import Cookies from "js-cookie";
 
 const VideoUser = () => {
   const [videoData, setVideoData] = useState([]);
   const [user, setUser] = useState();
+  const [name, setName] = useState();
+  const [image, setImage] = useState();
   const { id } = useParams();
 
   useEffect(() => {
-    const getUserDataFromCookie = () => {
-      const cookieData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userData="));
+    const userCookie = Cookies.get("userData");
 
-      if (cookieData) {
-        const userDataString = cookieData.split("=")[1];
-        try {
-          const userData = JSON.parse(decodeURIComponent(userDataString));
-          return userData;
-        } catch (error) {
-          console.error("Error parsing JSON from cookie:", error);
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const userData = getUserDataFromCookie();
-    setUser(userData);
+    if (userCookie) {
+      const userDataObj = JSON.parse(userCookie);
+      setUser(userDataObj);
+    }
   }, []);
+
+  useEffect(() => {
+    getUserDetail();
+  }, [id]);
+
+  const getUserDetail = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/user/${id}`
+      );
+      setName(response.data.data.name);
+      setImage(response.data.data.image);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getVideoByUserId();
@@ -68,9 +72,9 @@ const VideoUser = () => {
 
             <div className="flex gap-2 items-start justify-start">
               <p className="rounded-full bg-slate-300 border-black border-[1px]">
-                {video.user_image && video.user_image !== null ? (
+                {image !== null ? (
                   <img
-                    src={`http://localhost:3000/${video.user_image}`}
+                    src={image}
                     alt="user image"
                     className="rounded-full w-[50px] h-[50px] object-cover "
                   />
@@ -87,7 +91,7 @@ const VideoUser = () => {
                     className="md:text-[20px] text-[15px]"
                     to={`/profile/${video.user_video_id}`}
                   >
-                    {video.name}{" "}
+                    {name}{" "}
                   </Link>
                   <p>-</p>
                   <p className="md:text-[20px] text-[15px]">

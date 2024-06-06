@@ -4,26 +4,11 @@ import { Link } from "react-router-dom";
 import Pagination from "../../components/molecules/Pagination/pagination";
 import { FaUser } from "react-icons/fa";
 import { formatDistanceToNow, parseISO } from "date-fns";
-import Cookies from "js-cookie";
 
 const Video = () => {
   const [videoData, setVideoData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [user, setUser] = useState();
-  const [userId, setUserId] = useState();
-  const [image, setImage] = useState();
-  const [name, setName] = useState();
-
-  useEffect(() => {
-    const userCookie = Cookies.get("userData");
-
-    if (userCookie) {
-      const userDataObj = JSON.parse(userCookie);
-      setUserId(userDataObj.user_id);
-      setUser(userDataObj);
-    }
-  }, []);
 
   useEffect(() => {
     fetchVideos();
@@ -36,26 +21,12 @@ const Video = () => {
       );
       setVideoData(response.data.data);
       setTotalPages(response.data.total_page);
+      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    getUserDetail();
-  }, [userId]);
-
-  const getUserDetail = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3000/api/v1/user/${userId}`
-      );
-      setImage(response.data.data.image);
-      setName(response.data.data.name);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const search = async (q) => {
     try {
@@ -85,46 +56,48 @@ const Video = () => {
   const VideoList = () => (
     <>
       <div className="grid sm:grid-cols-2 md:grid-cols-3  grid-cols-1 gap-3  text-black  justify-center">
-        {videoData.map((video, index) => (
-          <Link
-            to={`/video/${video.video_id}`}
-            key={index}
-            className="shadow-lg cursor-pointer bg-gray-300 p-4 flex flex-col items-start rounded-xl max-h-auto border-gray-400 border-[2px]"
-          >
-            <video
-              className="h-[200px] w-full object-cover rounded border-gray-400 shadow-md border-[2px]"
-              controls
+        {videoData.map((video, index) => {
+          return (
+            <Link
+              to={`/video/${video.video_id}`}
+              key={index}
+              className="shadow-lg cursor-pointer bg-gray-300 p-4 flex flex-col items-start rounded-xl max-h-auto border-gray-400 border-[2px]"
             >
-              <source src={video.video} type="video/mp4" /> Your browser does
-              not support the video tag.
-            </video>
-            <hr className="mt-3" />
+              <video
+                className="h-[200px] w-full object-cover rounded border-gray-400 shadow-md border-[2px]"
+                controls
+              >
+                <source src={video.video} type="video/mp4" /> Your browser does
+                not support the video tag.
+              </video>
+              <hr className="mt-3" />
 
-            <div className="flex gap-2 items-start justify-start">
-              <p className="rounded-full bg-slate-300 border-black border-[1px]">
-                {image && image !== null ? (
-                  <img
-                    src={image}
-                    alt="user image"
-                    className="rounded-full w-[50px] h-[50px] object-cover "
-                  />
-                ) : (
-                  <FaUser className="text-black rounded-full w-[50px] h-[50px] object-cover" />
-                )}
-              </p>
-              <div className="">
-                <div>
-                  <h1 className="text-2xl uppercase ">{video.title}</h1>
-                </div>
-                <div className="flex gap-2  ">
-                  <Link to={`/profile/${video.user_video_id}`}>{name} </Link>
-                  <p>-</p>
-                  <p>{formatDistanceToNow(parseISO(video.createdAt))} ago</p>
+              <div className="flex gap-2 items-start justify-start">
+                <p className="rounded-full bg-slate-300 border-black border-[1px]">
+                  {video.user_image !== null ? (
+                    <img
+                      src={video.user_image}
+                      alt="user image"
+                      className="rounded-full w-[50px] h-[50px] object-cover "
+                    />
+                  ) : (
+                    <FaUser className="text-black rounded-full w-[50px] h-[50px] object-cover" />
+                  )}
+                </p>
+                <div className="">
+                  <div>
+                    <h1 className="text-2xl uppercase ">{video.title}</h1>
+                  </div>
+                  <div className="flex gap-2  ">
+                    <Link to={`/profile/${video.user_video_id}`}>{video.name} </Link>
+                    <p>-</p>
+                    <p>{formatDistanceToNow(parseISO(video.createdAt))} ago</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          );
+        })}
       </div>
     </>
   );

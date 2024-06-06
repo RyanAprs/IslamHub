@@ -21,7 +21,6 @@ const DetailVideo = () => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
-  const [userId, setUserId] = useState();
   const [image, setImage] = useState();
   const [name, setName] = useState();
 
@@ -30,7 +29,6 @@ const DetailVideo = () => {
 
     if (userCookie) {
       const userDataObj = JSON.parse(userCookie);
-      setUserId(userDataObj.user_id);
       setUser(userDataObj);
     }
   }, []);
@@ -42,7 +40,7 @@ const DetailVideo = () => {
           `http://localhost:3000/api/v1/video/${id}`
         );
         setVideo(response.data.data.video);
-        setUserVideoId(response.data.data.user_video_id); 
+        setUserVideoId(response.data.data.user_video_id);
         setTitle(response.data.data.title);
         setDescription(response.data.data.description);
         setCreatedAt(response.data.data.createdAt);
@@ -54,21 +52,22 @@ const DetailVideo = () => {
     fetchVideoById();
   }, [id]);
 
-    useEffect(() => {
-      getUserDetail();
-    }, [userId]);
+  useEffect(() => {
+    getUserDetail();
+  }, [userVideoId]);
 
-    const getUserDetail = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/api/v1/user/${userId}`
-        );
-        setImage(response.data.data.image);
-        setName(response.data.data.name);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  const getUserDetail = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/user/${userVideoId}`
+      );
+
+      setName(response.data.data.name);
+      setImage(response.data.data.image);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleDelete = async () => {
     setShowModal(true);
