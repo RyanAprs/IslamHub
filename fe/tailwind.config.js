@@ -18,6 +18,11 @@ module.exports = {
     },
     extend: {
       colors: {
+        "main-bg": "#E8EDED",
+        "second-bg": "#C5EBAA",
+        "third-bg": "#254336",
+        "main-font-color": "#F4CE14",
+        "second-font-color": "#0C359E",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -74,10 +79,10 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
       },
-      backgroundImage: {
-        "main-gradient":
-          "linear-gradient(252.92deg, rgba(63, 19, 238, 0.38) 0.99%, #E4E0F5 66.83%)",
-      },
+      // backgroundImage: {
+      //   "main-gradient":
+      //     "linear-gradient(252.92deg, rgba(63, 19, 238, 0.38) 0.99%, #E4E0F5 66.83%)",
+      // },
     },
   },
   plugins: [require("tailwindcss-animate")],

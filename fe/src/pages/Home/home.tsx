@@ -3,11 +3,14 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import quranImg from "../../assets/quran.png";
 import KajianList from "../Kajian/kajianList";
-import { FaArrowDown } from "react-icons/fa";
+import axios from "axios";
+import { BsChevronDoubleDown } from "react-icons/bs";
 
 const Home = () => {
   const [user, setUser] = useState();
   const location = useLocation();
+  const [name, setName] = useState();
+  const [userId, setUserId] = useState();
 
   useEffect(() => {
     const userCookie = Cookies.get("userData");
@@ -15,8 +18,24 @@ const Home = () => {
     if (userCookie) {
       const userDataObj = JSON.parse(userCookie);
       setUser(userDataObj);
+      setUserId(userDataObj.user_id);
     }
   }, []);
+
+  useEffect(() => {
+    getUserDetail();
+  }, [userId]);
+
+  const getUserDetail = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/user/${userId}`
+      );
+      setName(response.data.data.name);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (location.hash) {
@@ -28,44 +47,60 @@ const Home = () => {
   }, [location]);
 
   return (
-    <div className="flex flex-col bg-main-gradient p-8 md:px-32 ">
-      <div className="min-h-screen flex flex-col md:flex-row items-center justify-between gap-5">
-        <div className="font-poppins gap-6 md:gap-14 flex flex-col items-center md:items-start text-center md:text-left">
+    <div id="home" className="flex flex-col md:pt-10 pt-2">
+      <div className="min-h-screen flex flex-col md:flex-row bg-main-bg p-8 md:px-32 pt-28 md:pt-4  items-center justify-between gap-5">
+        <div className=" gap-6 md:gap-14 flex flex-col  justify-center items-center md:items-start text-center md:text-left">
           <div className="gap-4 flex flex-col">
-            <div className="text-[24px] font-semibold text-blue-800">
-              Halo, Selamat datang{" "}
-              <span>{user ? `${user.name}` : "sobat"}</span>
+            <div className="text-[20px] text-third-bg font-light flex md:justify-start justify-center items-center gap-3 ">
+              Selamat datang{" "}
+              <span className="font-bold">{user ? `${name}` : "sobat"}</span>
             </div>
-            <div className="text-[32px] md:text-[48px] font-bold flex flex-col text-black">
+            <div className="text-[32px] md:text-[48px] font-semibold flex flex-col text-black">
               <span>
-                Pelajarilah <span className="text-red-600">Agamamu</span>
+                Mari Belajar{" "}
+                <span className="rounded-xl p-2 bg-third-bg font-bold text-main-bg text-border border-[1px]">
+                  Agama
+                </span>
+                ,
               </span>
-              <span>disini sobat Insyaallah</span>
-              <span>Berkah</span>
+              <span>Insyaallah Berkah</span>
+              <span>di Setiap Langkah</span>
             </div>
-            <div className="flex flex-col text-[16px] md:text-[18px]">
-              Belajarlah Dengan giat niscaya keberkahan <span>menyertaimu</span>
+            <div className="flex flex-col font-light text-[20px] md:text-[18px]">
+              <span>
+                Temukan keberkahan dalam setiap langkah perjalanan spiritual
+                anda
+              </span>
+              {user ? (
+                <span>Ayo jelajahi sekarang!</span>
+              ) : (
+                <span>Ayo bergabung sekarang!</span>
+              )}
             </div>
             {user ? (
-              <Link
-                to="#kajian"
-                className="flex gap-4 pt-8 items-center font-bold md:flex-row"
-              >
-                <div>Lihat Informasi Kajian Terbaru</div>
-                <div>
-                  <FaArrowDown />
-                </div>
-              </Link>
-            ) : (
-              <div className="flex gap-4 md:gap-9 items-center font-bold flex-col md:flex-row">
+              <div className="flex items-start md:justify-start justify-center">
                 <Link
-                  className="bg-blue-600 text-white rounded-xl px-10 py-3"
+                  to="#kajian"
+                  className="flex flex-col gap-2 pt-8 items-center justify-start md:justify-center font-bold "
+                >
+                  <div className="flex p-4 border-[2px] border-black rounded-full">
+                    Lihat Informasi Kajian Terbaru
+                  </div>
+                  <div className="flex items-center">
+                    <BsChevronDoubleDown size={20} />
+                  </div>
+                </Link>
+              </div>
+            ) : (
+              <div className="flex gap-4 md:gap-9 pt-8  items-center font-bold flex-col md:flex-row">
+                <Link
+                  className="bg-third-bg text-white rounded-xl px-10 py-3"
                   to="/register"
                 >
                   Daftar
                 </Link>
                 <Link
-                  className="bg-transparent border-blue-600 border-[2px] text-blue-600 rounded-xl px-10 py-3"
+                  className="bg-transparent border-third-bg border-[2px] text-third-bg rounded-xl px-10 py-3"
                   to="/login"
                 >
                   Masuk
@@ -82,7 +117,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className="flex py-10 md:py-36">
+      <div className="">
         <KajianList id="kajian" />
       </div>
     </div>

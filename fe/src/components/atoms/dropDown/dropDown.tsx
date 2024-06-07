@@ -30,11 +30,11 @@ const DropdownMenu = ({ user, handleLogout }) => {
         {user && user.name && <p className="mr-2">{user.name}</p>}
         {user ? (
           <button onClick={toggleDropdown}>
-            <img
+            {/* <img
               src={`http://localhost:3000/${user.image}`}
               alt="user image"
               className="h-[40px] w-[40px] object-cover rounded-full bg-gray-200"
-            />
+            /> */}
           </button>
         ) : (
           <button
@@ -46,18 +46,18 @@ const DropdownMenu = ({ user, handleLogout }) => {
         )}
       </div>
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 bg-white border border-gray-300 rounded shadow-lg">
+        <div className="absolute top-full left-0 mt-2 bg-white border border-gray-300 shadow-lg">
           {user ? (
             <div>
               <Link
                 to={`/profile/${user.user_id}`}
-                className="block w-full text-left py-2 px-4 text-gray-800 hover:bg-gray-200"
+                className="block w-full text-left py-2 px-4 text-gray-800 hover:bg-gray-200 rounded"
               >
                 Profile
               </Link>
               <button
                 onClick={handleLogout}
-                className="block w-full text-left py-2 px-4 text-gray-800 hover:bg-gray-200"
+                className="block w-full text-left py-2 px-4 text-gray-800 hover:bg-gray-200 rounded"
               >
                 Logout
               </button>
@@ -65,7 +65,7 @@ const DropdownMenu = ({ user, handleLogout }) => {
           ) : (
             <Link
               to="/login"
-              className="block w-full text-left py-2 px-4 text-gray-800 hover:bg-gray-200"
+              className="block w-full text-left py-2 px-4 text-gray-800 hover:bg-gray-200 rounded"
             >
               Login
             </Link>
