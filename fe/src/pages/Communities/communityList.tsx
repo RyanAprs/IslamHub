@@ -37,7 +37,7 @@ const CommunityList = () => {
   return (
     <div className="relative">
       <div
-        className={`overflow-y-auto ${
+        className={`overflow-y-auto min-h-screen ${
           isSidebarOpen
             ? "bg-blue-500 w-[200px] border-black border-[1px] p-2"
             : "bg-blue-200 w-0 p-0 border-0"

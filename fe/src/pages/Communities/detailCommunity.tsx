@@ -87,7 +87,6 @@ const DetailCommunity = () => {
     try {
       if (dataImage) {
         const imageRef = ref(storage, dataImage);
-        // Pastikan bahwa dataImage bukan referensi root
         if (imageRef.fullPath !== "") {
           await deleteObject(imageRef);
         }
