@@ -50,10 +50,10 @@ const Profile = () => {
               <img
                 src={image}
                 alt="profile picture"
-                className="w-[200px] h-[200px] md:w-[300px] md:h-[300px] bg-white shadow-lg object-cover mt-3 border-black rounded-full"
+                className="w-[200px] h-[200px] md:w-[300px] md:h-[300px] bg-main-bg shadow-xl object-cover mt-3 border-black rounded-full"
               />
             ) : (
-              <div className="relative w-[200px] h-[200px] md:w-[250px] md:h-[250px] shadow-lg object-cover mt-3 border-black rounded-full flex justify-center items-center">
+              <div className="relative w-[200px] h-[200px] md:w-[250px] md:h-[250px] shadow-xl object-cover mt-3 border-black rounded-full flex justify-center items-center">
                 <FaUser
                   size={100}
                   className="absolute md:relative md:w-[150px] md:h-[150px]"
@@ -75,13 +75,13 @@ const Profile = () => {
                 <div className="flex gap-5">
                   <Link
                     to={`/profile/update/${userId}`}
-                    className="bg-blue-600 text-color-dark font-bold py-3 px-2 md:px-4 text-lg rounded"
+                    className="bg-main-bg text-color-dark font-bold py-3 px-2 md:px-4 text-lg rounded-xl shadow-xl"
                   >
                     Edit Profile
                   </Link>
                   <Link
                     to="/video/create"
-                    className="bg-blue-600 text-color-dark font-bold py-3 px-2 md:px-4 text-lg rounded"
+                    className="bg-main-bg text-color-dark font-bold py-3 px-2 md:px-4 text-lg rounded-xl shadow-xl"
                   >
                     Create Video
                   </Link>
@@ -95,7 +95,7 @@ const Profile = () => {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <div className="px-8 md:px-32 underline font-bold flex ml-8 md:ml-16 text-[20px] md:text-[25px]  ">
+        <div className="px-8 md:px-32 underline font-bold flex justify-center md:justify-start ml-0 md:ml-16 text-[20px] md:text-[25px]  ">
           Videos
         </div>
         <div>

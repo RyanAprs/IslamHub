@@ -8,6 +8,7 @@ import { formatDistanceToNow, parseISO } from "date-fns";
 import { storage } from "../../firebase";
 import { ref, deleteObject } from "firebase/storage";
 import Cookies from "js-cookie";
+import CommentSection from "../../components/atoms/commentSection/commentSection";
 
 const DetailVideo = () => {
   const { id } = useParams();
@@ -100,12 +101,12 @@ const DetailVideo = () => {
       <div className="flex md:px-4 px-1">
         <BackButton path="/video" />
       </div>
-      <div className="md:px-4 px-1 flex flex-col gap-3">
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center justify-center">
+      <div className="px-8 py-4 flex flex-col gap-3">
+        <div className="flex md:flex-row flex-col gap-2 justify-evenly">
+          <div className="w-full md:w-[823px] h-full">
             {video ? (
               <video
-                className="md:h-[500px] h-[250px] w-full md:w-[1000px] object-fill rounded border-gray-400 shadow-md border-[2px]"
+                className="w-full md:w-[823px] h-full md:h-[463px] object-fill rounded border-gray-400 shadow-md border-[2px]"
                 controls
               >
                 <source src={video} type="video/mp4" />
@@ -113,37 +114,31 @@ const DetailVideo = () => {
               </video>
             ) : (
               <p>Loading video...</p>
-            )}
-          </div>
-          <div className="md:pl-40 flex flex-col gap-5">
+            )}{" "}
             <div>
+              <div className="md:text-3xl text-2xl font-bold">{title}</div>
               <div>
-                <div className="md:text-3xl text-2xl font-bold">{title}</div>
-                <div>
-                  {createdAt ? (
-                    <p>{formatDistanceToNow(parseISO(createdAt))} ago</p>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-              <div className="text-md">
-                {showFullDescription
-                  ? description
-                  : description.length > 50
-                  ? `${description.slice(0, 20)}...`
-                  : description}
-                {description.length > 50 && (
-                  <button
-                    onClick={() => setShowFullDescription(!showFullDescription)}
-                    className="text-blue-500 ml-2"
-                  >
-                    {showFullDescription
-                      ? "tampilkan lebih sedikit"
-                      : "Lainnya"}
-                  </button>
+                {createdAt ? (
+                  <p>{formatDistanceToNow(parseISO(createdAt))} ago</p>
+                ) : (
+                  ""
                 )}
               </div>
+            </div>
+            <div className="text-md">
+              {showFullDescription
+                ? description
+                : description.length > 50
+                ? `${description.slice(0, 20)}...`
+                : description}
+              {description.length > 50 && (
+                <button
+                  onClick={() => setShowFullDescription(!showFullDescription)}
+                  className="text-blue-500 ml-2"
+                >
+                  {showFullDescription ? "tampilkan lebih sedikit" : "Lainnya"}
+                </button>
+              )}
             </div>
             <Link
               to={`/profile/${userVideoId}`}
@@ -164,6 +159,13 @@ const DetailVideo = () => {
                 <div className="text-lg font-bold uppercase">{name}</div>
               </div>
             </Link>
+            <div>
+              <CommentSection />
+            </div>
+          </div>
+
+          <div className="flex flex-col w-96 bg-main-bg p-5">
+            Video lainnya 
           </div>
         </div>
       </div>

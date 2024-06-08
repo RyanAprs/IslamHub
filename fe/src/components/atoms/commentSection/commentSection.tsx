@@ -116,7 +116,7 @@ const CommentSection = () => {
 
   return (
     <div className="rounded-sm flex flex-col gap-3">
-      <h3 className="text-2xl">Comments</h3>
+      <h3 className="text-2xl">Komentar</h3>
       <div className="py-2 flex flex-col h-[250px] overflow-y-auto border-2 rounded">
         {dataComment && dataComment.length > 0 ? (
           dataComment.map((comment, index) => (
@@ -140,7 +140,7 @@ const CommentSection = () => {
           ))
         ) : (
           <div className="flex justify-center">
-            <h1>No Comment Posted</h1>
+            <h1>Belum ada komentar</h1>
           </div>
         )}
       </div>

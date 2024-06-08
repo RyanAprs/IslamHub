@@ -125,7 +125,7 @@ const VideoUser = () => {
 
   return (
     <>
-      <div className="flex-col gap-8 px-5">
+      <div className="">
         <div>
           {Array.isArray(videoData) && videoData.length > 0 ? (
             <VideoList />
@@ -135,11 +135,6 @@ const VideoUser = () => {
             </div>
           )}
         </div>
-        {/* <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />{" "} */}
       </div>
     </>
   );

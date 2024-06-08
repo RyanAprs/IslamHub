@@ -105,139 +105,129 @@ const Header: React.FC = () => {
   const isHome = location.pathname === "/";
 
   return (
-    <header
-      className={`fixed font-poppins bg-main-bg top-0 left-0 right-0 z-50 flex justify-between items-center py-4 md:py-4 px-5 md:px-10 text-black shadow-lg transition-colors duration-300 `}
-    >
-      <div className="font-poppins text-[24px] text-third-bg">
-        <div className="font-bold">IslamHub</div>
-      </div>
-      <div className="text-lg text-black hidden gap-12 font-bold md:flex">
-        <Link
-          to={isHome ? "#home" : "/"}
-          className="text-third-bg transition-all flex flex-col items-center justify-center"
-        >
-          <h1>Home</h1>
-          {location.pathname === "/" ? (
-            <span className="w-2 h-2 rounded-full bg-third-bg"></span>
-          ) : null}
-        </Link>
-        <Link
-          to="/video"
-          className="text-third-bg transition-all flex flex-col items-center justify-center"
-        >
-          <h1>Videos</h1>
-          {location.pathname === "/video" ? (
-            <span className="w-2 h-2 rounded-full bg-third-bg"></span>
-          ) : null}
-        </Link>
-        <Link
-          to="/community"
-          className="text-third-bg transition-all flex flex-col items-center justify-center"
-        >
-          <h1>Communities</h1>
-          {location.pathname === "/community" ? (
-            <span className="w-2 h-2 rounded-full bg-third-bg"></span>
-          ) : null}
-        </Link>
-        <Link
-          to="/contact"
-          className="text-third-bg transition-all flex flex-col items-center justify-center"
-        >
-          <h1>Contact</h1>
-          {location.pathname === "/contact" ? (
-            <span className="w-2 h-2 rounded-full bg-third-bg"></span>
-          ) : null}{" "}
-        </Link>
-      </div>
-      <div className="flex gap-16 items-center text-[24px]">
-        <div className="relative" ref={dropdownRef}>
-          <div className="flex items-center gap-4">
-            {user && name && (
-              <p className="text-third-bg font-bold text-[20px]">{name}</p>
-            )}
-            {user && userImage !== null ? (
-              <button onClick={toggleDropdown}>
-                <img
-                  src={userImage}
-                  alt="user image"
-                  className="h-[50px] w-[50px] object-cover rounded-full bg-gray-200"
-                />
-              </button>
-            ) : (
-              <button
-                onClick={toggleDropdown}
-                className="cursor-pointer p-3 bg-gray-200 rounded-full"
-              >
-                <FaUser className="text-black" />
-              </button>
-            )}
-          </div>
-          {isOpen && (
-            <div className="absolute top-full right-0 mt-2 bg-second-bg border border-blue-300 rounded-xl shadow-lg">
-              {user ? (
-                <div className="flex flex-col text-xl">
-                  <Link
-                    to={`/profile/${user.user_id}`}
-                    className="px-6 py-2 block w-full text-left text-black "
-                  >
-                    Profile
-                  </Link>
-                  <nav className="text-left block md:hidden">
-                    <Link
-                      to="/video"
-                      className="px-6 py-2 block w-full text-black "
-                    >
-                      <h1>Videos</h1>
-                    </Link>
-                    <Link
-                      to="/community"
-                      className="px-6 py-2 block w-full text-black "
-                    >
-                      <h1>Communities</h1>
-                    </Link>
-                    <Link
-                      to="/contact"
-                      className="px-6 py-2 block w-full text-black "
-                    >
-                      <h1>Contact</h1>
-                    </Link>
-                  </nav>
-                  <button
-                    onClick={handleLogout}
-                    className="px-6 py-2 block w-full text-left text-black "
-                  >
-                    Logout
-                  </button>
-                </div>
+    <>
+      <header
+        className={`fixed font-poppins bg-main-bg top-0 left-0 right-0 z-50 flex justify-between items-center py-4 md:py-4 px-5 md:px-10 text-black shadow-lg transition-colors duration-300 `}
+      >
+        <div className="font-poppins text-[24px] text-third-bg">
+          <Link to={isHome ? "#home" : "/"} className="font-bold">
+            IslamHub
+          </Link>
+        </div>
+        <div className="text-lg text-black hidden gap-12 font-bold md:flex">
+          <Link
+            to={isHome ? "#home" : "/"}
+            className="text-third-bg transition-all flex flex-col items-center justify-center"
+          >
+            <h1>Home</h1>
+            {location.pathname === "/" ? (
+              <span className="w-2 h-2 rounded-full bg-third-bg"></span>
+            ) : null}
+          </Link>
+          <Link
+            to="/video"
+            className="text-third-bg transition-all flex flex-col items-center justify-center"
+          >
+            <h1>Video</h1>
+            {location.pathname === "/video" ? (
+              <span className="w-2 h-2 rounded-full bg-third-bg"></span>
+            ) : null}
+          </Link>
+          <Link
+            to="/community"
+            className="text-third-bg transition-all flex flex-col items-center justify-center"
+          >
+            <h1>Komunitas</h1>
+            {location.pathname === "/community" ? (
+              <span className="w-2 h-2 rounded-full bg-third-bg"></span>
+            ) : null}
+          </Link>
+        </div>
+        <div className="flex gap-16 items-center text-[24px]">
+          <div className="relative" ref={dropdownRef}>
+            <div className="flex items-center gap-4">
+              {user && name && (
+                <p className="text-third-bg font-bold text-[20px]">{name}</p>
+              )}
+              {user && userImage !== null ? (
+                <button onClick={toggleDropdown}>
+                  <img
+                    src={userImage}
+                    alt="user image"
+                    className="h-[50px] w-[50px] object-cover rounded-full bg-gray-200"
+                  />
+                </button>
               ) : (
-                <div className="flex flex-col">
-                  <Link
-                    to="/login"
-                    className="block w-full text-left px-2 py-2 text-black "
-                  >
-                    Login
-                  </Link>
-                  <nav className="text-left block md:hidden">
-                    <Link
-                      to="/community"
-                      className="px-2 py-2 block w-full text-black "
-                    >
-                      <h1>Communities</h1>
-                    </Link>
-                    <Link
-                      to="/video"
-                      className="px-2 py-2 block w-full text-black "
-                    >
-                      <h1>Videos</h1>
-                    </Link>
-                  </nav>
-                </div>
+                <button
+                  onClick={toggleDropdown}
+                  className="cursor-pointer p-3 bg-gray-200 rounded-full"
+                >
+                  <FaUser className="text-black" />
+                </button>
               )}
             </div>
-          )}
+            {isOpen && (
+              <div className="absolute top-full right-0 mt-2 bg-second-bg border border-blue-300 rounded-xl shadow-lg">
+                {user ? (
+                  <div className="flex flex-col text-xl">
+                    <Link
+                      to={`/profile/${user.user_id}`}
+                      className="px-6 py-2 block w-full text-left text-black "
+                    >
+                      Profile
+                    </Link>
+                    <nav className="text-left block md:hidden">
+                      <Link
+                        to="/video"
+                        className="px-6 py-2 block w-full text-black "
+                      >
+                        <h1>Video</h1>
+                      </Link>
+                      <Link
+                        to="/community"
+                        className="px-6 py-2 block w-full text-black "
+                      >
+                        <h1>Komunitas</h1>
+                      </Link>
+                    </nav>
+                    <button
+                      onClick={handleLogout}
+                      className="px-6 py-2 block w-full text-left text-black "
+                    >
+                      Logout
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex flex-col">
+                    <Link
+                      to="/login"
+                      className="block w-full text-left px-2 py-2 text-black "
+                    >
+                      Login
+                    </Link>
+                    <nav className="text-left block md:hidden">
+                      <Link
+                        to="/community"
+                        className="px-2 py-2 block w-full text-black "
+                      >
+                        <h1>Komunitas</h1>
+                      </Link>
+                      <Link
+                        to="/video"
+                        className="px-2 py-2 block w-full text-black "
+                      >
+                        <h1>Video</h1>
+                      </Link>
+                    </nav>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+      {/* <div className="fixed bottom-0 left-0 right-0">Testt</div> */}
+    </>
   );
 };
 

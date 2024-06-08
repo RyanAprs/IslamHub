@@ -120,11 +120,11 @@ const Video = () => {
   return (
     <>
       <div className="px-4 py-20 flex  pt-[100px] md:pt-[140px] flex-col gap-8 min-h-screen">
-        <div className="border-[1px] rounded-full text-white">
+        <div className="border-[1px]  border-third-bg rounded-full text-black">
           <input
             type="text"
             placeholder="Cari video..."
-            className="border-none py-4 pl-4 bg-third-bg w-full focus:outline-none  rounded-full"
+            className="border-none py-4 pl-4 bg-main-bg w-full focus:outline-none  rounded-full"
             onChange={({ target }) => search(target.value)}
           />
         </div>

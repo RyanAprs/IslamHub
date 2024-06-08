@@ -138,15 +138,13 @@ const Chat = () => {
 
   return (
     <div className="px-4 py-20 flex bg-main-gradient pt-[100px] md:pt-[140px] flex-col gap-8 min-h-screen">
-      <div className="flex justify-center items-center">
-        <div className="rounded-full flex items-center md:w-[454px] w-full h-auto md:h-[71px] justify-center border-black border-2">
-          <input
-            type="text"
-            placeholder="Cari Komunitas..."
-            className="border-none py-4 pl-4 w-full h-auto md:h-[68px] border-black focus:outline-none text-black rounded-full"
-            onChange={({ target }) => search(target.value)}
-          />
-        </div>
+      <div className="border-[1px] border-third-bg rounded-full text-black">
+        <input
+          type="text"
+          placeholder="Cari Komunitas..."
+          className="border-none py-4 pl-4 bg-main-bg w-full focus:outline-none  rounded-full"
+          onChange={({ target }) => search(target.value)}
+        />
       </div>
       <div>
         {Array.isArray(communities) && communities.length > 0 ? (
