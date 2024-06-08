@@ -42,8 +42,8 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3 md:gap-16 bg-main-gradient pt-[120px] md:pt-[160px] pb-8 px-8 md:px-32 text-color-primary min-h-screen text-2xl font-poppins">
-      <div className="flex justify-center  md:justify-between items-start">
+    <div className="flex flex-col gap-3 md:gap-16 bg-main-gradient pt-[120px] md:pt-[160px] pb-8  text-color-primary min-h-screen text-2xl font-poppins">
+      <div className="flex justify-center px-8 md:px-32  md:justify-between items-start">
         <div className="flex flex-col md:flex-row md:gap-8">
           <div className="flex justify-center">
             {image !== null ? (
@@ -95,7 +95,7 @@ const Profile = () => {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <div className="underline font-bold flex ml-8 md:ml-16 text-[20px] md:text-[25px]">
+        <div className="px-8 md:px-32 underline font-bold flex ml-8 md:ml-16 text-[20px] md:text-[25px]  ">
           Videos
         </div>
         <div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
@@ -11,6 +11,7 @@ const VideoUser = () => {
   const [name, setName] = useState();
   const [image, setImage] = useState();
   const { id } = useParams();
+  const videoRefs = useRef([]);
 
   useEffect(() => {
     const userCookie = Cookies.get("userData");
@@ -52,63 +53,79 @@ const VideoUser = () => {
     }
   };
 
+  const handlePlay = (index) => {
+    videoRefs.current.forEach((video, idx) => {
+      if (index !== idx && video) {
+        video.pause();
+      }
+    });
+  };
+
   const VideoList = () => (
     <>
-      <div className="grid md:grid-cols-2  grid-cols-1 gap-3  text-black  justify-center">
-        {videoData.map((video, index) => (
-          <Link
-            to={`/video/${video.video_id}`}
-            key={index}
-            className="shadow-lg cursor-pointer bg-gray-300 p-4 flex flex-col items-start rounded-xl max-h-auto border-gray-400 border-[2px]"
-          >
-            <video
-              className="md:h-[230px] h-[170px] w-full object-cover rounded border-gray-400 shadow-md border-[2px]"
-              controls
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-3 text-black justify-center">
+        {videoData.map((video, index) => {
+          return (
+            <Link
+              to={`/video/${video.video_id}`}
+              key={index}
+              className="cursor-pointer p-4  "
             >
-              <source src={video.video} type="video/mp4" /> Your browser does
-              not support the video tag.
-            </video>
-            <hr className="mt-3" />
+              <div className="flex flex-col items-start rounded-xl max-h-auto hover:bg-main-bg transition-all">
+                <video
+                  ref={(el) => (videoRefs.current[index] = el)}
+                  className="h-[200px] w-full object-cover rounded-xl "
+                  controls
+                  onPlay={() => handlePlay(index)}
+                >
+                  <source src={video.video} type="video/mp4" /> Your browser
+                  does not support the video tag.
+                </video>
+                <hr className="mt-3" />
 
-            <div className="flex gap-2 items-start justify-start">
-              <p className="rounded-full bg-slate-300 border-black border-[1px]">
-                {image !== null ? (
-                  <img
-                    src={image}
-                    alt="user image"
-                    className="rounded-full w-[50px] h-[50px] object-cover "
-                  />
-                ) : (
-                  <FaUser className="text-black rounded-full w-[50px] h-[50px] object-cover" />
-                )}
-              </p>
-              <div>
-                <div>
-                  <h1 className="text-[25px] uppercase ">{video.title}</h1>
-                </div>
-                <div className="flex gap-2  ">
-                  <Link
-                    className="md:text-[20px] text-[15px]"
-                    to={`/profile/${video.user_video_id}`}
-                  >
-                    {name}{" "}
-                  </Link>
-                  <p>-</p>
-                  <p className="md:text-[20px] text-[15px]">
-                    {formatDistanceToNow(parseISO(video.createdAt))} ago
-                  </p>
+                <div className="flex gap-2 items-start justify-start">
+                  <div className="rounded-full  border-black border-[1px]">
+                    {video.user_image !== null ? (
+                      <img
+                        src={video.user_image}
+                        alt="user image"
+                        className="rounded-full w-[40px] h-[40px] object-cover "
+                      />
+                    ) : (
+                      <FaUser className="text-black rounded-full w-[50px] h-[50px] object-cover" />
+                    )}
+                  </div>
+                  <div className="flex flex-col justify-start">
+                    <h1 className="text-2xl font-bold overflow-hidden truncate w-[300px]">
+                      {video.title.length > 25
+                        ? `${video.title.substring(0, 25)}...`
+                        : video.title}
+                    </h1>
+                    <div className="flex gap-2 items-center">
+                      <Link
+                        to={`/profile/${video.user_video_id}`}
+                        className="text-[20px]"
+                      >
+                        {video.name}
+                      </Link>
+                      <p>-</p>
+                      <p className="text-[18px]">
+                        {formatDistanceToNow(parseISO(video.createdAt))} ago
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          );
+        })}
       </div>
     </>
   );
 
   return (
     <>
-      <div className="flex-col gap-8 ">
+      <div className="flex-col gap-8 px-5">
         <div>
           {Array.isArray(videoData) && videoData.length > 0 ? (
             <VideoList />

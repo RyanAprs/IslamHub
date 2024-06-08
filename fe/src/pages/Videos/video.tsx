@@ -82,7 +82,7 @@ const Video = () => {
               <hr className="mt-3" />
 
               <div className="flex gap-2 items-start justify-start">
-                <p className="rounded-full  border-black border-[1px]">
+                <div className="rounded-full  border-black border-[1px]">
                   {video.user_image !== null ? (
                     <img
                       src={video.user_image}
@@ -92,12 +92,16 @@ const Video = () => {
                   ) : (
                     <FaUser className="text-black rounded-full w-[50px] h-[50px] object-cover" />
                   )}
-                </p>
+                </div>
                 <div className="">
                   <div>
-                    <h1 className="text-2xl uppercase ">{video.title}</h1>
+                    <h1 className="text-2xl uppercase ">
+                      {video.title.length > 25
+                        ? `${video.title.substring(0, 25)}...`
+                        : video.title}
+                    </h1>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 items-center">
                     <Link to={`/profile/${video.user_video_id}`}>
                       {video.name}
                     </Link>
