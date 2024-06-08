@@ -4,7 +4,7 @@ import bg from "../../assets/bg.png";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 
 function Card({ children }) {
-  return <div className="border shadow-md rounded-lg">{children}</div>;
+  return <div className="shadow-xl rounded-lg p-8">{children}</div>;
 }
 
 function CardContent({ children, className }) {
@@ -20,7 +20,7 @@ function Carousel({ children, className }) {
 function CarouselContent({ children, style }) {
   return (
     <div
-      className="flex transition-transform duration-700 ease-in-out gap-8"
+      className="flex transition-transform duration-700 ease-in-out "
       style={style}
     >
       {children}
@@ -34,7 +34,7 @@ function CarouselItem({ children }) {
 
 function CarouselPrevious({ onClick }) {
   return (
-    <button onClick={onClick}>
+    <button onClick={onClick} className="text-main-bg">
       <BsArrowLeftCircle size={40} />
     </button>
   );
@@ -42,7 +42,7 @@ function CarouselPrevious({ onClick }) {
 
 function CarouselNext({ onClick }) {
   return (
-    <button onClick={onClick}>
+    <button onClick={onClick} className="text-main-bg">
       <BsArrowRightCircle size={40} />
     </button>
   );
@@ -55,7 +55,7 @@ const cards = [
     location: "Lokasi 1",
     description:
       "Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1",
-    link: "/link1",
+    link: "",
   },
   {
     title: "Judul Kajian 2",
@@ -63,7 +63,7 @@ const cards = [
     location: "Lokasi 2",
     description:
       "Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2",
-    link: "/link2",
+    link: "",
   },
 ];
 
@@ -82,7 +82,7 @@ export function CarouselDemo() {
   useEffect(() => {
     const slideInterval = setInterval(() => {
       setCurrentSlide((prev) => (prev < totalSlides - 1 ? prev + 1 : 0));
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(slideInterval);
   }, [totalSlides]);
@@ -92,7 +92,6 @@ export function CarouselDemo() {
       <Carousel className="w-full ">
         <CarouselContent
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-          
         >
           {cards.map((card, index) => (
             <CarouselItem key={index}>

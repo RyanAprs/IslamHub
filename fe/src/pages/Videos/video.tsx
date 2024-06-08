@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/molecules/Pagination/pagination";
 import { FaUser } from "react-icons/fa";
@@ -9,6 +9,7 @@ const Video = () => {
   const [videoData, setVideoData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const videoRefs = useRef([]);
 
   useEffect(() => {
     fetchVideos();
@@ -21,12 +22,10 @@ const Video = () => {
       );
       setVideoData(response.data.data);
       setTotalPages(response.data.total_page);
-      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
   };
-
 
   const search = async (q) => {
     try {
@@ -49,23 +48,33 @@ const Video = () => {
     }
   };
 
-  const handlePageChange = (page: number) => {
+  const handlePageChange = (page) => {
     setCurrentPage(page);
+  };
+
+  const handlePlay = (index) => {
+    videoRefs.current.forEach((video, idx) => {
+      if (index !== idx && video) {
+        video.pause();
+      }
+    });
   };
 
   const VideoList = () => (
     <>
-      <div className="grid sm:grid-cols-2 md:grid-cols-3  grid-cols-1 gap-3  text-black  justify-center">
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-3 text-black justify-center">
         {videoData.map((video, index) => {
           return (
             <Link
               to={`/video/${video.video_id}`}
               key={index}
-              className="shadow-lg cursor-pointer bg-gray-300 p-4 flex flex-col items-start rounded-xl max-h-auto border-gray-400 border-[2px]"
+              className="cursor-pointer  p-4 flex flex-col items-start rounded-xl max-h-auto hover:bg-main-bg transition-all"
             >
               <video
-                className="h-[200px] w-full object-cover rounded border-gray-400 shadow-md border-[2px]"
+                ref={(el) => (videoRefs.current[index] = el)}
+                className="h-[200px] w-full object-cover rounded-xl "
                 controls
+                onPlay={() => handlePlay(index)}
               >
                 <source src={video.video} type="video/mp4" /> Your browser does
                 not support the video tag.
@@ -73,7 +82,7 @@ const Video = () => {
               <hr className="mt-3" />
 
               <div className="flex gap-2 items-start justify-start">
-                <p className="rounded-full bg-slate-300 border-black border-[1px]">
+                <p className="rounded-full  border-black border-[1px]">
                   {video.user_image !== null ? (
                     <img
                       src={video.user_image}
@@ -88,8 +97,10 @@ const Video = () => {
                   <div>
                     <h1 className="text-2xl uppercase ">{video.title}</h1>
                   </div>
-                  <div className="flex gap-2  ">
-                    <Link to={`/profile/${video.user_video_id}`}>{video.name} </Link>
+                  <div className="flex gap-2">
+                    <Link to={`/profile/${video.user_video_id}`}>
+                      {video.name}
+                    </Link>
                     <p>-</p>
                     <p>{formatDistanceToNow(parseISO(video.createdAt))} ago</p>
                   </div>
@@ -104,12 +115,12 @@ const Video = () => {
 
   return (
     <>
-      <div className="px-4 py-20 flex bg-main-gradient pt-[100px] md:pt-[140px] flex-col gap-8 min-h-screen">
-        <div className="border-[1px] border-black  rounded-full">
+      <div className="px-4 py-20 flex  pt-[100px] md:pt-[140px] flex-col gap-8 min-h-screen">
+        <div className="border-[1px] rounded-full text-white">
           <input
             type="text"
             placeholder="Cari video..."
-            className="border-none py-4 pl-4  border-black w-full focus:outline-none text-black  rounded-full"
+            className="border-none py-4 pl-4 bg-third-bg w-full focus:outline-none  rounded-full"
             onChange={({ target }) => search(target.value)}
           />
         </div>
@@ -126,7 +137,7 @@ const Video = () => {
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}
-        />{" "}
+        />
       </div>
     </>
   );
