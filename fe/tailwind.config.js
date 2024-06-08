@@ -76,13 +76,6 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
-      fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
-      },
-      // backgroundImage: {
-      //   "main-gradient":
-      //     "linear-gradient(252.92deg, rgba(63, 19, 238, 0.38) 0.99%, #E4E0F5 66.83%)",
-      // },
     },
   },
   plugins: [require("tailwindcss-animate")],
