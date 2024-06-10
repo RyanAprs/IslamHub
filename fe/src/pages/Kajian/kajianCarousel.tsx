@@ -4,7 +4,7 @@ import bg from "../../assets/bg.png";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 
 function Card({ children }) {
-  return <div className="shadow-xl rounded-lg p-8">{children}</div>;
+  return <div className="shadow-xl rounded-lg p-4">{children}</div>;
 }
 
 function CardContent({ children, className }) {
@@ -54,7 +54,7 @@ const cards = [
     date: "01-01-2024",
     location: "Lokasi 1",
     description:
-      "Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1",
+      "Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1",
     link: "",
   },
   {
@@ -62,7 +62,7 @@ const cards = [
     date: "02-01-2024",
     location: "Lokasi 2",
     description:
-      "Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2",
+      "Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 ",
     link: "",
   },
 ];
@@ -98,15 +98,15 @@ export function CarouselDemo() {
               <div className="">
                 <Card>
                   <CardContent className="flex gap-10">
-                    <div className="flex bg-main-bg w-full h-auto md:h-[300px] ">
+                    <div className="flex bg-main-bg w-full h-auto md:h-[300px] rounded-xl ">
                       <div className="flex flex-col justify-between md:flex-col">
                         <div className="flex md:flex-row flex-col gap-4">
                           <img
                             src={bg}
-                            className="md:h-[300px] w-[454px] object-cover"
+                            className="md:h-[300px] w-[454px] object-cover rounded-t-xl md:rounded-l-xl"
                             alt="gambar kajian"
                           />
-                          <div className="flex flex-col py-2 px-8 md:px-0 gap-4 justify-center">
+                          <div className="flex flex-col py-4 px-4 md:px-0 gap-4 justify-center">
                             <div>
                               <h1 className="text-[25px] font-bold">
                                 {card.title}

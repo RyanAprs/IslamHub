@@ -46,7 +46,7 @@ const DropdownMenu = ({ user, handleLogout }) => {
         )}
       </div>
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 bg-white border border-gray-300 shadow-lg">
+        <div className="absolute text-sm top-full left-0 mt-2 bg-white border border-gray-300 shadow-lg">
           {user ? (
             <div>
               <Link
@@ -65,7 +65,7 @@ const DropdownMenu = ({ user, handleLogout }) => {
           ) : (
             <Link
               to="/login"
-              className="block w-full text-left py-2 px-4 text-gray-800 hover:bg-gray-200 rounded"
+              className="block w-full text-left text-sm py-2 px-4 text-gray-800 hover:bg-gray-200 rounded"
             >
               Login
             </Link>

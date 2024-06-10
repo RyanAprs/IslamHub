@@ -83,7 +83,7 @@ const Home = () => {
                   to="#kajian"
                   className="flex flex-col gap-2 pt-8 items-center justify-start md:justify-center font-bold "
                 >
-                  <div className="flex p-4 border-[2px] border-black rounded-full">
+                  <div className="flex p-4 border-[2px]  bg-third-bg text-white rounded-full shadow-xl">
                     Lihat Informasi Kajian Terbaru
                   </div>
                   <div className="flex items-center">
@@ -92,7 +92,7 @@ const Home = () => {
                 </Link>
               </div>
             ) : (
-              <div className="flex gap-4 md:gap-9 pt-8  items-center font-bold flex-col md:flex-row">
+              <div className="flex gap-4 md:gap-9 pt-8  items-center font-bold md:justify-start justify-center flex-row">
                 <Link
                   className="bg-third-bg text-white rounded-xl px-10 py-3"
                   to="/register"
@@ -117,9 +117,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className="">
-        <KajianList id="kajian" />
-      </div>
+      <div>{user ? <KajianList id="kajian" /> : null}</div>
     </div>
   );
 };

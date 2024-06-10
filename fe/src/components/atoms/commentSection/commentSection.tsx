@@ -1,17 +1,29 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaArrowAltCircleRight, FaTrash } from "react-icons/fa";
+import { FaArrowRight, FaTrash } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const CommentSection = () => {
   const [comment, setComment] = useState("");
   const [user_id, setUser_id] = useState("");
+  const [user, setUser] = useState("");
   const [blog_id, setBlog_id] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [dataComment, setDataComment] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [idCommentToDelete, setIdCommentToDelete] = useState();
+
+  useEffect(() => {
+    const userCookie = Cookies.get("userData");
+
+    if (userCookie) {
+      const userDataObj = JSON.parse(userCookie);
+      setUser(userDataObj);
+      setUser_id(userDataObj.user_id);
+    }
+  }, []);
 
   const { id } = useParams();
 
@@ -46,47 +58,22 @@ const CommentSection = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchComment = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/api/v1/comment/${id}`
-        );
-        setDataComment(response.data.data);
-        console.log(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchComment = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `http://localhost:3000/api/v1/comment/${id}`
+  //       );
+  //       setDataComment(response.data.data);
+  //       console.log(response.data.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    const getUserDataFromCookie = () => {
-      const cookieData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userData="));
-
-      if (cookieData) {
-        const userDataString = cookieData.split("=")[1];
-        try {
-          const userData = JSON.parse(decodeURIComponent(userDataString));
-          return userData;
-        } catch (error) {
-          console.error("Error parsing JSON from cookie:", error);
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    setBlog_id(id);
-    fetchComment();
-
-    const userData = getUserDataFromCookie();
-    if (userData) {
-      setUser_id(userData.user_id);
-      setName(userData.name);
-    }
-  }, [id]);
+  //   setBlog_id(id);
+  //   fetchComment();
+  // }, [id]);
 
   const handleDelete = async (commentId) => {
     setIdCommentToDelete(commentId);
@@ -95,19 +82,19 @@ const CommentSection = () => {
 
   const confirmDelete = async () => {
     console.log(idCommentToDelete);
-    
-    try {
-      const response = await axios.delete(
-        `http://localhost:3000/api/v1/comment/${idCommentToDelete}`
-      );
-      if (response.status === 200) {
-        window.location.reload();
-      }
-    } catch (error) {
-      console.log("Request error:", error);
-    } finally {
-      setShowModal(false);
-    }
+
+    // try {
+    //   const response = await axios.delete(
+    //     `http://localhost:3000/api/v1/comment/${idCommentToDelete}`
+    //   );
+    //   if (response.status === 200) {
+    //     window.location.reload();
+    //   }
+    // } catch (error) {
+    //   console.log("Request error:", error);
+    // } finally {
+    //   setShowModal(false);
+    // }
   };
 
   const closeModal = () => {
@@ -123,17 +110,17 @@ const CommentSection = () => {
             <div className="p-2" key={index}>
               <div className="p-4 bg-white rounded-xl flex justify-between items-center">
                 <div>
-                  <h1>{comment.name}</h1>
-                  <p>{comment.comment}</p>
+                  {/* <h1>{comment.name}</h1> */}
+                  {/* <p>{comment.comment}</p> */}
                 </div>
                 <div>
-                  {user_id === comment.user_id ? (
+                  {/* {user_id === comment.user_id ? (
                     <button onClick={() => handleDelete(comment.comment_id)}>
                       <FaTrash />
                     </button>
                   ) : (
                     ""
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
@@ -147,30 +134,28 @@ const CommentSection = () => {
 
       {error && <p className="text-red-500">{error}</p>}
 
-      {user_id ? (
+      {user ? (
         <div className="flex gap-3">
           <input
             type="text"
-            className="w-full p-4 rounded"
+            className="w-full p-4 rounded-full bg-main-bg"
             placeholder="Comment..."
             value={comment}
             onChange={(e) => setComment(e.target.value)}
           />
-          <button
-            className="bg-gray-400 py-2 px-6 rounded"
-            onClick={handleCreate}
-          >
-            <FaArrowAltCircleRight size={40} />
+          <button className=" py-2 px-6 rounded-full" onClick={handleCreate}>
+            <FaArrowRight size={40} />
           </button>
         </div>
       ) : (
         <div className="flex justify-center gap-5 items-center">
           <h4>You Should Login For Comment</h4>
-          <Link to="/login" className="bg-gray-400 px-3 py-2 rounded">
+          <Link to="/login" className=" px-3 py-2 rounded">
             Login
           </Link>
         </div>
       )}
+
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg">

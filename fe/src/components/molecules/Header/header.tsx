@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FaUser } from "react-icons/fa";
+import { FaHome, FaUser, FaUsers, FaVideo } from "react-icons/fa";
 import Cookies from "js-cookie";
 import axios from "axios";
 
@@ -10,11 +10,17 @@ const Header: React.FC = () => {
   const [name, setName] = useState("");
   const [userId, setUserId] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
+  const [clicked, setClicked] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
 
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  const handleClick = () => {
+    setClicked(true);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -114,41 +120,47 @@ const Header: React.FC = () => {
             IslamHub
           </Link>
         </div>
-        <div className="text-lg text-black hidden gap-12 font-bold md:flex">
+        <div className="text-lg text-black hidden gap-12 font-semibold md:flex">
           <Link
-            to={isHome ? "#home" : "/"}
-            className="text-third-bg transition-all flex flex-col items-center justify-center"
+            to="/"
+            className="text-third-bg transition-all hover:scale-110 flex flex-col items-center justify-center"
+            onClick={handleClick}
           >
             <h1>Home</h1>
-            {location.pathname === "/" ? (
-              <span className="w-2 h-2 rounded-full bg-third-bg"></span>
-            ) : null}
+            <span
+              className={`h-1 rounded-full bg-third-bg transition-all ${
+                location.pathname === "/" && clicked ? "w-full" : "w-0"
+              }`}
+            ></span>
           </Link>
           <Link
             to="/video"
-            className="text-third-bg transition-all flex flex-col items-center justify-center"
+            className="text-third-bg transition-all hover:scale-110 flex flex-col items-center justify-center"
+            onClick={handleClick}
           >
             <h1>Video</h1>
-            {location.pathname === "/video" ? (
-              <span className="w-2 h-2 rounded-full bg-third-bg"></span>
-            ) : null}
+            <span
+              className={`h-1 rounded-full bg-third-bg transition-all ${
+                location.pathname === "/video" && clicked ? "w-full" : "w-0"
+              }`}
+            ></span>
           </Link>
           <Link
             to="/community"
-            className="text-third-bg transition-all flex flex-col items-center justify-center"
+            className="text-third-bg transition-all hover:scale-110 flex flex-col items-center justify-center"
+            onClick={handleClick}
           >
             <h1>Komunitas</h1>
-            {location.pathname === "/community" ? (
-              <span className="w-2 h-2 rounded-full bg-third-bg"></span>
-            ) : null}
+            <span
+              className={`h-1 rounded-full bg-third-bg transition-all ${
+                location.pathname === "/community" && clicked ? "w-full" : "w-0"
+              }`}
+            ></span>
           </Link>
         </div>
         <div className="flex gap-16 items-center text-[24px]">
           <div className="relative" ref={dropdownRef}>
-            <div className="flex items-center gap-4">
-              {user && name && (
-                <p className="text-third-bg font-bold text-[20px]">{name}</p>
-              )}
+            <div className="flex items-center gap-2">
               {user && userImage !== null ? (
                 <button onClick={toggleDropdown}>
                   <img
@@ -167,16 +179,21 @@ const Header: React.FC = () => {
               )}
             </div>
             {isOpen && (
-              <div className="absolute top-full right-0 mt-2 bg-second-bg border border-blue-300 rounded-xl shadow-lg">
+              <div className="absolute top-full text-lg right-0 mt-2 bg-white border   rounded-xl shadow-xl">
                 {user ? (
-                  <div className="flex flex-col text-xl">
+                  <div className="flex flex-col text-sm justify-center items-start">
+                    <div className="px-8 py-3 block w-full text-left text-black ">
+                      {user && name && (
+                        <p className="text-black font-bold ">{name}</p>
+                      )}
+                    </div>
                     <Link
                       to={`/profile/${user.user_id}`}
-                      className="px-6 py-2 block w-full text-left text-black "
+                      className="px-8 py-3 block w-full text-left text-black "
                     >
                       Profile
                     </Link>
-                    <nav className="text-left block md:hidden">
+                    {/* <nav className="text-left block md:hidden">
                       <Link
                         to="/video"
                         className="px-6 py-2 block w-full text-black "
@@ -189,23 +206,23 @@ const Header: React.FC = () => {
                       >
                         <h1>Komunitas</h1>
                       </Link>
-                    </nav>
+                    </nav> */}
                     <button
                       onClick={handleLogout}
-                      className="px-6 py-2 block w-full text-left text-black "
+                      className="px-8 py-3 block w-full text-left text-black "
                     >
                       Logout
                     </button>
                   </div>
                 ) : (
-                  <div className="flex flex-col">
+                  <div className="flex flex-col text-lg ">
                     <Link
                       to="/login"
-                      className="block w-full text-left px-2 py-2 text-black "
+                      className="block w-full text-left px-8 py-2 text-black "
                     >
                       Login
                     </Link>
-                    <nav className="text-left block md:hidden">
+                    {/* <nav className="text-left block md:hidden">
                       <Link
                         to="/community"
                         className="px-2 py-2 block w-full text-black "
@@ -218,7 +235,7 @@ const Header: React.FC = () => {
                       >
                         <h1>Video</h1>
                       </Link>
-                    </nav>
+                    </nav> */}
                   </div>
                 )}
               </div>
@@ -226,7 +243,39 @@ const Header: React.FC = () => {
           </div>
         </div>
       </header>
-      {/* <div className="fixed bottom-0 left-0 right-0">Testt</div> */}
+      <div className="fixed z-50 md:hidden  bottom-0 left-0 right-0 bg-white shadow-xl p-3">
+        <div className="flex  justify-between px-8 items-center text-black">
+          <Link
+            to={isHome ? "#home" : "/"}
+            className={`flex flex-col items-center justify-center transition-all  ${
+              location.pathname === "/" ? "opacity-100" : "opacity-50"
+            }`}
+          >
+            <FaHome size={25} />
+            <div className="text-sm">Home</div>
+          </Link>
+
+          <Link
+            to="/video"
+            className={`flex flex-col items-center justify-center transition-all  ${
+              location.pathname === "/video" ? "opacity-100" : "opacity-50"
+            }`}
+          >
+            <FaVideo size={25} />
+            <div className="text-sm">Video</div>
+          </Link>
+
+          <Link
+            to="/community"
+            className={`flex flex-col items-center justify-center transition-all  ${
+              location.pathname === "/community" ? "opacity-100" : "opacity-50"
+            }`}
+          >
+            <FaUsers size={25} />
+            <div className="text-sm">Komunitas</div>
+          </Link>
+        </div>
+      </div>
     </>
   );
 };

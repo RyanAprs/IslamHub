@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { FaPen, FaTrash, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import BackButton from "../../components/atoms/backButton/backButton";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { storage } from "../../firebase";
 import { ref, deleteObject } from "firebase/storage";
@@ -97,12 +96,9 @@ const DetailVideo = () => {
   };
 
   return (
-    <div className="min-h-screen pt-[100px] md:pt-[100px] bg-main-gradient flex flex-col md:p-2">
-      <div className="flex md:px-4 px-1">
-        <BackButton path="/video" />
-      </div>
-      <div className="px-8 py-4 flex flex-col gap-3">
-        <div className="flex md:flex-row flex-col gap-2 justify-evenly">
+    <div className="min-h-screen pt-[70px] md:pt-[100px] bg-main-gradient flex flex-col md:p-2">
+      <div className="md:px-8 px-0 py-4 flex flex-col gap-3">
+        <div className="flex  md:flex-row flex-col gap-2 justify-evenly">
           <div className="w-full md:w-[823px] h-full">
             {video ? (
               <video
@@ -115,57 +111,61 @@ const DetailVideo = () => {
             ) : (
               <p>Loading video...</p>
             )}{" "}
-            <div>
-              <div className="md:text-3xl text-2xl font-bold">{title}</div>
+            <div className="md:px-0 px-4 ">
               <div>
-                {createdAt ? (
-                  <p>{formatDistanceToNow(parseISO(createdAt))} ago</p>
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
-            <div className="text-md">
-              {showFullDescription
-                ? description
-                : description.length > 50
-                ? `${description.slice(0, 20)}...`
-                : description}
-              {description.length > 50 && (
-                <button
-                  onClick={() => setShowFullDescription(!showFullDescription)}
-                  className="text-blue-500 ml-2"
-                >
-                  {showFullDescription ? "tampilkan lebih sedikit" : "Lainnya"}
-                </button>
-              )}
-            </div>
-            <Link
-              to={`/profile/${userVideoId}`}
-              className="flex gap-3 mb-3 items-center py-2 w-max"
-            >
-              <div className="flex gap-5 mb-3 items-center">
-                <div className="rounded-full bg-slate-300 border-black border-[1px]">
-                  {image ? (
-                    <img
-                      src={image}
-                      alt="user image"
-                      className="rounded-full w-[50px] h-[50px] object-cover"
-                    />
+                <div className="md:text-3xl text-2xl font-bold">{title}</div>
+                <div>
+                  {createdAt ? (
+                    <p>{formatDistanceToNow(parseISO(createdAt))} ago</p>
                   ) : (
-                    <FaUser className="text-black rounded-full w-[50px] h-[50px] object-cover" />
+                    ""
                   )}
                 </div>
-                <div className="text-lg font-bold uppercase">{name}</div>
               </div>
-            </Link>
-            <div>
-              <CommentSection />
+              <div className="text-md">
+                {showFullDescription
+                  ? description
+                  : description.length > 50
+                  ? `${description.slice(0, 20)}...`
+                  : description}
+                {description.length > 50 && (
+                  <button
+                    onClick={() => setShowFullDescription(!showFullDescription)}
+                    className="text-blue-500 ml-2 "
+                  >
+                    {showFullDescription
+                      ? "tampilkan lebih sedikit"
+                      : "Lainnya"}
+                  </button>
+                )}
+              </div>
+              <Link
+                to={`/profile/${userVideoId}`}
+                className="flex gap-3 mb-3 items-center py-2 w-full"
+              >
+                <div className="flex gap-5 mb-3 rounded-full w-full p-2 bg-main-bg items-center">
+                  <div className="rounded-full  border-black border-[1px]">
+                    {image ? (
+                      <img
+                        src={image}
+                        alt="user image"
+                        className="rounded-full w-[50px] h-[50px] object-cover"
+                      />
+                    ) : (
+                      <FaUser className="text-black rounded-full w-[50px] h-[50px] object-cover" />
+                    )}
+                  </div>
+                  <div className="text-lg font-bold ">{name}</div>
+                </div>
+              </Link>
+              <div>
+                <CommentSection />
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-col w-96 bg-main-bg p-5">
-            Video lainnya 
+          <div className="flex flex-col w-full md:w-96 bg-main-bg p-5">
+            Video lainnya
           </div>
         </div>
       </div>
