@@ -99,7 +99,7 @@ const ChatSection = ({ admin }) => {
 
   return (
     <div className="flex flex-col flex-grow ">
-      <div className="w-full flex-grow overflow-y-auto  bg-main-gradient h-[40px]">
+      <div className="w-full flex-grow overflow-y-auto  bg-main-bg h-[40px]">
         <div className="flex items-center justify-center">
           created by {admin}
         </div>

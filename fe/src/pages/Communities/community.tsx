@@ -5,6 +5,7 @@ import { FaPlus, FaUsers } from "react-icons/fa";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import Pagination from "../../components/molecules/Pagination/pagination";
 import Cookies from "js-cookie";
+import CommunityList from "./communityList";
 
 const Chat = () => {
   const [communities, setCommunities] = useState([]);
@@ -102,7 +103,7 @@ const Chat = () => {
     setCurrentPage(page);
   };
 
-  const CommunityList = () => (
+  const KomunitasList = () => (
     <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-3 text-black justify-center">
       {communities.map((community, index) => (
         <Link
@@ -137,27 +138,17 @@ const Chat = () => {
   );
 
   return (
-    <div className="px-4 py-20 flex bg-main-gradient pt-[100px] md:pt-[140px] flex-col gap-8 min-h-screen">
-      <div className="border-[1px] border-third-bg rounded-full text-black">
-        <input
-          type="text"
-          placeholder="Cari Komunitas..."
-          className="border-none py-4 pl-4 bg-main-bg w-full focus:outline-none  rounded-full"
-          onChange={({ target }) => search(target.value)}
-        />
-      </div>
+    <div className="flex bg-main-gradient  gap-8 min-h-screen">
       <div>
-        {Array.isArray(communities) && communities.length > 0 ? (
-          <CommunityList />
-        ) : (
-          <div className="min-h-screen flex justify-center">
-            <h1>No Community Posted</h1>
-          </div>
-        )}
+        <CommunityList />
       </div>
+      <div className="pt-[0px] flex justify-center w-full">
+        Sliahkan Pilih Komunitas
+      </div>
+
       <button
         onClick={handleShowModal}
-        className="fixed bg-blue-700 text-white hover:bg-blue-800 transition-all shadow-lg p-6 rounded-full bottom-5 right-4"
+        className="fixed bg-third-bg text-white hover:1/2-bg-third-bg transition-all shadow-lg p-6 rounded-full bottom-5 right-4"
       >
         <FaPlus />
       </button>
@@ -209,11 +200,6 @@ const Chat = () => {
           </div>
         </div>
       )}
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
     </div>
   );
 };

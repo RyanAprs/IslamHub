@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaUsers } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 
 const CommunityList = () => {
@@ -8,7 +8,7 @@ const CommunityList = () => {
   const [selectedCommunityId, setSelectedCommunityId] = useState(null);
 
   const location = useLocation();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -35,28 +35,36 @@ const CommunityList = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <div
-        className={`overflow-y-auto min-h-screen ${
-          isSidebarOpen
-            ? "bg-blue-500 w-[200px] border-black border-[1px] p-2"
-            : "bg-blue-200 w-0 p-0 border-0"
+        className={`overflow-y-auto min-h-screen pt-[80px] ${
+          isSidebarOpen ? " w-[300px]  p-2" : "bg-white w-0 p-0 border-0"
         } relative transition-all duration-300`}
       >
         {isSidebarOpen && (
-          <>
-            <div className="flex items-center justify-between p-4 bg-blue-500">
-              <div
-                onClick={toggleSidebar}
-                className="cursor-pointer flex items-center justify-center"
-              >
-                <FaTimes size={20} />
+          <div className="flex flex-col gap-4">
+            <div className=" flex flex-col ">
+              <div className="py-3 pl-2 flex items-center justify-between">
+                <Link to="/community" className="font-semibold text-xl">
+                  Komunitas
+                </Link>
+                <div
+                  onClick={toggleSidebar}
+                  className="cursor-pointer flex items-center justify-start"
+                >
+                  <FaTimes size={20} />
+                </div>
               </div>
-              <Link to="/community" className="font-bold text-xl">
-                Communities
-              </Link>
+              <div className=" rounded-full text-black">
+                <input
+                  type="text"
+                  placeholder="Cari Komunitas..."
+                  className="border-none py-3 pl-4 bg-main-bg w-full focus:outline-none  rounded-full"
+                  // onChange={({ target }) => search(target.value)}
+                />
+              </div>
             </div>
-            <div className="overflow-y-auto h-[500px] border-t-[2px] border-black">
+            <div className="overflow-y-auto h-[500px] p-2 rounded-xl bg-main-bg px ">
               {communities.map((community) => {
                 const isSelected =
                   community.community_id === selectedCommunityId;
@@ -64,19 +72,32 @@ const CommunityList = () => {
                   <Link
                     to={`/community/${community.community_id}`}
                     key={community._id}
-                    className={`flex p-3 rounded-xl transition-all mt-1 ${
-                      isSelected ? "bg-blue-400" : "hover:bg-blue-400"
+                    className={`flex p-3 gap-2 mt-2 rounded-xl transition-all ${
+                      isSelected ? "bg-white" : "hover:bg-white"
                     }`}
                     onClick={() =>
                       setSelectedCommunityId(community.community_id)
                     }
                   >
-                    <h1>{community.title}</h1>
+                    {community && community.image !== null ? (
+                      <div>
+                        <img
+                          src={community.image}
+                          alt="user image"
+                          className="h-[40px] w-[40px] object-cover rounded-full"
+                        />
+                      </div>
+                    ) : (
+                      <div className="cursor-pointer h-[40px] w-[40px] flex items-center p-3 text-main-bg bg-third-bg rounded-full">
+                        <FaUsers size={50} className="text-main-bg" />
+                      </div>
+                    )}
+                    <div className="flex items-start">{community.title}</div>
                   </Link>
                 );
               })}
             </div>
-          </>
+          </div>
         )}
       </div>
       {!isSidebarOpen && (

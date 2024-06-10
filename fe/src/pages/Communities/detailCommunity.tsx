@@ -185,10 +185,10 @@ const DetailCommunity = () => {
   };
 
   return (
-    <div className="flex pt-[80px] min-h-screen">
+    <div className="flex  min-h-screen">
       <CommunityList />
-      <div className="flex flex-col w-full">
-        <nav className="bg-blue-500 h-15 w-full border-black border-[1px]">
+      <div className="flex flex-col w-full pt-[90px]">
+        <nav className="bg-third-bg h-15 w-full border-black border-[1px]">
           <div className="flex px-3 items-center justify-between">
             <div className="flex items-center pl-2">
               {dataImage !== null ? (
@@ -211,7 +211,7 @@ const DetailCommunity = () => {
                 onClick={handleShowModal}
                 className="flex items-center justify-between pr-4"
               >
-                <FaEllipsisV />
+                <FaEllipsisV className="text-white" />
               </button>
             ) : (
               ""
