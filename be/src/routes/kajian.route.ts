@@ -6,7 +6,7 @@ import {
   getKajian,
   getKajianByUser,
   updateKajian,
-} from "../controllers/kajian.kontroller";
+} from "../controllers/kajian.controller";
 
 export const KajianRouter: Router = Router();
 

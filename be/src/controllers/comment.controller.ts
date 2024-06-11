@@ -58,7 +58,7 @@ export const getComments = async (req: Request, res: Response) => {
 
 export const createComment = async (req: Request, res: Response) => {
   const comment_id = uuidv4();
-  const { user_id, video_id, comment } = req.body;
+  const { user_id, video_id, comment, name } = req.body;
 
   if (!comment) {
     return res.status(400).send({
@@ -72,6 +72,7 @@ export const createComment = async (req: Request, res: Response) => {
     comment_id,
     user_id,
     video_id,
+    name,
     comment,
   };
 

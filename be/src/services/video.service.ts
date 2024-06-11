@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import videoModel from "../models/video.model";
 import authModel from "../models/auth.model";
+import commentModel from "../models/comment.model";
 
 export const getAllVideo = async (
   req: Request,
@@ -101,7 +102,11 @@ export const insertVideo = async (payload: any) => {
 
 export const getVideoAndDelete = async (id: string) => {
   try {
-    return await videoModel.findOneAndDelete({ video_id: id });
+    const deleteVideo = await videoModel.findOneAndDelete({ video_id: id });
+
+    const deleteComment = await commentModel.deleteMany({ video_id: id });
+
+    return { deleteVideo, deleteComment };
   } catch (error) {
     throw error;
   }
