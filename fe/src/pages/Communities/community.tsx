@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { FaPlus, FaUsers } from "react-icons/fa";
-import { formatDistanceToNow, parseISO } from "date-fns";
-import Pagination from "../../components/molecules/Pagination/pagination";
 import Cookies from "js-cookie";
 import CommunityList from "./communityList";
 
@@ -12,7 +10,6 @@ const Chat = () => {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [user_id, setUser_id] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
@@ -38,7 +35,6 @@ const Chat = () => {
       );
       const data = response.data.data;
       setCommunities(data);
-      setTotalPages(response.data.total_page);
     } catch (error) {
       console.log(error);
     }
@@ -78,77 +74,18 @@ const Chat = () => {
     }
   };
 
-  const search = async (q) => {
-    try {
-      if (q.length > 0) {
-        const response = await axios.get(
-          `http://localhost:3000/api/v1/community/search`,
-          {
-            params: {
-              query: q,
-            },
-          }
-        );
-        setCommunities(response.data.data);
-        setTotalPages(1);
-      } else if (q.length === 0) {
-        fetchCommunities();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  const KomunitasList = () => (
-    <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-3 text-black justify-center">
-      {communities.map((community, index) => (
-        <Link
-          to={`/community/${community.community_id}`}
-          key={index}
-          className="shadow-lg cursor-pointer bg-gray-300 p-4 flex flex-col items-start rounded-xl max-h-auto border-gray-400 border-[2px]"
-        >
-          {community && community.image !== null ? (
-            <img
-              className="h-[200px] w-full object-cover rounded border-gray-400 shadow-md border-[2px]"
-              src={community.image}
-              alt="community image"
-            />
-          ) : (
-            <div className="h-[200px] flex justify-center items-center w-full object-cover rounded border-gray-400 shadow-md border-[2px]">
-              <FaUsers size={200} />
-            </div>
-          )}
-          <hr className="mt-3" />
-          <div className="flex gap-2 items-start justify-start">
-            <div>
-              <h1 className="text-2xl uppercase">{community.title}</h1>
-              <div>
-                {community.name} -{" "}
-                {formatDistanceToNow(parseISO(community.createdAt))} ago
-              </div>
-            </div>
-          </div>
-        </Link>
-      ))}
-    </div>
-  );
-
   return (
     <div className="flex bg-main-gradient  gap-8 min-h-screen">
-      <div>
+      <div className="z-40 fixed bg-white">
         <CommunityList />
       </div>
-      <div className="pt-[0px] flex justify-center w-full">
-        Sliahkan Pilih Komunitas
+      <div className="pt-[100px] flex justify-center w-full text-xl">
+        Silahkan Pilih Komunitas
       </div>
 
       <button
         onClick={handleShowModal}
-        className="fixed bg-third-bg text-white hover:1/2-bg-third-bg transition-all shadow-lg p-6 rounded-full bottom-5 right-4"
+        className="fixed bg-third-bg text-white hover:1/2-bg-third-bg transition-all shadow-lg p-6 rounded-full bottom-20 md:bottom-5 right-4"
       >
         <FaPlus />
       </button>

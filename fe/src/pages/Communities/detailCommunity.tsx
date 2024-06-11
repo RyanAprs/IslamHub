@@ -186,7 +186,9 @@ const DetailCommunity = () => {
 
   return (
     <div className="flex  min-h-screen">
-      <CommunityList />
+      <div className="z-40 fixed bg-white">
+        <CommunityList />
+      </div>
       <div className="flex flex-col w-full pt-[90px]">
         <nav className="bg-third-bg h-15 w-full border-black border-[1px]">
           <div className="flex px-3 items-center justify-between">

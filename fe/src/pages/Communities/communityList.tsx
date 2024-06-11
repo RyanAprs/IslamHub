@@ -34,6 +34,59 @@ const CommunityList = () => {
     }
   };
 
+  const search = async (q) => {
+    try {
+      if (q.length > 0) {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/community/search`,
+          {
+            params: {
+              query: q,
+            },
+          }
+        );
+        setCommunities(response.data.data);
+      } else if (q.length === 0) {
+        fetchCommunities();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const KomunitasList = () => (
+    <>
+      {communities.map((community) => {
+        const isSelected = community.community_id === selectedCommunityId;
+        return (
+          <Link
+            to={`/community/${community.community_id}`}
+            key={community._id}
+            className={`flex p-3 gap-2 mt-2 rounded-xl transition-all ${
+              isSelected ? "bg-white" : "hover:bg-white"
+            }`}
+            onClick={() => setSelectedCommunityId(community.community_id)}
+          >
+            {community && community.image !== null ? (
+              <div>
+                <img
+                  src={community.image}
+                  alt="user image"
+                  className="h-[40px] w-[40px] object-cover rounded-full"
+                />
+              </div>
+            ) : (
+              <div className="cursor-pointer h-[40px] w-[40px] flex items-center p-3 text-main-bg bg-third-bg rounded-full">
+                <FaUsers size={50} className="text-main-bg" />
+              </div>
+            )}
+            <div className="flex items-start">{community.title}</div>
+          </Link>
+        );
+      })}
+    </>
+  );
+
   return (
     <div className="relative ">
       <div
@@ -60,42 +113,18 @@ const CommunityList = () => {
                   type="text"
                   placeholder="Cari Komunitas..."
                   className="border-none py-3 pl-4 bg-main-bg w-full focus:outline-none  rounded-full"
-                  // onChange={({ target }) => search(target.value)}
+                  onChange={({ target }) => search(target.value)}
                 />
               </div>
             </div>
             <div className="overflow-y-auto h-[500px] p-2 rounded-xl bg-main-bg px ">
-              {communities.map((community) => {
-                const isSelected =
-                  community.community_id === selectedCommunityId;
-                return (
-                  <Link
-                    to={`/community/${community.community_id}`}
-                    key={community._id}
-                    className={`flex p-3 gap-2 mt-2 rounded-xl transition-all ${
-                      isSelected ? "bg-white" : "hover:bg-white"
-                    }`}
-                    onClick={() =>
-                      setSelectedCommunityId(community.community_id)
-                    }
-                  >
-                    {community && community.image !== null ? (
-                      <div>
-                        <img
-                          src={community.image}
-                          alt="user image"
-                          className="h-[40px] w-[40px] object-cover rounded-full"
-                        />
-                      </div>
-                    ) : (
-                      <div className="cursor-pointer h-[40px] w-[40px] flex items-center p-3 text-main-bg bg-third-bg rounded-full">
-                        <FaUsers size={50} className="text-main-bg" />
-                      </div>
-                    )}
-                    <div className="flex items-start">{community.title}</div>
-                  </Link>
-                );
-              })}
+              {Array.isArray(communities) && communities.length > 0 ? (
+                <KomunitasList />
+              ) : (
+                <div className="min-h-screen flex justify-center">
+                  <h1>Komunitas tidak ditemukan</h1>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -103,7 +132,7 @@ const CommunityList = () => {
       {!isSidebarOpen && (
         <button
           onClick={toggleSidebar}
-          className="top-32 fixed left-0 bg-blue-700 text-white p-4  rounded-r-full z-50 transition-all duration-300"
+          className="top-24 fixed left-0 bg-third-bg text-white p-4  rounded-r-full z-50 transition-all duration-300"
         >
           <FaBars />
         </button>
