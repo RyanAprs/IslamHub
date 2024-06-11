@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaPen, FaTrash, FaUser } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { storage } from "../../firebase";
 import { ref, deleteObject } from "firebase/storage";
 import Cookies from "js-cookie";
 import CommentSection from "../../components/atoms/commentSection/commentSection";
+import VideoList from "./videoList";
 
 const DetailVideo = () => {
   const { id } = useParams();
@@ -20,13 +20,11 @@ const DetailVideo = () => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-
   const [image, setImage] = useState();
   const [name, setName] = useState();
 
   useEffect(() => {
     const userCookie = Cookies.get("userData");
-
     if (userCookie) {
       const userDataObj = JSON.parse(userCookie);
       setUser(userDataObj);
@@ -39,35 +37,36 @@ const DetailVideo = () => {
         const response = await axios.get(
           `http://localhost:3000/api/v1/video/${id}`
         );
-        setVideo(response.data.data.video);
-        setUserVideoId(response.data.data.user_video_id);
-        setTitle(response.data.data.title);
-        setDescription(response.data.data.description);
-        setCreatedAt(response.data.data.createdAt);
+        const videoData = response.data.data;
+        setVideo(videoData.video);
+        setUserVideoId(videoData.user_video_id);
+        setTitle(videoData.title);
+        setDescription(videoData.description);
+        setCreatedAt(videoData.createdAt);
       } catch (error) {
         console.error("Error fetching video:", error);
       }
     };
-
     fetchVideoById();
   }, [id]);
 
   useEffect(() => {
-    getUserDetail();
-  }, [userVideoId]);
-
-  const getUserDetail = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3000/api/v1/user/${userVideoId}`
-      );
-
-      setName(response.data.data.name);
-      setImage(response.data.data.image);
-    } catch (error) {
-      console.log(error);
+    const getUserDetail = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/user/${userVideoId}`
+        );
+        const userData = response.data.data;
+        setName(userData.name);
+        setImage(userData.image);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (userVideoId) {
+      getUserDetail();
     }
-  };
+  }, [userVideoId]);
 
   const handleDelete = async () => {
     setShowModal(true);
@@ -77,7 +76,6 @@ const DetailVideo = () => {
     try {
       const videoRef = ref(storage, video);
       await deleteObject(videoRef);
-
       const response = await axios.delete(
         `http://localhost:3000/api/v1/video/${id}`
       );
@@ -102,6 +100,7 @@ const DetailVideo = () => {
           <div className="w-full md:w-[823px] h-full">
             {video ? (
               <video
+                key={video}
                 className="w-full md:w-[823px] h-full md:h-[463px] object-fill rounded border-gray-400 shadow-md border-[2px]"
                 controls
               >
@@ -110,8 +109,8 @@ const DetailVideo = () => {
               </video>
             ) : (
               <p>Loading video...</p>
-            )}{" "}
-            <div className="md:px-0 px-4 ">
+            )}
+            <div className="md:px-0 px-4">
               <div>
                 <div className="md:text-3xl text-2xl font-bold">{title}</div>
                 <div>
@@ -144,7 +143,7 @@ const DetailVideo = () => {
                 className="flex gap-3 mb-3 items-center py-2 w-full"
               >
                 <div className="flex gap-5 mb-3 rounded-full w-full p-2 bg-main-bg items-center">
-                  <div className="rounded-full  border-black border-[1px]">
+                  <div className="rounded-full border-black border-[1px]">
                     {image ? (
                       <img
                         src={image}
@@ -155,7 +154,7 @@ const DetailVideo = () => {
                       <FaUser className="text-black rounded-full w-[50px] h-[50px] object-cover" />
                     )}
                   </div>
-                  <div className="text-lg font-bold ">{name}</div>
+                  <div className="text-lg font-bold">{name}</div>
                 </div>
               </Link>
               <div>
@@ -163,9 +162,8 @@ const DetailVideo = () => {
               </div>
             </div>
           </div>
-
-          <div className="flex flex-col w-full md:w-96 bg-main-bg p-5">
-            Video lainnya
+          <div className="flex flex-col w-full md:w-96 bg-main-bg">
+            <VideoList />
           </div>
         </div>
       </div>
@@ -184,8 +182,6 @@ const DetailVideo = () => {
           </button>
         </div>
       )}
-      {/* <div className="p-4 rounded mt-4"><CommentSection /></div> */}
-
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg">
