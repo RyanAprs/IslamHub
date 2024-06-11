@@ -2,9 +2,9 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import quranImg from "../../assets/quran.png";
-import KajianList from "../Kajian/kajianList";
 import axios from "axios";
 import { BsChevronDoubleDown } from "react-icons/bs";
+import KajianHome from "./kajianHome";
 
 const Home = () => {
   const [user, setUser] = useState();
@@ -117,7 +117,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <div>{user ? <KajianList id="kajian" /> : null}</div>
+      <div>{user ? <KajianHome id="kajian" /> : null}</div>
     </div>
   );
 };

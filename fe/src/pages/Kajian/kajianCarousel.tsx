@@ -67,7 +67,7 @@ const cards = [
   },
 ];
 
-export function CarouselDemo() {
+export function KajianCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalSlides = cards.length;
 
