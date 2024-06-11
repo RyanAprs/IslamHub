@@ -157,7 +157,7 @@ const DetailVideo = () => {
                   <div className="text-lg font-bold">{name}</div>
                 </div>
               </Link>
-              <div>
+              <div className="pb-10">
                 <CommentSection />
               </div>
             </div>

@@ -8,7 +8,7 @@ const CommentSection = () => {
   const [comment, setComment] = useState("");
   const [user_id, setUser_id] = useState("");
   const [user, setUser] = useState("");
-  const [blog_id, setBlog_id] = useState("");
+  const [video_id, setVideo_id] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [dataComment, setDataComment] = useState([]);
@@ -22,6 +22,7 @@ const CommentSection = () => {
       const userDataObj = JSON.parse(userCookie);
       setUser(userDataObj);
       setUser_id(userDataObj.user_id);
+      setName(userDataObj.name);
     }
   }, []);
 
@@ -33,7 +34,7 @@ const CommentSection = () => {
         "http://localhost:3000/api/v1/comment",
         {
           user_id,
-          blog_id,
+          video_id,
           comment,
           name,
         }
@@ -41,7 +42,6 @@ const CommentSection = () => {
 
       if (response.data.status_code === 200) {
         window.location.reload();
-        console.log("create comment berhasil");
       } else {
         console.log("create comment gagal");
       }
@@ -58,22 +58,21 @@ const CommentSection = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const fetchComment = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `http://localhost:3000/api/v1/comment/${id}`
-  //       );
-  //       setDataComment(response.data.data);
-  //       console.log(response.data.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchComment = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/comment/${id}`
+        );
+        setDataComment(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  //   setBlog_id(id);
-  //   fetchComment();
-  // }, [id]);
+    setVideo_id(id);
+    fetchComment();
+  }, [id]);
 
   const handleDelete = async (commentId) => {
     setIdCommentToDelete(commentId);
@@ -83,18 +82,18 @@ const CommentSection = () => {
   const confirmDelete = async () => {
     console.log(idCommentToDelete);
 
-    // try {
-    //   const response = await axios.delete(
-    //     `http://localhost:3000/api/v1/comment/${idCommentToDelete}`
-    //   );
-    //   if (response.status === 200) {
-    //     window.location.reload();
-    //   }
-    // } catch (error) {
-    //   console.log("Request error:", error);
-    // } finally {
-    //   setShowModal(false);
-    // }
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/v1/comment/${idCommentToDelete}`
+      );
+      if (response.status === 200) {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("Request error:", error);
+    } finally {
+      setShowModal(false);
+    }
   };
 
   const closeModal = () => {
@@ -108,19 +107,19 @@ const CommentSection = () => {
         {dataComment && dataComment.length > 0 ? (
           dataComment.map((comment, index) => (
             <div className="p-2" key={index}>
-              <div className="p-4 bg-white rounded-xl flex justify-between items-center">
+              <div className="p-4 bg-main-bg rounded-xl flex justify-between items-center">
                 <div>
-                  {/* <h1>{comment.name}</h1> */}
-                  {/* <p>{comment.comment}</p> */}
+                  <h1 className="font-bold">{comment.name}</h1>
+                  <p>{comment.comment}</p>
                 </div>
                 <div>
-                  {/* {user_id === comment.user_id ? (
+                  {user_id === comment.user_id ? (
                     <button onClick={() => handleDelete(comment.comment_id)}>
                       <FaTrash />
                     </button>
                   ) : (
                     ""
-                  )} */}
+                  )}
                 </div>
               </div>
             </div>
