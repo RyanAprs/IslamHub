@@ -29,6 +29,7 @@ import AdminDashboard from "../../pages/Admin/adminDashboard";
 import AdminLogin from "../../pages/Admin/adminLogin";
 import NotFound from "../../pages/notFound/notFound";
 import TotalUser from "../../pages/Admin/stats/totalUser";
+import KajianList from "../../pages/Kajian/kajianList";
 
 const RouteData = [
   {
@@ -70,6 +71,10 @@ const RouteData = [
   {
     path: "/video/:id",
     element: <DetailVideo />,
+  },
+  {
+    path: "/kajian",
+    element: <KajianList />,
   },
 ];
 
