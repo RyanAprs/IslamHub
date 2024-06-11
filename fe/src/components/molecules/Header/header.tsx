@@ -110,13 +110,11 @@ const Header: React.FC = () => {
         className={`fixed font-poppins bg-main-bg top-0 left-0 right-0 z-50 flex justify-between items-center py-4 md:py-4 px-5 md:px-10 text-black shadow-lg transition-colors duration-300 `}
       >
         <div className="font-poppins text-[24px] text-third-bg">
-          <Link to={isHome ? "#home" : "/"} className="font-bold">
-            IslamHub
-          </Link>
+          <div className="font-bold">IslamHub</div>
         </div>
         <div className="text-lg text-black hidden gap-12 font-semibold md:flex">
           <Link
-            to="/"
+            to={isHome ? "#home" : "/"}
             className="text-third-bg transition-all hover:scale-110 flex flex-col items-center justify-center"
             onClick={handleClick}
           >
