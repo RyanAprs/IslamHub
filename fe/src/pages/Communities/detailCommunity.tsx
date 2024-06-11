@@ -189,9 +189,9 @@ const DetailCommunity = () => {
       <div className="z-40 fixed bg-white">
         <CommunityList />
       </div>
-      <div className="flex flex-col w-full pt-[90px]">
-        <nav className="bg-third-bg h-15 w-full border-black border-[1px]">
-          <div className="flex px-3 items-center justify-between">
+      <div className="flex flex-col w-full pt-[85px]">
+        <nav className="bg-third-bg h-16 w-full border-black border-[1px]">
+          <div className="flex px-10 items-center justify-between">
             <div className="flex items-center pl-2">
               {dataImage !== null ? (
                 <button>

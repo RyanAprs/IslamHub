@@ -131,7 +131,7 @@ const VideoUser = () => {
             <VideoList />
           ) : (
             <div className="min-h-screen flex justify-center">
-              <h1>No Video Posted</h1>
+              <h1>Belum ada Video</h1>
             </div>
           )}
         </div>

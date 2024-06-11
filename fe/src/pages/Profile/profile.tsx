@@ -69,7 +69,7 @@ const Profile = () => {
               </p>
             </div>
             <div className="md:py-6 py-3 flex flex-wrap gap-4">
-              {(user && user.user_id !== userId) || user === null ? (
+              {(user && user.user_id !== userId) || !user  ? (
                 ""
               ) : (
                 <div className="flex gap-5">

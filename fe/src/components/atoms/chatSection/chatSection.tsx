@@ -24,7 +24,6 @@ const ChatSection = ({ admin }) => {
         );
         const data = response.data.data;
         setDataChats(data);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -98,7 +97,7 @@ const ChatSection = ({ admin }) => {
   };
 
   return (
-    <div className="flex flex-col flex-grow ">
+    <div className="flex flex-col flex-grow md:pb-12 pb-0">
       <div className="w-full flex-grow overflow-y-auto  bg-main-bg h-[40px]">
         <div className="flex items-center justify-center">
           created by {admin}
@@ -175,8 +174,8 @@ const ChatSection = ({ admin }) => {
         )}
       </div>
 
-      <div className="p-4 bg-blue-200">
-        {error && <p className="text-white bg-blue-500">{error}</p>}
+      <div className="p-4 bg-main-bg border-[1px] ">
+        {error && <p className="text-red-400">{error}</p>}
         {user_id ? (
           <div className="flex gap-3 ">
             <input
@@ -187,7 +186,7 @@ const ChatSection = ({ admin }) => {
               onChange={(e) => setChat(e.target.value)}
             />
             <button
-              className="bg-white py-2 px-6 rounded-xl"
+              className=" py-2 md:px-5 px-1 rounded-xl"
               onClick={handleCreate}
             >
               <FaArrowRight size={40} />
@@ -196,7 +195,7 @@ const ChatSection = ({ admin }) => {
         ) : (
           <div className="flex justify-center gap-5 items-center">
             <h4>You Should Login For Chat</h4>
-            <Link to="/login" className="bg-blue-400 px-3 py-2 rounded">
+            <Link to="/login" className="bg-third-bg text-white px-3 py-2 rounded">
               Login
             </Link>
           </div>

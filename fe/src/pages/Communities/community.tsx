@@ -85,7 +85,7 @@ const Chat = () => {
 
       <button
         onClick={handleShowModal}
-        className="fixed bg-third-bg text-white hover:1/2-bg-third-bg transition-all shadow-lg p-6 rounded-full bottom-20 md:bottom-5 right-4"
+        className="fixed bg-third-bg text-white transition-all shadow-xl p-6 rounded-full bottom-20 md:bottom-12 right-4"
       >
         <FaPlus />
       </button>

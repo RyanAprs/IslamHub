@@ -68,6 +68,7 @@ const CreateVideo = () => {
         try {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           setVideoUrl(downloadURL);
+          setProgress(100); // Ensure progress is set to 100 when the upload is complete
         } catch (error) {
           console.error("Error getting download URL:", error);
         }
@@ -76,6 +77,10 @@ const CreateVideo = () => {
   };
 
   const handleCreate = async () => {
+    if (progress < 100) {
+      return;
+    }
+
     try {
       const response = await axios.post("http://localhost:3000/api/v1/video", {
         user_video_id: userVideoId,
@@ -89,7 +94,7 @@ const CreateVideo = () => {
       } else {
         console.log("Gagal membuat video");
       }
-    } catch (error: any) {
+    } catch (error) {
       if (error.response) {
         setError(error.response.data.message);
       } else if (error.request) {
@@ -101,38 +106,44 @@ const CreateVideo = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-8 justify-center pt-[140px]">
+    <div className="flex flex-col items-center gap-8 justify-center pt-[70px] min-h-screen">
       <div className="text-[36px] font-bold">Create Video</div>
       <div className="w-full flex flex-col justify-center px-8 rounded shadow-lg gap-10">
         {error && <p className="text-red-500">{error}</p>}
         <div className="flex items-center justify-center flex-col gap-2">
           <input
             type="text"
-            placeholder="Title"
-            className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
+            placeholder="Judul"
+            className="border-2 border-third-bg rounded-xl p-4 mb-4 w-full"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <textarea
-            placeholder="Description"
-            className="border-2 border-gray-300 rounded p-4 mb-4 w-full h-[150px]"
+            placeholder="Deskripsi"
+            className="border-2 border-third-bg rounded-xl p-4 mb-4 w-full h-[150px]"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+          {progress > 0 && (
+            <p className="text-black">Uploading {progress.toFixed(2)}%</p>
+          )}
           <input
             type="file"
             placeholder="video"
-            className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
+            className="border-2 border-third-bg rounded-xl p-4 mb-4 w-full"
             onChange={handleVideoChange}
           />
-          {progress > 0 && (
-            <p className="text-green-600">Uploading {progress.toFixed(2)}%</p>
-          )}
+
           <div className="flex gap-4">
             <BackButton path={`/profile/${userVideoId}`} />
             <button
               onClick={handleCreate}
-              className="bg-blue-500 p-2 rounded-xl mb-4 flex justify-center items-center gap-2"
+              disabled={progress < 100}
+              className={`p-4 rounded-xl mb-4 flex justify-center items-center gap-2 text-white ${
+                progress < 100
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-third-bg hover:bg-third-hover transition-colors duration-300"
+              }`}
             >
               <FaSave />
               Create

@@ -133,7 +133,7 @@ const Video = () => {
             <VideoList />
           ) : (
             <div className="min-h-screen flex justify-center">
-              <h1>No Video Posted</h1>
+              <h1>Video tidak ditemukan</h1>
             </div>
           )}
         </div>

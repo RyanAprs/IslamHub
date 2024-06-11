@@ -94,18 +94,12 @@ const Header: React.FC = () => {
   };
 
   const handleLogout = () => {
-    const now = new Date();
-
-    const expiresDate = new Date(now.getTime() + 24 * 60 * 60 * 100);
-
-    const expiresUTC = expiresDate.toUTCString();
-    document.cookie = `userData=; expires=${expiresUTC}; path=/;`;
-
-    setUser(null);
+    Cookies.remove("userData");
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     localStorage.removeItem("userId");
     navigate("/login");
+    window.location.reload();
   };
 
   const isHome = location.pathname === "/";

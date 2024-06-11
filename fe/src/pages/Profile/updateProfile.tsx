@@ -194,7 +194,7 @@ const UpdateProfile = () => {
           {progress > 0 && progress < 100 && (
             <div className="w-full bg-gray-200 rounded-full">
               <div
-                className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                className="bg-third-bg text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
                 style={{ width: `${progress}%` }}
               >
                 {progress.toFixed(2)}%
@@ -204,27 +204,27 @@ const UpdateProfile = () => {
           <input
             type="file"
             placeholder="Image"
-            className="border-2 border-blue-300 rounded-xl p-4 mb-4 w-full"
+            className="border-2 border-third-bg rounded-xl p-4 mb-4 w-full"
             onChange={handleImageChange}
           />
           <input
             type="text"
             placeholder="Name"
-            className="border-2 border-blue-300 rounded-xl p-4 mb-4 w-full"
+            className="border-2 border-third-bg rounded-xl p-4 mb-4 w-full"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <input
             type="email"
             placeholder="Email"
-            className="border-2 border-blue-300 rounded-xl p-4 mb-4 w-full"
+            className="border-2 border-third-bg rounded-xl p-4 mb-4 w-full"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="text"
             placeholder="Bio"
-            className="border-2 border-blue-300 rounded-xl p-4 mb-4 w-full"
+            className="border-2 border-third-bg rounded-xl p-4 mb-4 w-full"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
           />
@@ -233,7 +233,7 @@ const UpdateProfile = () => {
             <BackButton path={`/profile/${id}`} />
             <button
               onClick={handleUpdate}
-              className="bg-blue-500 p-2 rounded-xl mb-4 flex justify-center items-center gap-2"
+              className="bg-third-bg text-white p-4 rounded-xl mb-4 flex justify-center items-center gap-2"
             >
               <FaSave />
               Update
