@@ -4,6 +4,7 @@ import axios from "axios";
 import { FaArrowLeft, FaPlus, FaUsers } from "react-icons/fa";
 import Cookies from "js-cookie";
 import CommunityList from "./communityList";
+import { useToast } from "@chakra-ui/react";
 
 const Chat = () => {
   const [communities, setCommunities] = useState([]);
@@ -13,6 +14,7 @@ const Chat = () => {
   const [user_id, setUser_id] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
+  const toast = useToast();
 
   useEffect(() => {
     const userCookie = Cookies.get("userData");
@@ -59,6 +61,12 @@ const Chat = () => {
         }
       );
       if (response.data.status_code === 200) {
+        toast({
+          title: "Create Komunitas berhasil",
+          status: "success",
+          position: "top",
+          isClosable: true,
+        });
         window.location.reload();
       } else {
         console.log("create community failed");

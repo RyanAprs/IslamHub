@@ -3,7 +3,7 @@ import { useAuthContext } from "../context/useAuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export const useLogin = () => {
+export const useLogin = (toast) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
@@ -22,7 +22,6 @@ export const useLogin = () => {
         }
       );
       if (response.data.status_code === 200) {
-        navigate("/");
         const user = response.data.data;
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);
@@ -38,8 +37,17 @@ export const useLogin = () => {
         localStorage.setItem("role", role);
         localStorage.setItem("userId", userId);
         dispatch({ type: "LOGIN", payload: token });
+
+        toast({
+          title: "Login berhasil",
+          status: "success",
+          position: "top",
+          isClosable: true,
+        });
+
+        navigate("/");
       } else {
-        console.log("login gagal");
+        setError("Login gagal");
       }
     } catch (error: any) {
       if (error.response) {
@@ -49,6 +57,8 @@ export const useLogin = () => {
       } else {
         console.log("Request error:", error.message);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 

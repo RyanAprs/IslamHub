@@ -7,6 +7,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../firebase";
 import { v4 } from "uuid";
 import Cookies from "js-cookie";
+import { useToast } from "@chakra-ui/react";
 
 const UpdateProfile = () => {
   const [error, setError] = useState("");
@@ -21,6 +22,7 @@ const UpdateProfile = () => {
   const [imageUrl, setImageUrl] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
+  const toast = useToast();
 
   useEffect(() => {
     const userCookie = Cookies.get("userData");
@@ -144,7 +146,13 @@ const UpdateProfile = () => {
         )}; expires=${expirationDate.toUTCString()}`;
 
         navigate(`/profile/${id}`);
-        window.location.reload();
+
+        toast({
+          title: "Update Profile Berhasil",
+          status: "success",
+          position: "top",
+          isClosable: true,
+        });
       } else {
         setError("Failed to update user data");
       }

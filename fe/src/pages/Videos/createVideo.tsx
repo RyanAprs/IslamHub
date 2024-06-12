@@ -7,6 +7,7 @@ import { storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { v4 } from "uuid";
 import Cookies from "js-cookie";
+import { useToast } from "@chakra-ui/react";
 
 const CreateVideo = () => {
   const [title, setTitle] = useState("");
@@ -17,6 +18,7 @@ const CreateVideo = () => {
   const [progress, setProgress] = useState(0);
   const [videoUrl, setVideoUrl] = useState("");
   const navigate = useNavigate();
+  const toast = useToast();
 
   useEffect(() => {
     const userCookie = Cookies.get("userData");
@@ -91,6 +93,12 @@ const CreateVideo = () => {
 
       if (response.data.status_code === 200) {
         navigate(`/profile/${userVideoId}`);
+        toast({
+          title: "Berhasil Upload Video",
+          status: "success",
+          position: "top",
+          isClosable: true,
+        });
       } else {
         console.log("Gagal membuat video");
       }

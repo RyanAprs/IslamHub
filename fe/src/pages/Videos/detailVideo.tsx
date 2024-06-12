@@ -8,6 +8,7 @@ import { ref, deleteObject } from "firebase/storage";
 import Cookies from "js-cookie";
 import CommentSection from "../../components/atoms/commentSection/commentSection";
 import VideoList from "./videoList";
+import { useToast } from "@chakra-ui/react";
 
 const DetailVideo = () => {
   const { id } = useParams();
@@ -22,6 +23,7 @@ const DetailVideo = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState();
   const [name, setName] = useState();
+  const toast = useToast();
 
   useEffect(() => {
     const userCookie = Cookies.get("userData");
@@ -81,6 +83,12 @@ const DetailVideo = () => {
       );
       if (response.status === 200) {
         navigate("/video");
+        toast({
+          title: "Delete video berhasil",
+          status: "success",
+          position: "top",
+          isClosable: true,
+        });
       }
     } catch (error) {
       console.log("Request error:", error.message);

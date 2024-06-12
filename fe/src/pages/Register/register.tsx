@@ -2,12 +2,14 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import quranImg from "../../assets/quran.png";
+import { useToast } from "@chakra-ui/react";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState();
+  const toast = useToast();
 
   const navigate = useNavigate();
 
@@ -23,8 +25,13 @@ const Register = () => {
       );
       if (response.data.status_code === 200) {
         navigate("/login");
-        console.log("login berhasil");
-        console.log(response.data.data);
+
+        toast({
+          title: "Register berhasil",
+          status: "success",
+          position: "top",
+          isClosable: true,
+        });
       } else {
         console.log("login gagal");
       }
@@ -46,7 +53,7 @@ const Register = () => {
         <div className=" border-third-bg border-2  w-full md:h-auto md:w-[556px] flex flex-col justify-center p-10 rounded-xl md:shadow-lg gap-10">
           {error && <p className="text-red-500">{error}</p>}
           <div className=" flex flex-col gap-2 ">
-            <div >
+            <div>
               <label htmlFor="" className="font-bold ">
                 Masukkan Nama
               </label>

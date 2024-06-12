@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaHome, FaUser, FaUsers, FaVideo } from "react-icons/fa";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { useToast } from "@chakra-ui/react";
 
 const Header: React.FC = () => {
   const [user, setUser] = useState<any | null>(null);
@@ -11,11 +12,12 @@ const Header: React.FC = () => {
   const [userId, setUserId] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const toast = useToast();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
-
-  const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const handleClick = () => {
@@ -99,7 +101,20 @@ const Header: React.FC = () => {
     localStorage.removeItem("role");
     localStorage.removeItem("userId");
     navigate("/login");
-    window.location.reload();
+    toast({
+      title: "Logout berhasil",
+      status: "success",
+      position: "top",
+      isClosable: true,
+    });
+  };
+
+  const confirmLogout = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const isHome = location.pathname === "/";
@@ -107,7 +122,9 @@ const Header: React.FC = () => {
   return (
     <>
       <header
-        className={`fixed font-poppins bg-main-bg top-0 left-0 right-0 z-50 flex justify-between items-center py-4 md:py-4 px-5 md:px-10 text-black shadow-lg transition-colors duration-300 `}
+        className={`fixed font-poppins bg-main-bg top-0 left-0 right-0 z-50 flex justify-between items-center py-4 md:py-4 px-5 md:px-10 text-black shadow-lg transition-colors duration-300 ${
+          isScrolled ? "bg-white shadow-md" : "bg-transparent"
+        }`}
       >
         <div className="font-poppins text-[24px] text-third-bg">
           <div className="font-bold">IslamHub</div>
@@ -185,22 +202,8 @@ const Header: React.FC = () => {
                     >
                       Profile
                     </Link>
-                    {/* <nav className="text-left block md:hidden">
-                      <Link
-                        to="/video"
-                        className="px-6 py-2 block w-full text-black "
-                      >
-                        <h1>Video</h1>
-                      </Link>
-                      <Link
-                        to="/community"
-                        className="px-6 py-2 block w-full text-black "
-                      >
-                        <h1>Komunitas</h1>
-                      </Link>
-                    </nav> */}
                     <button
-                      onClick={handleLogout}
+                      onClick={confirmLogout}
                       className="px-8 py-3 block w-full text-left text-black "
                     >
                       Logout
@@ -214,20 +217,6 @@ const Header: React.FC = () => {
                     >
                       Login
                     </Link>
-                    {/* <nav className="text-left block md:hidden">
-                      <Link
-                        to="/community"
-                        className="px-2 py-2 block w-full text-black "
-                      >
-                        <h1>Komunitas</h1>
-                      </Link>
-                      <Link
-                        to="/video"
-                        className="px-2 py-2 block w-full text-black "
-                      >
-                        <h1>Video</h1>
-                      </Link>
-                    </nav> */}
                   </div>
                 )}
               </div>
@@ -235,6 +224,31 @@ const Header: React.FC = () => {
           </div>
         </div>
       </header>
+
+      {/* Modal for logout confirmation */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg font-semibold mb-4">Confirm Logout</h2>
+            <p className="mb-4">Are you sure you want to logout?</p>
+            <div className="flex justify-end">
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+              >
+                Logout
+              </button>
+              <button
+                onClick={closeModal}
+                className="bg-gray-300 px-4 py-2 rounded"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="fixed z-50 md:hidden  bottom-0 left-0 right-0 bg-white shadow-xl p-3">
         <div className="flex  justify-between px-8 items-center text-black">
           <Link

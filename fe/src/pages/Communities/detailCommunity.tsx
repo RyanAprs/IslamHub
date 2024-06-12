@@ -13,6 +13,7 @@ import {
 } from "firebase/storage";
 import { storage } from "../../firebase";
 import { v4 } from "uuid";
+import { useToast } from "@chakra-ui/react";
 
 const DetailCommunity = () => {
   const [image, setImage] = useState();
@@ -29,6 +30,7 @@ const DetailCommunity = () => {
   const [progress, setProgress] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
   const [dataImage, setDataImage] = useState();
+  const toast = useToast()
 
   const navigate = useNavigate();
 
@@ -98,6 +100,12 @@ const DetailCommunity = () => {
 
       if (response.status === 200) {
         navigate("/community");
+        toast({
+          title: "Delete Komunitas berhasil",
+          status: "success",
+          position: "top",
+          isClosable: true,
+        });
       }
     } catch (error) {
       console.log("Request error:", error.message);
@@ -170,6 +178,12 @@ const DetailCommunity = () => {
       );
       if (response.data.status_code === 200) {
         window.location.reload();
+        toast({
+          title: "Update Komunitas berhasil",
+          status: "success",
+          position: "top",
+          isClosable: true,
+        });
       } else {
         console.log("Update community gagal");
       }
