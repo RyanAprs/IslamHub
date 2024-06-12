@@ -1,14 +1,19 @@
 import express, { NextFunction, Request, Response } from "express";
 import { routes } from "./routes/index";
 import deserializeToken from "./middleware/deserializeToken";
+import { initWebSocketServer } from "./utils/websocket";
 import cors from "cors";
 // connect to db
 import "./utils/connectDB";
+import { createServer } from "http";
 
 const app = express();
 const port: number = 3000;
 
 app.use(cors());
+
+const server = createServer(app);
+initWebSocketServer(server);
 
 const corsOrigin = {
   origin: "http://localhost:5173",
