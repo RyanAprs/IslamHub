@@ -132,7 +132,7 @@ const CommunityList = () => {
       {!isSidebarOpen && (
         <button
           onClick={toggleSidebar}
-          className="top-24 fixed left-0 bg-white shadow-xl text-black p-4  rounded-r-full z-50 transition-all duration-300"
+          className="top-24 fixed left-0 bg-third-bg shadow-xl text-white p-4  rounded-r-full z-50 transition-all duration-300"
         >
           <FaBars />
         </button>

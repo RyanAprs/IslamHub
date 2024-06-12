@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { FaPlus, FaUsers } from "react-icons/fa";
+import { FaArrowLeft, FaPlus, FaUsers } from "react-icons/fa";
 import Cookies from "js-cookie";
 import CommunityList from "./communityList";
 
@@ -79,21 +79,25 @@ const Chat = () => {
       <div className="z-40 fixed bg-white">
         <CommunityList />
       </div>
-      <div className="pt-[100px] flex justify-center w-full text-xl">
-        Silahkan Pilih Komunitas
+      <div className="pt-[100px] flex flex-col gap-4 justify-start items-center w-full">
+        <div className=" text-2xl font-semibold">Silahkan Pilih Komunitas</div>
+        <div>
+          <FaArrowLeft size={30} />
+        </div>
       </div>
-
-      <button
-        onClick={handleShowModal}
-        className="fixed bg-third-bg text-white transition-all shadow-xl p-6 rounded-full bottom-20 md:bottom-12 right-4"
-      >
-        <FaPlus />
-      </button>
+      {user_id ? (
+        <button
+          onClick={handleShowModal}
+          className="fixed bg-third-bg text-white transition-all shadow-xl p-6 rounded-full bottom-20 md:bottom-12 right-4"
+        >
+          <FaPlus />
+        </button>
+      ) : null}
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-8 flex flex-col gap-4 rounded-lg shadow-lg">
-            <div className="flex items-center justify-center">
-              <p>Create Community</p>
+            <div className="flex items-center justify-center text-xl">
+              <p>Buat Komunitas Baru</p>
             </div>
             {user_id ? (
               <div className="flex items-center justify-center flex-col gap-2">
@@ -121,17 +125,25 @@ const Chat = () => {
                 </div>
               </div>
             ) : (
-              <div className="flex justify-center gap-5 items-center">
-                <h4>Login to create a community</h4>
-                <Link to="/login" className="bg-blue-400 px-3 py-2 rounded">
-                  Login
-                </Link>
-                <button
-                  onClick={closeModal}
-                  className="bg-red-600 px-3 py-2 rounded"
-                >
-                  Cancel
-                </button>
+              <div className="flex flex-col justify-center gap-5 items-center">
+                <div>
+                  <h4>Login untuk membuat komunitas</h4>
+                </div>
+
+                <div className="flex gap-4">
+                  <button
+                    onClick={closeModal}
+                    className="bg-red-600 px-3 py-2 rounded"
+                  >
+                    Cancel
+                  </button>
+                  <Link
+                    to="/login"
+                    className="bg-third-bg text-white px-3 py-2 rounded"
+                  >
+                    Login
+                  </Link>
+                </div>
               </div>
             )}
           </div>
