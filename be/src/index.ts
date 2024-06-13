@@ -22,10 +22,8 @@ app.use(
   })
 );
 
-// Add your authentication middleware if needed
 app.use(deserializeToken);
 
-// Set up WebSocket server
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
@@ -39,9 +37,12 @@ io.on("connection", (socket: any) => {
   socket.on("send_message", (data: any) => {
     socket.broadcast.emit("receive_message", data);
   });
+
+  socket.on("delete_message", (chatId: any) => {
+    socket.broadcast.emit("message_deleted", chatId);
+  });
 });
 
-// Define your API routes
 routes(app);
 
 server.listen(port, () => {

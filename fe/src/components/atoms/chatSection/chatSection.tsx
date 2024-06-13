@@ -37,6 +37,7 @@ const ChatSection = ({ admin }) => {
 
     const handleMessage = (newChat) => {
       setDataChats((prevChats) => {
+        // Check for duplicates before updating state
         const isDuplicate = prevChats.some(
           (chat) => chat.chat_id === newChat.chat_id
         );
@@ -45,7 +46,14 @@ const ChatSection = ({ admin }) => {
       });
     };
 
+    const handleDeleteMessage = (chatId) => {
+      setDataChats((prevChats) =>
+        prevChats.filter((chat) => chat.chat_id !== chatId)
+      );
+    };
+
     socket.on("receive_message", handleMessage);
+    socket.on("message_deleted", handleDeleteMessage);
 
     const userCookie = Cookies.get("userData");
 
@@ -55,8 +63,10 @@ const ChatSection = ({ admin }) => {
       setName(userDataObj.name);
     }
 
+    // Cleanup function to avoid adding multiple listeners
     return () => {
       socket.off("receive_message", handleMessage);
+      socket.off("message_deleted", handleDeleteMessage);
     };
   }, [id]);
 
@@ -72,10 +82,13 @@ const ChatSection = ({ admin }) => {
       if (response.data.status_code === 200) {
         const newChat = response.data.data;
 
+        // Add new chat to state immediately
         setDataChats((prevChats) => [...prevChats, newChat]);
 
+        // Emit the new chat message to other clients
         socket.emit("send_message", newChat);
 
+        // Clear input field after sending
         setChat("");
       } else {
         console.log("create chat gagal");
@@ -106,6 +119,7 @@ const ChatSection = ({ admin }) => {
         setDataChats(
           dataChats.filter((chat) => chat.chat_id !== idChatToDelete)
         );
+        socket.emit("delete_message", idChatToDelete);
       }
     } catch (error) {
       console.log("Request error:", error);
