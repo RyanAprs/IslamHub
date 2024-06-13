@@ -30,7 +30,7 @@ const DetailCommunity = () => {
   const [progress, setProgress] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
   const [dataImage, setDataImage] = useState();
-  const toast = useToast()
+  const toast = useToast();
 
   const navigate = useNavigate();
 
@@ -53,7 +53,6 @@ const DetailCommunity = () => {
           `http://localhost:3000/api/v1/community/${id}`
         );
         setCommunityTitle(response.data.data.title);
-        console.log(response.data.data);
         setAdmin(response.data.data.name);
         setAdminId(response.data.data.user_id);
         setDataImage(response.data.data.image);

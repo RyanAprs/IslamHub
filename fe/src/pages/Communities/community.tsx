@@ -62,12 +62,13 @@ const Chat = () => {
       );
       if (response.data.status_code === 200) {
         toast({
-          title: "Create Komunitas berhasil",
+          title:
+            "Create Komunitas berhasil, refresh untuk menampilkan komunitas",
           status: "success",
           position: "top",
           isClosable: true,
         });
-        window.location.reload();
+        setShowModal(false);
       } else {
         console.log("create community failed");
       }
