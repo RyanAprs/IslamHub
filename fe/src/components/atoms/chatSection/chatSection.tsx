@@ -3,10 +3,13 @@ import { useEffect, useState } from "react";
 import { FaArrowRight, FaTrash, FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
+import io from "socket.io-client";
+
+const socket = io("http://localhost:3000");
 
 const ChatSection = ({ admin }) => {
   const [user_id, setUser_id] = useState();
-  const [chat, setChat] = useState();
+  const [chat, setChat] = useState("");
   const [dataChats, setDataChats] = useState([]);
   const [error, setError] = useState();
   const [name, setName] = useState();
@@ -32,6 +35,18 @@ const ChatSection = ({ admin }) => {
     setCommunity_id(id);
     fetchChat();
 
+    const handleMessage = (newChat) => {
+      setDataChats((prevChats) => {
+        const isDuplicate = prevChats.some(
+          (chat) => chat.chat_id === newChat.chat_id
+        );
+        if (isDuplicate) return prevChats;
+        return [...prevChats, newChat];
+      });
+    };
+
+    socket.on("receive_message", handleMessage);
+
     const userCookie = Cookies.get("userData");
 
     if (userCookie) {
@@ -39,6 +54,10 @@ const ChatSection = ({ admin }) => {
       setUser_id(userDataObj.user_id);
       setName(userDataObj.name);
     }
+
+    return () => {
+      socket.off("receive_message", handleMessage);
+    };
   }, [id]);
 
   const handleCreate = async () => {
@@ -51,14 +70,18 @@ const ChatSection = ({ admin }) => {
       });
 
       if (response.data.status_code === 200) {
-        window.location.reload();
-        console.log("create chat berhasil");
+        const newChat = response.data.data;
+
+        setDataChats((prevChats) => [...prevChats, newChat]);
+
+        socket.emit("send_message", newChat);
+
+        setChat("");
       } else {
         console.log("create chat gagal");
       }
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
-
       if (error.response) {
         setError(error.response.data.message);
       } else if (error.request) {
@@ -75,14 +98,14 @@ const ChatSection = ({ admin }) => {
   };
 
   const confirmDelete = async () => {
-    console.log(idChatToDelete);
-
     try {
       const response = await axios.delete(
         `http://localhost:3000/api/v1/chat/${idChatToDelete}`
       );
       if (response.status === 200) {
-        window.location.reload();
+        setDataChats(
+          dataChats.filter((chat) => chat.chat_id !== idChatToDelete)
+        );
       }
     } catch (error) {
       console.log("Request error:", error);
@@ -91,14 +114,13 @@ const ChatSection = ({ admin }) => {
     }
   };
 
-
   const closeModal = () => {
     setShowModal(false);
   };
 
   return (
     <div className="flex flex-col flex-grow md:pb-12 pb-0">
-      <div className="w-full flex-grow overflow-y-auto  bg-main-bg h-[40px]">
+      <div className="w-full flex-grow overflow-y-auto bg-main-bg h-[40px]">
         <div className="flex items-center justify-center">
           created by {admin}
         </div>
@@ -111,7 +133,6 @@ const ChatSection = ({ admin }) => {
               >
                 <div className="p-2 bg-white rounded-l-xl rounded-br-xl flex gap-4 flex-row-reverse justify-start items-center">
                   <div>
-                    {/* <h1>{dataChat.name}</h1> */}
                     <p>{dataChat.chat}</p>
                   </div>
                   <div>
@@ -186,7 +207,7 @@ const ChatSection = ({ admin }) => {
               onChange={(e) => setChat(e.target.value)}
             />
             <button
-              className=" py-2 md:px-5 px-1 rounded-xl"
+              className="py-2 md:px-5 px-1 rounded-xl"
               onClick={handleCreate}
             >
               <FaArrowRight size={40} />
@@ -195,7 +216,10 @@ const ChatSection = ({ admin }) => {
         ) : (
           <div className="flex justify-center gap-5 items-center">
             <h4>You Should Login For Chat</h4>
-            <Link to="/login" className="bg-third-bg text-white px-3 py-2 rounded">
+            <Link
+              to="/login"
+              className="bg-third-bg text-white px-3 py-2 rounded"
+            >
               Login
             </Link>
           </div>

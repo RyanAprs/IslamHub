@@ -7,6 +7,7 @@ import {
 } from "../services/chat.service";
 import { v4 as uuidv4 } from "uuid";
 import { getUserImage } from "../services/auth.service";
+import { broadcast } from "../utils/websocket";
 
 export const getChats = async (req: Request, res: Response) => {
   const id = req.params.id;
@@ -80,6 +81,9 @@ export const createChat = async (req: Request, res: Response) => {
       image: userImage,
     };
     await insertChat(chatData);
+
+    
+
     return res.status(200).json({
       status: true,
       status_code: 200,
@@ -121,6 +125,7 @@ export const deleteChat = async (req: Request, res: Response) => {
 
   try {
     const result = await getChatAndDelete(id);
+    
     if (result) {
       res.status(200).json({
         status: true,
