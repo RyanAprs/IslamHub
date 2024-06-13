@@ -28,8 +28,12 @@ import CreateVideo from "../../pages/Videos/createVideo";
 import AdminDashboard from "../../pages/Admin/adminDashboard";
 import AdminLogin from "../../pages/Admin/adminLogin";
 import NotFound from "../../pages/notFound/notFound";
-import TotalUser from "../../pages/Admin/stats/totalUser";
 import KajianList from "../../pages/Kajian/kajianList";
+import VideoAdmin from "../../pages/Admin/stats/videoAdmin";
+import CommunityAdmin from "../../pages/Admin/stats/communityAdmin";
+import ChatAdmin from "../../pages/Admin/stats/chatAdmin";
+import UserAdmin from "../../pages/Admin/stats/userAdmin";
+import KajianAdmin from "../../pages/Admin/stats/kajianAdmin";
 
 const RouteData = [
   {
@@ -84,8 +88,24 @@ const AdminRouteData = [
     element: <AdminDashboard />,
   },
   {
-    path: "/admin/dashboard/users",
-    element: <TotalUser />,
+    path: "/admin/dashboard/user",
+    element: <UserAdmin />,
+  },
+  {
+    path: "/admin/dashboard/kajian",
+    element: <KajianAdmin />,
+  },
+  {
+    path: "/admin/dashboard/video",
+    element: <VideoAdmin />,
+  },
+  {
+    path: "/admin/dashboard/community",
+    element: <CommunityAdmin />,
+  },
+  {
+    path: "/admin/dashboard/chat",
+    element: <ChatAdmin />,
   },
 ];
 

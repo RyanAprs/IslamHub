@@ -84,8 +84,8 @@ const SideBarAdmin = () => {
                   </div>
                 )}
                 <div>{user && user.name}</div>
-              </div>
-              <div className="overflow-y-auto h-screen border-black ">
+              </div >
+              <div className="overflow-y-auto h-screen border-black border-t-2 ">
                 <div className="grid grid-cols-3 md:grid-cols-1">
                   <Link
                     to="/admin/dashboard"
@@ -98,34 +98,54 @@ const SideBarAdmin = () => {
                     <h1>Dashboard</h1>
                   </Link>
                   <Link
-                    to="/admin/dashboard/users"
+                    to="/admin/dashboard/user"
                     className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
-                      location.pathname === "/admin/dashboard/users"
+                      location.pathname === "/admin/dashboard/user"
                         ? "bg-blue-400"
                         : ""
                     }`}
                   >
-                    <h1>Users</h1>
+                    <h1>User</h1>
                   </Link>
                   <Link
-                    to=""
+                    to="/admin/dashboard/community"
                     className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
-                      location.pathname === "/admin/dashboard/communities"
+                      location.pathname === "/admin/dashboard/community"
                         ? "bg-blue-400"
                         : ""
                     }`}
                   >
-                    <h1>Communities</h1>
+                    <h1>Komunitas</h1>
                   </Link>
                   <Link
-                    to=""
+                    to="/admin/dashboard/video"
                     className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
-                      location.pathname === "/admin/dashboard/videos"
+                      location.pathname === "/admin/dashboard/video"
                         ? "bg-blue-400"
                         : ""
                     }`}
                   >
-                    <h1>Videos</h1>
+                    <h1>Video</h1>
+                  </Link>
+                  <Link
+                    to="/admin/dashboard/chat"
+                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
+                      location.pathname === "/admin/dashboard/chat"
+                        ? "bg-blue-400"
+                        : ""
+                    }`}
+                  >
+                    <h1>Chat</h1>
+                  </Link>
+                  <Link
+                    to="/admin/dashboard/kajian"
+                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
+                      location.pathname === "/admin/dashboard/kajian"
+                        ? "bg-blue-400"
+                        : ""
+                    }`}
+                  >
+                    <h1>Kajian</h1>
                   </Link>
                 </div>
                 <button

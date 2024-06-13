@@ -1,14 +1,12 @@
 import SideBarAdmin from "../../../components/atoms/sideBarAdmin/sideBarAdmin";
 
-const TotalUser = () => {
+const KajianAdmin = () => {
   return (
     <div className="flex min-h-screen">
-        <SideBarAdmin />
-        <div>
-            Total User Page
-        </div>
+      <SideBarAdmin />
+      <div>Kajian Page</div>
     </div>
-  )
+  );
 };
 
-export default TotalUser;
+export default KajianAdmin;
