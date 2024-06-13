@@ -47,7 +47,7 @@ const Home = () => {
   }, [location]);
 
   return (
-    <div id="home" className="flex flex-col md:pt-10 pt-2">
+    <div id="home" className="flex flex-col ">
       <div className="min-h-screen flex flex-col md:flex-row bg-main-bg p-8 md:px-32 pt-28 md:pt-4  items-center justify-between gap-5">
         <div className=" gap-6 md:gap-14 flex flex-col  justify-center items-center md:items-start text-center md:text-left">
           <div className="gap-4 flex flex-col">
