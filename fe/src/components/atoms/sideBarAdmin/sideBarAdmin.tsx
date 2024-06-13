@@ -1,52 +1,48 @@
 import { useEffect, useState } from "react";
 import { FaBars, FaSignOutAlt, FaTimes, FaUser } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useToast } from "@chakra-ui/react";
 
 const SideBarAdmin = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [user, setUser] = useState<any | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const toast = useToast();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
   useEffect(() => {
-    const getUserDataFromCookie = () => {
-      const cookieData = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userData="));
+    const userCookie = Cookies.get("userData");
 
-      if (cookieData) {
-        const userDataString = cookieData.split("=")[1];
-        try {
-          const userData = JSON.parse(decodeURIComponent(userDataString));
-          return userData;
-        } catch (error) {
-          console.error("Error parsing JSON from cookie:", error);
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const userData = getUserDataFromCookie();
-    setUser(userData);
+    if (userCookie) {
+      const userDataObj = JSON.parse(userCookie);
+      setUser(userDataObj);
+    }
   }, []);
 
   const handleLogout = () => {
-    const now = new Date();
-    const expiresDate = new Date(now.getTime() + 24 * 60 * 60 * 100);
-
-    const expiresUTC = expiresDate.toUTCString();
-    document.cookie = `userData=; expires=${expiresUTC}; path=/;`;
-
-    setUser(null);
+    Cookies.remove("userData");
     localStorage.removeItem("adminToken");
     localStorage.removeItem("role");
+    toast({
+      title: "Logout berhasil",
+      status: "success",
+      position: "top",
+      isClosable: true,
+    });
     navigate("/admin/login");
+  };
+
+  const confirmLogout = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -54,7 +50,7 @@ const SideBarAdmin = () => {
       <div
         className={`overflow-y-auto ${
           isSidebarOpen
-            ? "bg-blue-500 w-[200px] border-black border-[1px] p-2"
+            ? "bg-blue-500 w-[300px] border-black border-[1px] p-2"
             : "bg-blue-200 w-0 p-0 border-0"
         } relative transition-all duration-300`}
       >
@@ -90,7 +86,7 @@ const SideBarAdmin = () => {
                 <div>{user && user.name}</div>
               </div>
               <div className="overflow-y-auto h-screen border-black ">
-                <div>
+                <div className="grid grid-cols-3 md:grid-cols-1">
                   <Link
                     to="/admin/dashboard"
                     className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
@@ -133,7 +129,7 @@ const SideBarAdmin = () => {
                   </Link>
                 </div>
                 <button
-                  onClick={handleLogout}
+                  onClick={confirmLogout}
                   className="w-full flex items-center justify-between px-4 py-2 mt-8 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
                 >
                   <span>Logout</span>
@@ -151,6 +147,29 @@ const SideBarAdmin = () => {
         >
           <FaBars />
         </button>
+      )}
+
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg font-semibold mb-4">Confirm Logout</h2>
+            <p className="mb-4">Are you sure you want to logout?</p>
+            <div className="flex justify-end">
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+              >
+                Logout
+              </button>
+              <button
+                onClick={closeModal}
+                className="bg-gray-300 px-4 py-2 rounded"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

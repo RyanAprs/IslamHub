@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaHandshake, FaUsers, FaVideo } from "react-icons/fa";
+import { FaUser, FaUsers, FaVideo } from "react-icons/fa";
 import SideBarAdmin from "../../components/atoms/sideBarAdmin/sideBarAdmin";
 
 const AdminDashboard = () => {
@@ -54,7 +54,7 @@ const AdminDashboard = () => {
             <p>{totalDataUser.total_data}</p>
           </div>
           <div>
-            <FaUsers size={90} />
+            <FaUser size={90} />
           </div>
         </div>
         <div className="shadow-lg  h-48 cursor-pointer bg-blue-300 p-4 flex gap-6  items-center justify-around rounded-xl border-blue-400 border-[2px]">
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
             <p>{totalDataCommunity.total_data}</p>
           </div>
           <div>
-            <FaHandshake size={90} />
+            <FaUsers size={90} />
           </div>
         </div>
         <div className="shadow-lg h-48 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">

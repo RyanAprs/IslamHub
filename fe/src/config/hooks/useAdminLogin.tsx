@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAdminAuthContext } from "../context/useAdminAuthContext";
 
-export const useAdminLogin = () => {
+export const useAdminLogin = (toast) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAdminAuthContext();
@@ -36,6 +36,13 @@ export const useAdminLogin = () => {
         localStorage.setItem("adminToken", adminToken);
         localStorage.setItem("role", role);
         dispatch({ type: "ADMIN_LOGIN", payload: adminToken });
+
+        toast({
+          title: "Admin berhasil login",
+          status: "success",
+          position: "top",
+          isClosable: true,
+        });
       } else {
         console.log("login gagal");
       }
