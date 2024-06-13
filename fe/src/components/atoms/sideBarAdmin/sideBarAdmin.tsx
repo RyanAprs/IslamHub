@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import { useToast } from "@chakra-ui/react";
 
 const SideBarAdmin = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [user, setUser] = useState<any | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -46,17 +46,17 @@ const SideBarAdmin = () => {
   };
 
   return (
-    <div className="relative min-h-screen">
+    <div className="fixed z-50 min-h-screen">
       <div
         className={`overflow-y-auto ${
           isSidebarOpen
-            ? "bg-blue-500 w-[300px] border-black border-[1px] p-2"
+            ? "bg-main-bg w-[300px] border-black border-[1px] p-2"
             : "bg-blue-200 w-0 p-0 border-0"
         } relative transition-all duration-300`}
       >
         {isSidebarOpen && (
           <>
-            <div className="flex items-center justify-between p-4 bg-blue-500">
+            <div className="flex items-center justify-between p-4 bg-main-bg">
               <div
                 onClick={toggleSidebar}
                 className="cursor-pointer flex items-start justify-start"
@@ -89,9 +89,9 @@ const SideBarAdmin = () => {
                 <div className="grid grid-cols-3 md:grid-cols-1">
                   <Link
                     to="/admin/dashboard"
-                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
+                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-white ${
                       location.pathname === "/admin/dashboard"
-                        ? "bg-blue-400"
+                        ? "bg-white"
                         : ""
                     }`}
                   >
@@ -99,9 +99,9 @@ const SideBarAdmin = () => {
                   </Link>
                   <Link
                     to="/admin/dashboard/user"
-                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
+                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-white ${
                       location.pathname === "/admin/dashboard/user"
-                        ? "bg-blue-400"
+                        ? "bg-white"
                         : ""
                     }`}
                   >
@@ -109,9 +109,9 @@ const SideBarAdmin = () => {
                   </Link>
                   <Link
                     to="/admin/dashboard/community"
-                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
+                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-white ${
                       location.pathname === "/admin/dashboard/community"
-                        ? "bg-blue-400"
+                        ? "bg-white"
                         : ""
                     }`}
                   >
@@ -119,9 +119,9 @@ const SideBarAdmin = () => {
                   </Link>
                   <Link
                     to="/admin/dashboard/video"
-                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
+                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-white ${
                       location.pathname === "/admin/dashboard/video"
-                        ? "bg-blue-400"
+                        ? "bg-white"
                         : ""
                     }`}
                   >
@@ -129,9 +129,9 @@ const SideBarAdmin = () => {
                   </Link>
                   <Link
                     to="/admin/dashboard/chat"
-                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
+                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-white ${
                       location.pathname === "/admin/dashboard/chat"
-                        ? "bg-blue-400"
+                        ? "bg-white"
                         : ""
                     }`}
                   >
@@ -139,9 +139,9 @@ const SideBarAdmin = () => {
                   </Link>
                   <Link
                     to="/admin/dashboard/kajian"
-                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-blue-400 ${
+                    className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-white ${
                       location.pathname === "/admin/dashboard/kajian"
-                        ? "bg-blue-400"
+                        ? "bg-white"
                         : ""
                     }`}
                   >
@@ -163,7 +163,7 @@ const SideBarAdmin = () => {
       {!isSidebarOpen && (
         <button
           onClick={toggleSidebar}
-          className="top-8 fixed left-0 bg-blue-700 text-white p-4  rounded-r-full z-50 transition-all duration-300"
+          className="top-20 fixed left-0 bg-third-bg text-white p-4  rounded-r-full z-50 transition-all duration-300"
         >
           <FaBars />
         </button>

@@ -33,7 +33,7 @@ import VideoAdmin from "../../pages/Admin/stats/videoAdmin";
 import CommunityAdmin from "../../pages/Admin/stats/communityAdmin";
 import ChatAdmin from "../../pages/Admin/stats/chatAdmin";
 import UserAdmin from "../../pages/Admin/stats/userAdmin";
-import KajianAdmin from "../../pages/Admin/stats/kajianAdmin";
+import KajianAdmin from "../../pages/Admin/stats/kajian/kajianAdmin";
 
 const RouteData = [
   {
