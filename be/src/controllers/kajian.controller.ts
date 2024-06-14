@@ -93,9 +93,9 @@ export const getSearchKajian = async (req: Request, res: Response) => {
 
 export const createKajian = async (req: Request, res: Response) => {
   const kajian_id = uuidv4();
-  const { title, description, user_kajian_id, image, date } = req.body;
+  const { title, description, user_kajian_id, image, date, lokasi } = req.body;
 
-  if (!title || !description || !image || !user_kajian_id) {
+  if (!title || !description || !image || !user_kajian_id || !date || !lokasi) {
     return res.status(400).send({
       status: false,
       status_code: 400,
@@ -110,6 +110,7 @@ export const createKajian = async (req: Request, res: Response) => {
     description,
     image,
     date,
+    lokasi,
   };
 
   try {
@@ -132,7 +133,7 @@ export const createKajian = async (req: Request, res: Response) => {
 
 export const updateKajian = async (req: Request, res: Response) => {
   const id = req.params.id;
-  const { title, description, user_kajian_id, image, date } = req.body;
+  const { title, description, user_kajian_id, image, date, lokasi } = req.body;
 
   let imagePrevious;
 
@@ -142,7 +143,7 @@ export const updateKajian = async (req: Request, res: Response) => {
     imagePrevious = await getKajianImage(id);
   }
 
-  if (!title || !description || !date || !user_kajian_id) {
+  if (!title || !description || !date || !user_kajian_id || !lokasi) {
     return res.status(400).send({
       status: false,
       status_code: 400,
@@ -155,7 +156,8 @@ export const updateKajian = async (req: Request, res: Response) => {
     title,
     description,
     image: imagePrevious,
-    date
+    date,
+    lokasi,
   };
 
   try {

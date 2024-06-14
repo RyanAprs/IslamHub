@@ -19,6 +19,7 @@ export const getAllKajian = async (
 
     const kajian = await kajianModel
       .find()
+      .sort({ createdAt: -1 })
       .skip(
         (parseInt(currentPage.toString()) - 1) * parseInt(perPage.toString())
       )
