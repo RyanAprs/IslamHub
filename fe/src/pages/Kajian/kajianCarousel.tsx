@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import bg from "../../assets/bg.png";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
+import axios from "axios";
 
 function Card({ children }) {
   return <div className="shadow-xl rounded-lg p-4">{children}</div>;
@@ -48,28 +48,27 @@ function CarouselNext({ onClick }) {
   );
 }
 
-const cards = [
-  {
-    title: "Judul Kajian 1",
-    date: "01-01-2024",
-    location: "Lokasi 1",
-    description:
-      "Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1 Deskripsi Kajian 1",
-    link: "",
-  },
-  {
-    title: "Judul Kajian 2",
-    date: "02-01-2024",
-    location: "Lokasi 2",
-    description:
-      "Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 Deskripsi Kajian 2 ",
-    link: "",
-  },
-];
-
 export function KajianCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = cards.length;
+  const [kajian, setKajian] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalSlides = kajian.length;
+
+  useEffect(() => {
+    fetchKajian();
+  }, [currentPage]);
+
+  const fetchKajian = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/kajian?page=${currentPage}&perPage=3`
+      );
+      const data = response.data.data;
+      setKajian(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handlePrevious = () => {
     setCurrentSlide((prev) => (prev > 0 ? prev - 1 : totalSlides - 1));
@@ -93,36 +92,36 @@ export function KajianCarousel() {
         <CarouselContent
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
         >
-          {cards.map((card, index) => (
+          {kajian.map((kajian, index) => (
             <CarouselItem key={index}>
               <div className="">
                 <Card>
                   <CardContent className="flex gap-10">
-                    <div className="flex bg-main-bg w-full h-auto md:h-[300px] rounded-xl ">
-                      <div className="flex flex-col justify-between md:flex-col">
+                    <div className="flex bg-main-bg w-full h-auto md:h-[350px] rounded-xl">
+                      <div className="flex flex-col justify-between ">
                         <div className="flex md:flex-row flex-col gap-4">
-                          <img
-                            src={bg}
-                            className="md:h-[300px] w-[454px] object-cover rounded-t-xl md:rounded-l-xl"
-                            alt="gambar kajian"
-                          />
-                          <div className="flex flex-col py-4 px-4 md:px-0 gap-4 justify-center">
+                          <div>
+                            <img
+                              src={kajian.image}
+                              className="md:h-[350px] w-full md:min-w-[500px] object-cover md:rounded-l-xl"
+                              alt="gambar kajian"
+                            />
+                          </div>
+                          <div className="flex flex-col py-4 px-4 md:px-0 gap-4 justify-evenly">
                             <div>
-                              <h1 className="text-[25px] font-bold">
-                                {card.title}
+                              <h1 className="text-4xl font-semibold">
+                                {kajian.title}
                               </h1>
-                              <div className="flex gap-3">
-                                <p>{card.date}</p>
+                              <div className="flex text-lg">
+                                <p>{kajian.date}</p>
                                 <p>-</p>
-                                <p>{card.location}</p>
+                                <p>{kajian.lokasi}</p>
                               </div>
                             </div>
-                            <div className="text-[20px]">
-                              {card.description}
-                            </div>
+                            <div className="text-xl">{kajian.description}</div>
                             <div className="flex justify-center items-center md:justify-start">
                               <Link
-                                to={card.link}
+                                to={`/kajian/${kajian.kajian_id}`}
                                 className="w-[159px] flex justify-center items-center rounded-full p-1 border-third-bg border-[1px]"
                               >
                                 Lihat Selengkapnya
@@ -139,7 +138,7 @@ export function KajianCarousel() {
           ))}
         </CarouselContent>
       </Carousel>
-      <div className="flex justify-center gap-4 p-5">
+      <div className={`flex justify-center gap-4 p-5 ${kajian.length > 1 ? 'block' : 'hidden'}`}>
         <CarouselPrevious onClick={handlePrevious} />
         <CarouselNext onClick={handleNext} />
       </div>

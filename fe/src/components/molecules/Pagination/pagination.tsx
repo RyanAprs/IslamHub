@@ -1,4 +1,5 @@
 import React from "react";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
 interface PaginationProps {
   currentPage: number;
@@ -16,9 +17,9 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-4 py-2 bg-gray-500 text-white rounded disabled:bg-gray-300 disabled:text-gray-500 "
+        className="px-4 py-2  text-black rounded  cursor-pointer disabled:cursor-not-allowed"
       >
-        Previous
+        <BsChevronLeft size={30} />
       </button>
       <span>
         Page {currentPage} of {totalPages}
@@ -26,9 +27,9 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-4 py-2 bg-gray-500 text-white rounded disabled:bg-gray-300 disabled:text-gray-500"
+        className="px-4 py-2  text-black rounded disabled:cursor-not-allowed cursor-pointer"
       >
-        Next
+        <BsChevronRight size={30} />
       </button>
     </div>
   );
