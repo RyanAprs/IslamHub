@@ -20,7 +20,6 @@ const KajianAdmin = () => {
         `http://localhost:3000/api/v1/kajian?page=${currentPage}&perPage=12`
       );
       const data = response.data.data;
-      console.log(data);
 
       setKajian(data);
       setTotalPages(response.data.total_page);
@@ -61,7 +60,7 @@ const KajianAdmin = () => {
             </div>
             <div>
               <Link
-                to={`/detail/${kajianItem.kajian_id}`}
+                to={`/admin/dashboard/kajian/detail-kajian/${kajianItem.kajian_id}`}
                 className="border-2 border-black p-2 rounded-full text-sm"
               >
                 Lihat Selengkapnya
