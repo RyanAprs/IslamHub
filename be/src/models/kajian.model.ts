@@ -21,6 +21,9 @@ const kajianSchema = new mongoose.Schema(
     date: {
       type: String,
     },
+    time: {
+      type: String,
+    },
     lokasi: {
       type: String,
     },

@@ -49,14 +49,20 @@ const KajianAdmin = () => {
           <div className="flex flex-col w-1/2 px-4 justify-evenly">
             <div>
               <h1 className="text-black font-bold text-xl">
-                {kajianItem.title}
+                {kajianItem.title.length > 20
+                  ? kajianItem.title.slice(0, 20) + "..."
+                  : kajianItem.title}
               </h1>
               <p className="text-black text-sm">
-                {kajianItem.date} - {kajianItem.lokasi}
+                {kajianItem.date}, {kajianItem.time} WIB - {kajianItem.lokasi}
               </p>
             </div>
             <div>
-              <p className="text-black mt-2">{kajianItem.description}</p>
+              <p className="text-black">
+                {kajianItem.description.length > 100
+                  ? kajianItem.description.slice(0, 100) + "..."
+                  : kajianItem.description}
+              </p>
             </div>
             <div>
               <Link

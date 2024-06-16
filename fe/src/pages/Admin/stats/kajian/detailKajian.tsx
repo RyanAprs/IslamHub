@@ -14,6 +14,7 @@ const DetailKajian = () => {
   const [description, setDescription] = useState();
   const [date, setDate] = useState();
   const [lokasi, setLokasi] = useState();
+  const [time, setTime] = useState();
   const [showModal, setShowModal] = useState(false);
   const toast = useToast();
 
@@ -32,6 +33,7 @@ const DetailKajian = () => {
       setTitle(kajianData.title);
       setDescription(kajianData.description);
       setDate(kajianData.date);
+      setTime(kajianData.time);
       setLokasi(kajianData.lokasi);
     } catch (error) {
       console.log(error);
@@ -90,7 +92,9 @@ const DetailKajian = () => {
           <h1 className="md:text-3xl text-xl font-bold">{title}</h1>
           <div className="flex gap-3 mb-3 items-center py-2 w-max">
             <div className="flex gap-3 mb-3 items-center">
-              <p>{date}</p>
+              <p>
+                {date}, {time} WIB
+              </p>
               <p>-</p>
               <p>{lokasi}</p>
             </div>
@@ -107,7 +111,7 @@ const DetailKajian = () => {
             Delete
           </Link>
           <Link
-            to={`/blog/update/${id}`}
+            to={`/admin/dashboard/kajian/update-kajian/${id}`}
             className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300 flex gap-2 items-center"
           >
             <FaPen />

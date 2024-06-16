@@ -36,6 +36,7 @@ import UserAdmin from "../../pages/Admin/stats/userAdmin";
 import KajianAdmin from "../../pages/Admin/stats/kajian/kajianAdmin";
 import CreateKajian from "../../pages/Admin/stats/kajian/createKajian";
 import DetailKajian from "../../pages/Admin/stats/kajian/detailKajian";
+import UpdateKajian from "../../pages/Admin/stats/kajian/updateKajian";
 
 const RouteData = [
   {
@@ -104,6 +105,10 @@ const AdminRouteData = [
   {
     path: "/admin/dashboard/kajian/detail-kajian/:id",
     element: <DetailKajian />,
+  },
+  {
+    path: "/admin/dashboard/kajian/update-kajian/:id",
+    element: <UpdateKajian />,
   },
   {
     path: "/admin/dashboard/video",

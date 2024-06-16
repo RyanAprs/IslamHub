@@ -110,15 +110,24 @@ export function KajianCarousel() {
                           <div className="flex flex-col py-4 px-4 md:px-0 gap-4 justify-evenly">
                             <div>
                               <h1 className="text-4xl font-semibold">
-                                {kajian.title}
+                                {kajian.title.length > 20
+                                  ? kajian.title.slice(0, 20) + "..."
+                                  : kajian.title}
+                                s
                               </h1>
                               <div className="flex text-lg">
-                                <p>{kajian.date}</p>
-                                <p>-</p>
+                                <p>
+                                  {kajian.date}, {kajian.time} WIB
+                                </p>
+                                <p> - </p>
                                 <p>{kajian.lokasi}</p>
                               </div>
                             </div>
-                            <div className="text-xl">{kajian.description}</div>
+                            <div className="text-xl">
+                              {kajian.description.length > 100
+                                ? kajian.description.slice(0, 100) + "..."
+                                : kajian.description}
+                            </div>
                             <div className="flex justify-center items-center md:justify-start">
                               <Link
                                 to={`/kajian/${kajian.kajian_id}`}
@@ -138,7 +147,11 @@ export function KajianCarousel() {
           ))}
         </CarouselContent>
       </Carousel>
-      <div className={`flex justify-center gap-4 p-5 ${kajian.length > 1 ? 'block' : 'hidden'}`}>
+      <div
+        className={`flex justify-center gap-4 p-5 ${
+          kajian.length > 1 ? "block" : "hidden"
+        }`}
+      >
         <CarouselPrevious onClick={handlePrevious} />
         <CarouselNext onClick={handleNext} />
       </div>

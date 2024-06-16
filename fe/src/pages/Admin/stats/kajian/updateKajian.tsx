@@ -1,35 +1,37 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaImage, FaSave } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import BackButton from "../../../../components/atoms/backButton/backButton";
-import { storage } from "../../../../firebase";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { v4 } from "uuid";
+import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useToast } from "@chakra-ui/react";
-import axios from "axios";
+import { FaImage, FaSave } from "react-icons/fa";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../../../../firebase";
+import { v4 } from "uuid";
+import BackButton from "../../../../components/atoms/backButton/backButton";
 
-const CreateKajian = () => {
-  const [error, setError] = useState("");
+const UpdateKajian = () => {
+  const { id } = useParams();
+  const [user, setUser] = useState();
+  const [image, setImage] = useState("");
+  const [imagePreview, setImagePreview] = useState("");
+  const [userKajianId, setUserKajianId] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [userKajianId, setUserKajianId] = useState("");
-  const [image, setImage] = useState(null);
-  const [date, setDate] = useState(null);
-  const [time, setTime] = useState("");
+  const [date, setDate] = useState("");
   const [lokasi, setLokasi] = useState("");
-  const [imagePreview, setImagePreview] = useState(null);
+  const [time, setTime] = useState("");
+  const [error, setError] = useState("");
   const [progress, setProgress] = useState(0);
-  const [imageUrl, setImageUrl] = useState("");
-  const navigate = useNavigate();
   const toast = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userCookie = Cookies.get("userData");
 
     if (userCookie) {
       const userDataObj = JSON.parse(userCookie);
-      setUserKajianId(userDataObj.user_id);
+      setUser(userDataObj);
     }
   }, []);
 
@@ -78,40 +80,72 @@ const CreateKajian = () => {
     );
   };
 
-  const handleCreate = async () => {
-    if (progress < 100) {
-      return;
-    }
+  useEffect(() => {
+    const getKajianById = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/kajian/${id}`
+        );
+        if (response.status === 200) {
+          const kajianData = response.data.data;
+          setUserKajianId(kajianData.user_kajian_id);
+          setTitle(kajianData.title);
+          setDescription(kajianData.description);
+          setDate(kajianData.date);
+          setLokasi(kajianData.lokasi);
+          setImagePreview(kajianData.image);
+          setTime(kajianData.time);
+        } else {
+          console.error("Failed to fetch user data");
+        }
+      } catch (error) {
+        console.error("Error fetching user by id:", error);
+      }
+    };
 
+    getKajianById();
+  }, [id]);
+
+  const handleUpdate = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/api/v1/kajian", {
-        title,
-        description,
+      const data = {
         user_kajian_id: userKajianId,
+        title: title || "",
+        description: description || "",
+        date: date || "",
+        time: time || "",
+        lokasi: lokasi || "",
         image: imageUrl,
-        date,
-        lokasi,
-        time
-      });
+      };
+      const response = await axios.put(
+        `http://localhost:3000/api/v1/kajian/${id}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (response.data.status_code === 200) {
-        navigate("/admin/dashboard/kajian");
+      if (response.status === 200) {
+        navigate(`/admin/dashboard/kajian/detail-kajian/${id}`);
+
         toast({
-          title: "Berhasil Upload Kajian",
+          title: "Update Kajian Berhasil",
           status: "success",
           position: "top",
           isClosable: true,
         });
       } else {
-        console.log("Gagal membuat video");
+        setError("Failed to update user data");
       }
     } catch (error: any) {
       if (error.response) {
         setError(error.response.data.message);
       } else if (error.request) {
-        console.error("No response received from server:", error.request);
+        console.log("No response received from server:", error.request);
       } else {
-        console.error("Error lainnya:", error.message);
+        console.log("Request error:", error.message);
       }
     }
   };
@@ -186,18 +220,13 @@ const CreateKajian = () => {
           />
 
           <div className="flex gap-4">
-            <BackButton path="/admin/dashboard/kajian" />
+            <BackButton path={`/admin/dashboard/kajian/detail-kajian/${id}`} />
             <button
-              onClick={handleCreate}
-              disabled={progress < 100}
-              className={`p-4 rounded-xl mb-4 flex justify-center items-center gap-2 text-white ${
-                progress < 100
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-third-bg hover:bg-third-hover transition-colors duration-300"
-              }`}
+              onClick={handleUpdate}
+              className="bg-third-bg text-white p-4 rounded-xl mb-4 flex justify-center items-center gap-2"
             >
               <FaSave />
-              Create
+              Update
             </button>
           </div>
         </div>
@@ -206,4 +235,4 @@ const CreateKajian = () => {
   );
 };
 
-export default CreateKajian;
+export default UpdateKajian;
