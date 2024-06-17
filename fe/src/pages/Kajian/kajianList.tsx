@@ -36,16 +36,16 @@ const KajianList = () => {
       {kajian.map((kajianItem, index) => (
         <div
           key={index}
-          className="flex justify-center w-full h-60 bg-main-bg shadow-xl"
+          className="flex md:flex-row flex-col justify-center w-full h-auto bg-main-bg shadow-xl"
         >
-          <div className="w-1/2 h-full">
+          <div className="w-full md:w-1/2 h-60 md:h-full p-2">
             <img
               src={kajianItem.image}
               alt="Kajian"
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="flex flex-col w-1/2 px-4 justify-evenly">
+          <div className="flex flex-col w-full md:w-1/2 px-4 py-4 justify-evenly">
             <div>
               <h1 className="text-black font-bold text-xl">
                 {kajianItem.title.length > 20
@@ -63,10 +63,10 @@ const KajianList = () => {
                   : kajianItem.description}
               </p>
             </div>
-            <div>
+            <div className="mt-4 flex md:justify-start justify-center">
               <Link
                 to={`/kajian/detail-kajian/${kajianItem.kajian_id}`}
-                className="border-2 border-black p-2 rounded-full text-sm"
+                className="border-2 border-black p-2 rounded-full text-sm inline-block"
               >
                 Lihat Selengkapnya
               </Link>
@@ -78,15 +78,17 @@ const KajianList = () => {
   );
 
   return (
-    <div className="pt-[100px] px-5 min-h-screen">
+    <div className="pt-[60px] px-5 min-h-screen">
       <div className="flex flex-col p-8 w-full gap-8">
         <div className="flex flex-col gap-4">
-          <div className="flex text-4xl font-bold mb-4 w-2/3 justify-between">
+          <div className="flex flex-col md:flex-row font-bold mb-4 md:w-2/3 items-center md:gap-4">
             <div className="flex items-center w-full justify-start">
               <BackButton path="/" />
             </div>
-            <div className="flex items-center w-full justify-end">
-              <h1>LIST SEMUA KAJIAN</h1>
+            <div className="flex  justify-end">
+              <h1 className="md:text-4xl text-2xl whitespace-nowrap w-full justify-center">
+                List Semua Kajian
+              </h1>
             </div>
           </div>
           <div>

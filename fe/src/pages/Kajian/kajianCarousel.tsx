@@ -92,50 +92,47 @@ export function KajianCarousel() {
         <CarouselContent
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
         >
-          {kajian.map((kajian, index) => (
+          {kajian.map((kajianItem, index) => (
             <CarouselItem key={index}>
               <div className="">
                 <Card>
                   <CardContent className="flex gap-10">
-                    <div className="flex bg-main-bg w-full h-auto md:h-[350px]">
-                      <div className="flex flex-col justify-between ">
-                        <div className="flex md:flex-row flex-col gap-4">
-                          <div>
-                            <img
-                              src={kajian.image}
-                              className="md:h-[350px] w-full md:min-w-[500px] object-cover  p-2"
-                              alt="gambar kajian"
-                            />
-                          </div>
-                          <div className="flex flex-col py-4 px-4 md:px-0 gap-4 justify-evenly">
-                            <div>
-                              <h1 className="text-4xl font-semibold">
-                                {kajian.title.length > 20
-                                  ? kajian.title.slice(0, 20) + "..."
-                                  : kajian.title}
-                              </h1>
-                              <div className="flex text-lg">
-                                <p>
-                                  {kajian.date}, {kajian.time} WIB
-                                </p>
-                                <p> - </p>
-                                <p>{kajian.lokasi}</p>
-                              </div>
-                            </div>
-                            <div className="text-light">
-                              {kajian.description.length > 300
-                                ? kajian.description.slice(0, 300) + "..."
-                                : kajian.description}
-                            </div>
-                            <div className="flex justify-center items-center md:justify-start">
-                              <Link
-                                to={`/kajian/detail-kajian/${kajian.kajian_id}`}
-                                className="w-[159px] flex justify-center items-center rounded-full p-1 border-third-bg border-[1px]"
-                              >
-                                Lihat Selengkapnya
-                              </Link>
-                            </div>
-                          </div>
+                    <div
+                      key={index}
+                      className="flex md:flex-row flex-col justify-start md:justify-center w-full h-[500px] md:h-[400px] bg-main-bg shadow-xl"
+                    >
+                      <div className="w-full md:w-1/2 h-60 md:h-full p-2">
+                        <img
+                          src={kajianItem.image}
+                          alt="Kajian"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex flex-col w-full md:w-1/2 px-4 py-4 justify-evenly">
+                        <div>
+                          <h1 className="text-black font-bold text-xl">
+                            {kajianItem.title.length > 20
+                              ? kajianItem.title.slice(0, 20) + "..."
+                              : kajianItem.title}
+                          </h1>
+                          <p className="text-black text-sm">
+                            {kajianItem.date} - {kajianItem.lokasi}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-black mt-2">
+                            {kajianItem.description.length > 100
+                              ? kajianItem.description.slice(0, 100) + "..."
+                              : kajianItem.description}
+                          </p>
+                        </div>
+                        <div className="mt-4 flex md:justify-start justify-center">
+                          <Link
+                            to={`/kajian/detail-kajian/${kajianItem.kajian_id}`}
+                            className="border-2 border-black p-2 rounded-full text-sm inline-block"
+                          >
+                            Lihat Selengkapnya
+                          </Link>
                         </div>
                       </div>
                     </div>
