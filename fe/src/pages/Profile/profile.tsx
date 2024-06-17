@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaUser } from "react-icons/fa";
+import { FaEdit, FaPlus, FaUser } from "react-icons/fa";
 import { BsGear } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -42,7 +42,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3 md:gap-16 bg-main-gradient pt-[120px] md:pt-[160px] pb-8  text-color-primary min-h-screen text-2xl font-poppins">
+    <div className="flex flex-col gap-3 md:gap-16 bg-main-gradient pt-[100px]  pb-8  text-color-primary min-h-screen text-2xl font-poppins">
       <div className="flex justify-center px-8 md:px-32  md:justify-between items-start">
         <div className="flex flex-col md:flex-row md:gap-8">
           <div className="flex justify-center">
@@ -69,21 +69,23 @@ const Profile = () => {
               </p>
             </div>
             <div className="md:py-6 py-3 flex flex-wrap gap-4">
-              {(user && user.user_id !== userId) || !user  ? (
+              {(user && user.user_id !== userId) || !user ? (
                 ""
               ) : (
                 <div className="flex gap-5">
                   <Link
                     to={`/profile/update/${userId}`}
-                    className="bg-main-bg text-color-dark font-bold py-3 px-2 md:px-4 text-lg rounded-xl shadow-xl"
+                    className="flex gap-4 items-center bg-main-bg text-color-dark font-bold py-3 px-2 md:px-4 text-lg rounded-xl shadow-xl"
                   >
+                    <FaEdit />
                     Edit Profile
                   </Link>
                   <Link
                     to="/video/create"
-                    className="bg-main-bg text-color-dark font-bold py-3 px-2 md:px-4 text-lg rounded-xl shadow-xl"
+                    className="flex gap-4 items-center bg-main-bg text-color-dark font-bold py-3 px-2 md:px-4 text-lg rounded-xl shadow-xl"
                   >
-                    Create Video
+                    <FaPlus />
+                    Buat Video
                   </Link>
                 </div>
               )}
@@ -91,7 +93,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="cursor-pointer mt-4 md:mt-0 hidden md:flex ">
-          <BsGear size={40} />
+          {/* <BsGear size={40} /> */}
         </div>
       </div>
       <div className="flex flex-col gap-4">
