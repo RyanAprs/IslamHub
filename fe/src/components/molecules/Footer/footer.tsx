@@ -1,21 +1,57 @@
-import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-third-bg py-4 md:pb-1 pb-20 z-50 md:fixed flex right-0 left-0 bottom-0">
-      <div className="container mx-auto flex justify-between items-center">
-        <p className="text-white font-bold">&copy; 2024 IslamHub</p>
-        <div className="flex space-x-4 text-white">
-          <Link to="https://www.instagram.com/rreiyyan/">
-            <FaInstagram size={25} />
-          </Link>
-          <Link to="https://www.linkedin.com/in/ryan-adi-prasetyo">
-            <FaLinkedin size={25} />
-          </Link>
-          <Link to="https://github.com/RyanAprs">
-            <FaGithub size={25} />
-          </Link>
+    <footer className="bg-third-bg py-8 text-white">
+      <div className="container mx-auto px-5">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
+          <div className="mb-4 md:mb-0">
+            <h1 className="text-2xl font-bold">IslamHub</h1>
+            <p className="text-sm mt-1">
+              &copy; {new Date().getFullYear()} IslamHub. All rights reserved.
+            </p>
+          </div>
+          <div className="flex flex-col md:flex-row md:space-x-6 space-y-2 md:space-y-0">
+            <Link to="" className="text-sm md:text-base hover:underline">
+              About Us
+            </Link>
+            <Link to="" className="text-sm md:text-base hover:underline">
+              Contact
+            </Link>
+            <Link to="" className="text-sm md:text-base hover:underline">
+              Privacy Policy
+            </Link>
+            <Link to="" className="text-sm md:text-base hover:underline">
+              Terms of Service
+            </Link>
+          </div>
+        </div>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-4 border-t border-gray-700 pt-4">
+          <div className="mb-4 md:mb-0">
+            <p className="text-sm">Follow us on:</p>
+            <div className="flex space-x-4 mt-2">
+              <Link to="" className="text-sm md:text-base hover:underline">
+                Facebook
+              </Link>
+              <Link to="" className="text-sm md:text-base hover:underline">
+                Twitter
+              </Link>
+              <Link to="" className="text-sm md:text-base hover:underline">
+                Instagram
+              </Link>
+              <Link to="" className="text-sm md:text-base hover:underline">
+                LinkedIn
+              </Link>
+            </div>
+          </div>
+          <div className="text-sm md:text-base">
+            <p>
+              Contact us:{" "}
+              <Link to="" className="hover:underline">
+                info@islamhub.com
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </footer>
