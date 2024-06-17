@@ -119,7 +119,7 @@ const Video = () => {
 
   return (
     <>
-      <div className="px-4 py-20 flex  pt-[100px] md:pt-[140px] flex-col gap-8 min-h-screen">
+      <div className="px-4 py-20 flex pt-[100px]  flex-col gap-8 min-h-screen">
         <div className="border-[1px]  border-third-bg rounded-full text-black">
           <input
             type="text"

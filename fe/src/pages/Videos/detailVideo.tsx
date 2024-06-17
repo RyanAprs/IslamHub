@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaPen, FaTrash, FaUser } from "react-icons/fa";
+import { FaEdit, FaTrash, FaUser } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { storage } from "../../firebase";
@@ -102,7 +102,7 @@ const DetailVideo = () => {
   };
 
   return (
-    <div className="min-h-screen pt-[70px] md:pt-[100px] bg-main-gradient flex flex-col md:p-2">
+    <div className="min-h-screen pt-[70px] md:pt-[100px] mb-20 bg-main-gradient flex flex-col md:p-2">
       <div className="md:px-8 px-0 py-4 flex flex-col gap-3">
         <div className="flex  md:flex-row flex-col gap-2 justify-evenly">
           <div className="w-full md:w-[823px] h-full">
@@ -185,7 +185,7 @@ const DetailVideo = () => {
             Delete
           </button>
           <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300 flex gap-2 items-center">
-            <FaPen />
+            <FaEdit />
             Update
           </button>
         </div>
