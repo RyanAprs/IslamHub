@@ -97,13 +97,13 @@ export function KajianCarousel() {
               <div className="">
                 <Card>
                   <CardContent className="flex gap-10">
-                    <div className="flex bg-main-bg w-full h-auto md:h-[350px] rounded-xl">
+                    <div className="flex bg-main-bg w-full h-auto md:h-[350px]">
                       <div className="flex flex-col justify-between ">
                         <div className="flex md:flex-row flex-col gap-4">
                           <div>
                             <img
                               src={kajian.image}
-                              className="md:h-[350px] w-full md:min-w-[500px] object-cover md:rounded-l-xl"
+                              className="md:h-[350px] w-full md:min-w-[500px] object-cover  p-2"
                               alt="gambar kajian"
                             />
                           </div>
@@ -113,7 +113,6 @@ export function KajianCarousel() {
                                 {kajian.title.length > 20
                                   ? kajian.title.slice(0, 20) + "..."
                                   : kajian.title}
-                                s
                               </h1>
                               <div className="flex text-lg">
                                 <p>
@@ -123,14 +122,14 @@ export function KajianCarousel() {
                                 <p>{kajian.lokasi}</p>
                               </div>
                             </div>
-                            <div className="text-xl">
-                              {kajian.description.length > 100
-                                ? kajian.description.slice(0, 100) + "..."
+                            <div className="text-light">
+                              {kajian.description.length > 300
+                                ? kajian.description.slice(0, 300) + "..."
                                 : kajian.description}
                             </div>
                             <div className="flex justify-center items-center md:justify-start">
                               <Link
-                                to={`/kajian/${kajian.kajian_id}`}
+                                to={`/kajian/detail-kajian/${kajian.kajian_id}`}
                                 className="w-[159px] flex justify-center items-center rounded-full p-1 border-third-bg border-[1px]"
                               >
                                 Lihat Selengkapnya

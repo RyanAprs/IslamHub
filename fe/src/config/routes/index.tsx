@@ -37,6 +37,7 @@ import KajianAdmin from "../../pages/Admin/stats/kajian/kajianAdmin";
 import CreateKajian from "../../pages/Admin/stats/kajian/createKajian";
 import DetailKajian from "../../pages/Admin/stats/kajian/detailKajian";
 import UpdateKajian from "../../pages/Admin/stats/kajian/updateKajian";
+import DetailKajianUser from "../../pages/Kajian/detailKajianUser";
 
 const RouteData = [
   {
@@ -171,6 +172,34 @@ const Routing = () => {
               <>
                 <Header />
                 <UpdateProfile />
+                <Footer />
+              </>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route
+          path="/profile/update/:id"
+          element={
+            token ? (
+              <>
+                <Header />
+                <UpdateProfile />
+                <Footer />
+              </>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route
+          path="/kajian/detail-kajian/:id"
+          element={
+            token ? (
+              <>
+                <Header />
+                <DetailKajianUser />
                 <Footer />
               </>
             ) : (

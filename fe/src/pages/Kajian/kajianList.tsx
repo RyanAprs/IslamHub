@@ -65,7 +65,7 @@ const KajianList = () => {
             </div>
             <div>
               <Link
-                to={`/detail/${kajianItem.kajian_id}`}
+                to={`/kajian/detail-kajian/${kajianItem.kajian_id}`}
                 className="border-2 border-black p-2 rounded-full text-sm"
               >
                 Lihat Selengkapnya
