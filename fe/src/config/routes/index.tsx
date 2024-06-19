@@ -10,14 +10,10 @@ import Login from "../../pages/Login/login";
 import Register from "../../pages/Register/register";
 import Header from "../../components/molecules/Header/header";
 import Home from "../../pages/Home/home";
-import Blogs from "../../pages/Blogs/blogs";
 import Contact from "../../pages/Contact/contact";
-import DetailBlog from "../../pages/Blogs/detailBlog";
 import Profile from "../../pages/Profile/profile";
 import UpdateProfile from "../../pages/Profile/updateProfile";
 import BlogUser from "../../pages/Profile/blogUser";
-import CreateBlog from "../../pages/Blogs/createBlog";
-import UpdateBlog from "../../pages/Blogs/updateBlog";
 import ResetPassword from "../../pages/ResetPassword/resetPassword";
 import Footer from "../../components/molecules/Footer/footer";
 import DetailCommunity from "../../pages/Communities/detailCommunity";
@@ -43,14 +39,6 @@ const RouteData = [
   {
     path: "/",
     element: <Home />,
-  },
-  {
-    path: "/blog",
-    element: <Blogs />,
-  },
-  {
-    path: "/blog/detail/:id",
-    element: <DetailBlog />,
   },
   {
     path: "/contact",
@@ -137,20 +125,7 @@ const Routing = () => {
         <Route path="/reset-password" element={<ResetPassword />} />
 
         {/* User Authenticated Routes */}
-        <Route
-          path="/blog/update/:id"
-          element={
-            token ? (
-              <>
-                <Header />
-                <UpdateBlog />
-                <Footer />
-              </>
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
+
         <Route
           path="/video/create"
           element={
@@ -200,20 +175,6 @@ const Routing = () => {
               <>
                 <Header />
                 <DetailKajianUser />
-                <Footer />
-              </>
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route
-          path="/blog/create"
-          element={
-            token ? (
-              <>
-                <Header />
-                <CreateBlog />
                 <Footer />
               </>
             ) : (
