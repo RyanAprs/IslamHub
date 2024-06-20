@@ -25,15 +25,15 @@ import AdminDashboard from "../../pages/Admin/adminDashboard";
 import AdminLogin from "../../pages/Admin/adminLogin";
 import NotFound from "../../pages/notFound/notFound";
 import KajianList from "../../pages/Kajian/kajianList";
-import VideoAdmin from "../../pages/Admin/stats/videoAdmin";
-import CommunityAdmin from "../../pages/Admin/stats/communityAdmin";
-import ChatAdmin from "../../pages/Admin/stats/chatAdmin";
-import UserAdmin from "../../pages/Admin/stats/userAdmin";
+import ChatAdmin from "../../pages/Admin/stats/chat/chatAdmin";
 import KajianAdmin from "../../pages/Admin/stats/kajian/kajianAdmin";
 import CreateKajian from "../../pages/Admin/stats/kajian/createKajian";
 import DetailKajian from "../../pages/Admin/stats/kajian/detailKajian";
 import UpdateKajian from "../../pages/Admin/stats/kajian/updateKajian";
 import DetailKajianUser from "../../pages/Kajian/detailKajianUser";
+import UserAdmin from "../../pages/Admin/stats/user/userAdmin";
+import VideoAdmin from "../../pages/Admin/stats/video/videoAdmin";
+import CommunityAdmin from "../../pages/Admin/stats/community/communityAdmin";
 
 const RouteData = [
   {

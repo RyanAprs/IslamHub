@@ -1,4 +1,4 @@
-import SideBarAdmin from "../../../components/atoms/sideBarAdmin/sideBarAdmin";
+import SideBarAdmin from "../../../../components/atoms/sideBarAdmin/sideBarAdmin";
 
 const VideoAdmin = () => {
   return (
