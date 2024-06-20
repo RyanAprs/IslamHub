@@ -5,8 +5,6 @@ import {
   getUserAndUpdate,
   getUserById,
 } from "../services/user.service";
-import { profileUploadAsync } from "../config/upload.config";
-import { hashPassword } from "../utils/hashing";
 import validator from "validator";
 import { findUserByEmail, getPassword } from "../services/auth.service";
 
@@ -60,79 +58,75 @@ export const getUsers = async (req: Request, res: Response) => {
 };
 
 export const updateUser = async (req: Request, res: Response) => {
-  
-      const id = req.params.id;
-      const { name, email, bio, user_id, image } = req.body;
-      // const image = req.file ? req.file.originalname : null;
+  const id = req.params.id;
+  const { name, email, bio, user_id, image } = req.body;
+  // const image = req.file ? req.file.originalname : null;
 
-      let imagePrevious;
+  let imagePrevious;
 
-      if (image) {
-        imagePrevious = image;
-      } else {
-        imagePrevious = await getImage(user_id);
-      }
+  if (image) {
+    imagePrevious = image;
+  } else {
+    imagePrevious = await getImage(user_id);
+  }
 
-    if (req.body.email && !validator.isEmail(req.body.email)) {
-      return res.status(400).send({
-        status: false,
-        status_code: 400,
-        message: "Invalid email format",
+  if (req.body.email && !validator.isEmail(req.body.email)) {
+    return res.status(400).send({
+      status: false,
+      status_code: 400,
+      message: "Invalid email format",
+    });
+  }
+
+  if (!name || !email) {
+    return res.status(400).send({
+      status: false,
+      status_code: 400,
+      message: "Fields are required",
+    });
+  }
+
+  const userEmail = await findUserByEmail(email);
+  if (userEmail) {
+    return res.status(409).send({
+      status: false,
+      status_code: 409,
+      message: "Email is already registered",
+    });
+  }
+
+  const userData = {
+    id: id,
+    user_id,
+    name,
+    image: imagePrevious,
+    email,
+    bio,
+  };
+
+  try {
+    const user = await getUserAndUpdate(id, userData);
+    if (user) {
+      return res.status(200).send({
+        status: true,
+        status_code: 200,
+        message: "User updated successfully",
+        data: userData,
       });
-    }
-
-    if (!name || !email) {
-      return res.status(400).send({
+    } else {
+      return res.status(404).json({
         status: false,
-        status_code: 400,
-        message: "Fields are required",
-      });
-    }
-
-    const userEmail = await findUserByEmail(email);
-    if (userEmail) {
-      return res.status(409).send({
-        status: false,
-        status_code: 409,
-        message: "Email is already registered",
-      });
-    }
-
-    const userData = {
-      id: id,
-      user_id,
-      name,
-      image: imagePrevious,
-      email,
-      bio,
-    };
-
-    try {
-      const user = await getUserAndUpdate(id, userData);
-      if (user) {
-        return res.status(200).send({
-          status: true,
-          status_code: 200,
-          message: "User updated successfully",
-          data: userData,
-        });
-      } else {
-        return res.status(404).json({
-          status: false,
-          status_code: 404,
-          message: "Data not found",
-          data: {},
-        });
-      }
-    } catch (error: any) {
-      return res.status(422).send({
-        status: false,
-        status_code: 422,
-        message: error.message || "An error occurred",
+        status_code: 404,
+        message: "Data not found",
         data: {},
       });
     }
-
-    
-  
+  } catch (error: any) {
+    return res.status(422).send({
+      status: false,
+      status_code: 422,
+      message: error.message || "An error occurred",
+      data: {},
+    });
+  }
 };

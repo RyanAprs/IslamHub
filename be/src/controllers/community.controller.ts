@@ -9,7 +9,6 @@ import {
   insertCommunity,
 } from "../services/community.service";
 import { v4 as uuidv4 } from "uuid";
-import { uploadAsync } from "../config/upload.config";
 
 export const getCommunities = async (req: Request, res: Response) => {
   const id = req.params.id;

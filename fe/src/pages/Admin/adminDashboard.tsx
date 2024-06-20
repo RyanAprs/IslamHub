@@ -16,6 +16,10 @@ const AdminDashboard = () => {
     title: "",
     total_data: 0,
   });
+  const [totalDataKajian, setTotalDataKajian] = useState({
+    title: "",
+    total_data: 0,
+  });
 
   useEffect(() => {
     fetchTotalData();
@@ -31,11 +35,13 @@ const AdminDashboard = () => {
         response.data.data &&
         response.data.data.user &&
         response.data.data.community &&
+        response.data.data.kajian &&
         response.data.data.video
       ) {
         setTotalDataUser(response.data.data.user);
         setTotalDataCommunity(response.data.data.community);
         setTotalDataVideo(response.data.data.video);
+        setTotalDataKajian(response.data.data.kajian);
       } else {
         console.log("Data structure is not as expected");
       }
@@ -45,10 +51,10 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen w-full">
       <SideBarAdmin />
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-6 text-black justify-center p-8">
-        <div className="shadow-lg h-48 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
+      <div className="w-full flex justify-evenly py-8">
+        <div className="shadow-lg h-48 w-80 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
           <div className="flex flex-col gap-4 items-center text-xl font-bold">
             <h2>{totalDataUser.title}</h2>
             <p>{totalDataUser.total_data}</p>
@@ -57,7 +63,7 @@ const AdminDashboard = () => {
             <FaUser size={90} />
           </div>
         </div>
-        <div className="shadow-lg  h-48 cursor-pointer bg-blue-300 p-4 flex gap-6  items-center justify-around rounded-xl border-blue-400 border-[2px]">
+        <div className="shadow-lg  w-80 h-48 cursor-pointer bg-blue-300 p-4 flex gap-6  items-center justify-around rounded-xl border-blue-400 border-[2px]">
           <div className="flex flex-col gap-4 items-center text-xl font-bold">
             <h2>{totalDataCommunity.title}</h2>
             <p>{totalDataCommunity.total_data}</p>
@@ -66,10 +72,19 @@ const AdminDashboard = () => {
             <FaUsers size={90} />
           </div>
         </div>
-        <div className="shadow-lg h-48 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
+        <div className="shadow-lg  w-80 h-48 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
           <div className="flex flex-col gap-4 items-center text-xl font-bold">
             <h2>{totalDataVideo.title}</h2>
             <p>{totalDataVideo.total_data}</p>
+          </div>
+          <div>
+            <FaVideo size={90} />
+          </div>
+        </div>
+        <div className="shadow-lg  w-80 h-48 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
+          <div className="flex flex-col gap-4 items-center text-xl font-bold">
+            <h2>{totalDataKajian.title}</h2>
+            <p>{totalDataKajian.total_data}</p>
           </div>
           <div>
             <FaVideo size={90} />
