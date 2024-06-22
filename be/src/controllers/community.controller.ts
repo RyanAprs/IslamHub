@@ -58,8 +58,15 @@ export const getCommunities = async (req: Request, res: Response) => {
 
 export const createCommunity = async (req: Request, res: Response) => {
   const community_id = uuidv4();
-  const { user_id, title, name } = req.body;
-  const image = null;
+  const { user_id, title, name, image } = req.body;
+
+  let img = null;
+
+  if (image) {
+    img = image;
+  } else {
+    img = img;
+  }
 
   if (!title || !name) {
     return res.status(400).send({
@@ -73,7 +80,7 @@ export const createCommunity = async (req: Request, res: Response) => {
     community_id,
     user_id,
     title,
-    image,
+    image: img,
     name,
   };
 

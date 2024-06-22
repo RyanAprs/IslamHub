@@ -134,7 +134,7 @@ const DetailCommunity = () => {
 
     setError("");
 
-    const imageRef = ref(storage, `images/${file.name + v4()}`);
+    const imageRef = ref(storage, `images/community/${file.name + v4()}`);
     const uploadTask = uploadBytesResumable(imageRef, file);
     uploadTask.on(
       "state_changed",

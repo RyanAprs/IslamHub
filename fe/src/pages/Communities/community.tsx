@@ -5,6 +5,9 @@ import { FaArrowLeft, FaPlus, FaUsers } from "react-icons/fa";
 import Cookies from "js-cookie";
 import CommunityList from "./communityList";
 import { useToast } from "@chakra-ui/react";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../../firebase";
+import { v4 } from "uuid";
 
 const Chat = () => {
   const [communities, setCommunities] = useState([]);
@@ -14,6 +17,11 @@ const Chat = () => {
   const [user_id, setUser_id] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [image, setImage] = useState();
+  const [imageUrl, setImageUrl] = useState("");
+  const [imagePreview, setImagePreview] = useState(null);
+
   const toast = useToast();
 
   useEffect(() => {
@@ -58,6 +66,7 @@ const Chat = () => {
           user_id,
           title,
           name,
+          image: imageUrl,
         }
       );
       if (response.data.status_code === 200) {
@@ -72,7 +81,7 @@ const Chat = () => {
       } else {
         console.log("create community failed");
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error.response) {
         setError(error.response.data.message);
       } else if (error.request) {
@@ -81,6 +90,50 @@ const Chat = () => {
         console.log("Request error:", error.message);
       }
     }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    if (!file) {
+      setError("No file selected");
+      return;
+    }
+    setImage(file);
+    setImagePreview(URL.createObjectURL(file));
+
+    const validExtensions = ["image/jpg", "image/jpeg", "image/png"];
+
+    if (!validExtensions.includes(file.type)) {
+      setError(
+        "Invalid file type. Please select a valid image file (JPG, JPEG, PNG)."
+      );
+      return;
+    }
+
+    setError("");
+
+    const imageRef = ref(storage, `images/community/${file.name + v4()}`);
+    const uploadTask = uploadBytesResumable(imageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progress);
+      },
+      (error) => {
+        console.error("Upload image gagal:", error);
+      },
+      async () => {
+        try {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          setImageUrl(downloadURL);
+        } catch (error) {
+          console.error("Error getting download URL:", error);
+        }
+      }
+    );
   };
 
   return (
@@ -117,6 +170,29 @@ const Chat = () => {
                   className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
+                />
+                {imagePreview && (
+                  <img
+                    src={imagePreview}
+                    alt="Image Preview"
+                    className="mb-4 max-w-[150px]"
+                  />
+                )}
+                {progress > 0 && progress < 100 && (
+                  <div className="w-full bg-gray-200 rounded-full">
+                    <div
+                      className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                      style={{ width: `${progress}%` }}
+                    >
+                      {progress.toFixed(2)}%
+                    </div>
+                  </div>
+                )}
+                <input
+                  type="file"
+                  placeholder="Image"
+                  className="border-2 border-gray-300 rounded p-3 w-full"
+                  onChange={handleImageChange}
                 />
                 <div className="flex gap-4 justify-center mt-4">
                   <button
