@@ -54,7 +54,7 @@ const CreateKajian = () => {
 
     setError("");
 
-    const imageRef = ref(storage, `images/${file.name + v4()}`);
+    const imageRef = ref(storage, `images/kajian/${file.name + v4()}`);
     const uploadTask = uploadBytesResumable(imageRef, file);
     uploadTask.on(
       "state_changed",

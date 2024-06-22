@@ -83,7 +83,7 @@ const UpdateProfile = () => {
 
     setError("");
 
-    const imageRef = ref(storage, `images/${file.name + v4()}`);
+    const imageRef = ref(storage, `images/profile/${file.name + v4()}`);
     const uploadTask = uploadBytesResumable(imageRef, file);
     uploadTask.on(
       "state_changed",
