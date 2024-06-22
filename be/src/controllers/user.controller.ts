@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   getAllUser,
   getImage,
+  getUserAndDelete,
   getUserAndUpdate,
   getUserById,
 } from "../services/user.service";
@@ -127,6 +128,34 @@ export const updateUser = async (req: Request, res: Response) => {
       status_code: 422,
       message: error.message || "An error occurred",
       data: {},
+    });
+  }
+};
+
+export const deleteUser = async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  try {
+    const result = await getUserAndDelete(id);
+    if (result) {
+      res.status(200).json({
+        status: true,
+        status_code: 200,
+        message: "Delete User successfully",
+      });
+    } else {
+      res.status(404).json({
+        status: false,
+        status_code: 404,
+        message: "Data not found",
+        data: {},
+      });
+    }
+  } catch (error: any) {
+    return res.status(422).send({
+      status: false,
+      status_code: 422,
+      message: error.message,
     });
   }
 };

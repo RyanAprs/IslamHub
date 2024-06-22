@@ -55,3 +55,7 @@ export const getUserAndUpdate = async (id: string, payload: any) => {
     }
   );
 };
+
+export const getUserAndDelete = async (id: string) => {
+  return await authModel.findOneAndDelete({ user_id: id });
+};
