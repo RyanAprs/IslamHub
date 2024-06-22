@@ -31,6 +31,27 @@ const KajianList = () => {
     setCurrentPage(page);
   };
 
+  const search = async (q) => {
+    try {
+      if (q.length > 0) {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/kajian/search`,
+          {
+            params: {
+              query: q,
+            },
+          }
+        );
+        setKajian(response.data.data);
+        setTotalPages(1);
+      } else if (q.length === 0) {
+        fetchKajian();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const KajianList = () => (
     <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
       {kajian.map((kajianItem, index) => (
@@ -91,12 +112,20 @@ const KajianList = () => {
               </h1>
             </div>
           </div>
+          <div className="border-[1px]  border-third-bg rounded-full text-black">
+            <input
+              type="text"
+              placeholder="Cari Kajian..."
+              className="border-none py-4 pl-4 bg-main-bg w-full focus:outline-none  rounded-full"
+              onChange={({ target }) => search(target.value)}
+            />
+          </div>
           <div>
             {Array.isArray(kajian) && kajian.length > 0 ? (
               <KajianList />
             ) : (
               <div className="min-h-screen flex justify-center">
-                <h1>Tidak ada Kajian</h1>
+                <h1>Kajian Tidak Ditemukan</h1>
               </div>
             )}
           </div>
