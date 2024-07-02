@@ -30,7 +30,7 @@ const Profile = () => {
   const getUserDetail = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/user/${id}`
+        `http://192.168.56.1:3000/api/v1/user/${id}`
       );
       setUserId(response.data.data.user_id);
       setName(response.data.data.name);

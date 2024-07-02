@@ -14,7 +14,7 @@ const ResetPassword = () => {
     if (!showPasswordInput) {
       try {
         const response = await axios.post(
-          "http://localhost:3000/api/v1/auth/get-email",
+          "http://192.168.56.1:3000/api/v1/auth/get-email",
           {
             email,
           }
@@ -39,7 +39,7 @@ const ResetPassword = () => {
     } else {
       try {
         const response = await axios.post(
-          "http://localhost:3000/api/v1/auth/reset-password",
+          "http://192.168.56.1:3000/api/v1/auth/reset-password",
           {
             email,
             password,

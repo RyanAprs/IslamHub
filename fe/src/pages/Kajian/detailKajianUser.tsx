@@ -18,7 +18,7 @@ const DetailKajianUser = () => {
   const fetchKajian = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/kajian/${id}`
+        `http://192.168.56.1:3000/api/v1/kajian/${id}`
       );
       const kajianData = response.data.data;
       setImage(kajianData.image);

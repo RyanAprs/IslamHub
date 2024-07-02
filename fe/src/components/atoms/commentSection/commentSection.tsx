@@ -31,7 +31,7 @@ const CommentSection = () => {
   const handleCreate = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/comment",
+        "http://192.168.56.1:3000/api/v1/comment",
         {
           user_id,
           video_id,
@@ -62,7 +62,7 @@ const CommentSection = () => {
     const fetchComment = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/comment/${id}`
+          `http://192.168.56.1:3000/api/v1/comment/${id}`
         );
         setDataComment(response.data.data);
       } catch (error) {
@@ -84,7 +84,7 @@ const CommentSection = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/v1/comment/${idCommentToDelete}`
+        `http://192.168.56.1:3000/api/v1/comment/${idCommentToDelete}`
       );
       if (response.status === 200) {
         window.location.reload();

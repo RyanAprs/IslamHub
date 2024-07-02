@@ -70,7 +70,7 @@ const SideBarAdmin = () => {
                 {user && user.image !== null ? (
                   <div>
                     <img
-                      src={`http://localhost:3000/${user.image}`}
+                      src={user.image}
                       alt="profile picture"
                       className=" flex items-center justify-center w-[80px] h-[100px] bg-white shadow-lg object-cover mt-3 border-black rounded-full"
                     />

@@ -86,7 +86,7 @@ const Header: React.FC = () => {
   const getUserDetail = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/user/${id}`
+        `http://192.168.56.1:3000/api/v1/user/${id}`
       );
       setUserImage(response.data.data.image);
       setName(response.data.data.name);

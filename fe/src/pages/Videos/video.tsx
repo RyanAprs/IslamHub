@@ -18,7 +18,7 @@ const Video = () => {
   const fetchVideos = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/video?page=${currentPage}&perPage=12`
+        `http://192.168.56.1:3000/api/v1/video?page=${currentPage}&perPage=12`
       );
       setVideoData(response.data.data);
       setTotalPages(response.data.total_page);
@@ -31,7 +31,7 @@ const Video = () => {
     try {
       if (q.length > 0) {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/video/search`,
+          `http://192.168.56.1:3000/api/v1/video/search`,
           {
             params: {
               query: q,

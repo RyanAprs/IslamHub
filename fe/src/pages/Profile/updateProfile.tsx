@@ -37,7 +37,7 @@ const UpdateProfile = () => {
     const getUserById = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/user/${id}`
+          `http://192.168.56.1:3000/api/v1/user/${id}`
         );
         if (response.status === 200) {
           const userData = response.data.data;
@@ -116,7 +116,7 @@ const UpdateProfile = () => {
         image: imageUrl,
       };
       const response = await axios.put(
-        `http://localhost:3000/api/v1/user/${id}`,
+        `http://192.168.56.1:3000/api/v1/user/${id}`,
         data,
         {
           headers: {

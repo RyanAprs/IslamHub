@@ -15,12 +15,13 @@ export const useLogin = (toast) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/auth/login",
+        "http://192.168.56.1:3000/api/v1/auth/login",
         {
           email,
           password,
         }
       );
+
       if (response.data.status_code === 200) {
         const user = response.data.data;
         const expirationDate = new Date();

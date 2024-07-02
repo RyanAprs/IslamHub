@@ -84,12 +84,15 @@ const CreateVideo = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/api/v1/video", {
-        user_video_id: userVideoId,
-        title,
-        description,
-        video: videoUrl,
-      });
+      const response = await axios.post(
+        "http://192.168.56.1:3000/api/v1/video",
+        {
+          user_video_id: userVideoId,
+          title,
+          description,
+          video: videoUrl,
+        }
+      );
 
       if (response.data.status_code === 200) {
         navigate(`/profile/${userVideoId}`);

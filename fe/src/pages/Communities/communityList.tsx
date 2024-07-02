@@ -26,7 +26,7 @@ const CommunityList = () => {
   const fetchCommunities = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/v1/community"
+        "http://192.168.56.1:3000/api/v1/community"
       );
       setCommunities(response.data.data);
     } catch (error) {
@@ -38,7 +38,7 @@ const CommunityList = () => {
     try {
       if (q.length > 0) {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/community/search`,
+          `http://192.168.56.1:3000/api/v1/community/search`,
           {
             params: {
               query: q,

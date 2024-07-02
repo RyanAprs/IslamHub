@@ -41,7 +41,7 @@ const Chat = () => {
   const fetchCommunities = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/community?page=${currentPage}&perPage=12`
+        `http://192.168.56.1:3000/api/v1/community?page=${currentPage}&perPage=12`
       );
       const data = response.data.data;
       setCommunities(data);
@@ -61,7 +61,7 @@ const Chat = () => {
   const handleCreate = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/community",
+        "http://192.168.56.1:3000/api/v1/community",
         {
           user_id,
           title,

@@ -29,7 +29,7 @@ const Home = () => {
   const getUserDetail = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/user/${userId}`
+        `http://192.168.56.1:3000/api/v1/user/${userId}`
       );
       setName(response.data.data.name);
     } catch (error) {

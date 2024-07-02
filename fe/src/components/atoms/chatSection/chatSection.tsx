@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:3000");
+const socket = io("http://192.168.56.1:3000");
 
 const ChatSection = ({ admin }) => {
   const [user_id, setUser_id] = useState();
@@ -23,7 +23,7 @@ const ChatSection = ({ admin }) => {
     const fetchChat = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/chat/${id}`
+          `http://192.168.56.1:3000/api/v1/chat/${id}`
         );
         const data = response.data.data;
         setDataChats(data);
@@ -70,7 +70,7 @@ const ChatSection = ({ admin }) => {
 
   const handleCreate = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/api/v1/chat", {
+      const response = await axios.post("http://192.168.56.1:3000/api/v1/chat", {
         user_id,
         community_id,
         chat,
@@ -108,7 +108,7 @@ const ChatSection = ({ admin }) => {
   const confirmDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/v1/chat/${idChatToDelete}`
+        `http://192.168.56.1:3000/api/v1/chat/${idChatToDelete}`
       );
       if (response.status === 200) {
         setDataChats(

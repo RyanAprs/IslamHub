@@ -5,11 +5,12 @@ import cors from "cors";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
-// connect to db
+// Connect to db
 import "./utils/connectDB";
 
 const app = express();
 const port: number = 3000;
+const host: string = "0.0.0.0"; // Bind to all network interfaces
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -17,7 +18,14 @@ app.use(express.urlencoded({ extended: true }));
 // Set up CORS middleware
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:51264",
+      "http://192.168.56.1:3001",
+      "http://192.168.0.103:3001",
+      "http://localhost:3001",
+      "http://192.168.56.1:5173",
+    ],
     credentials: true,
   })
 );
@@ -27,8 +35,14 @@ app.use(deserializeToken);
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3001",
+      "http://192.168.56.1:3001",
+      "http://192.168.56.1:5173",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    credentials: true,
   },
 });
 
@@ -45,6 +59,6 @@ io.on("connection", (socket: any) => {
 
 routes(app);
 
-server.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+server.listen(port, host, () => {
+  console.log(`Server running on http://${host}:${port}`);
 });

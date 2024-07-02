@@ -16,7 +16,7 @@ const KajianList = () => {
   const fetchKajian = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/kajian?page=${currentPage}&perPage=12`
+        `http://192.168.56.1:3000/api/v1/kajian?page=${currentPage}&perPage=12`
       );
       const data = response.data.data;
 

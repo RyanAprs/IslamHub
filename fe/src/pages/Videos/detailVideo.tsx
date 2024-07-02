@@ -79,7 +79,7 @@ const DetailVideo = () => {
       const videoRef = ref(storage, video);
       await deleteObject(videoRef);
       const response = await axios.delete(
-        `http://localhost:3000/api/v1/video/${id}`
+        `http://192.168.56.1:3000/api/v1/video/${id}`
       );
       if (response.status === 200) {
         navigate("/video");
@@ -184,10 +184,10 @@ const DetailVideo = () => {
             <FaTrash />
             Delete
           </button>
-          <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300 flex gap-2 items-center">
+          {/* <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300 flex gap-2 items-center">
             <FaEdit />
             Update
-          </button>
+          </button> */}
         </div>
       )}
       {showModal && (

@@ -29,7 +29,7 @@ const VideoUser = () => {
   const getUserDetail = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/user/${id}`
+        `http://192.168.56.1:3000/api/v1/user/${id}`
       );
       setName(response.data.data.name);
       setImage(response.data.data.image);
@@ -45,7 +45,7 @@ const VideoUser = () => {
   const getVideoByUserId = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/video/${id}/${id}`
+        `http://192.168.56.1:3000/api/v1/video/${id}/${id}`
       );
       setVideoData(response.data.data);
     } catch (error) {

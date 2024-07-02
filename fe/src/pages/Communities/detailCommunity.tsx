@@ -50,7 +50,7 @@ const DetailCommunity = () => {
     const fetchCommunityById = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/community/${id}`
+          `http://192.168.56.1:3000/api/v1/community/${id}`
         );
         setCommunityTitle(response.data.data.title);
         setAdmin(response.data.data.name);
@@ -94,7 +94,7 @@ const DetailCommunity = () => {
       }
 
       const response = await axios.delete(
-        `http://localhost:3000/api/v1/community/${id}`
+        `http://192.168.56.1:3000/api/v1/community/${id}`
       );
 
       if (response.status === 200) {
@@ -167,7 +167,7 @@ const DetailCommunity = () => {
       };
 
       const response = await axios.put(
-        `http://localhost:3000/api/v1/community/${id}`,
+        `http://192.168.56.1:3000/api/v1/community/${id}`,
         data,
         {
           headers: {
