@@ -84,7 +84,7 @@ const UpdateKajian = () => {
     const getKajianById = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/kajian/${id}`
+          `http://192.168.56.1:3000/api/v1/kajian/${id}`
         );
         if (response.status === 200) {
           const kajianData = response.data.data;
@@ -118,7 +118,7 @@ const UpdateKajian = () => {
         image: imageUrl,
       };
       const response = await axios.put(
-        `http://localhost:3000/api/v1/kajian/${id}`,
+        `http://192.168.56.1:3000/api/v1/kajian/${id}`,
         data,
         {
           headers: {

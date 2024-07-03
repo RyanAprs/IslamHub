@@ -84,15 +84,18 @@ const CreateKajian = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/api/v1/kajian", {
-        title,
-        description,
-        user_kajian_id: userKajianId,
-        image: imageUrl,
-        date,
-        lokasi,
-        time
-      });
+      const response = await axios.post(
+        "http://192.168.56.1:3000/api/v1/kajian",
+        {
+          title,
+          description,
+          user_kajian_id: userKajianId,
+          image: imageUrl,
+          date,
+          lokasi,
+          time,
+        }
+      );
 
       if (response.data.status_code === 200) {
         navigate("/admin/dashboard/kajian");

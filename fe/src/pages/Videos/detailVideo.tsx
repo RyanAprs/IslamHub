@@ -37,7 +37,7 @@ const DetailVideo = () => {
     const fetchVideoById = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/video/${id}`
+          `http://192.168.56.1:3000/api/v1/video/${id}`
         );
         const videoData = response.data.data;
         setVideo(videoData.video);
@@ -56,7 +56,7 @@ const DetailVideo = () => {
     const getUserDetail = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/user/${userVideoId}`
+          `http://192.168.56.1:3000/api/v1/user/${userVideoId}`
         );
         const userData = response.data.data;
         setName(userData.name);

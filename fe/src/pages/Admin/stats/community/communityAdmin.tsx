@@ -10,7 +10,7 @@ const CommunityAdmin = () => {
   const fetchCommuities = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/community`
+        `http://192.168.56.1:3000/api/v1/community`
       );
       console.log(response.data.data);
     } catch (error) {

@@ -26,7 +26,7 @@ const DetailKajian = () => {
   const fetchKajian = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/kajian/${id}`
+        `http://192.168.56.1:3000/api/v1/kajian/${id}`
       );
       const kajianData = response.data.data;
       setImage(kajianData.image);
@@ -52,7 +52,7 @@ const DetailKajian = () => {
   const confirmDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/v1/kajian/${id}`
+        `http://192.168.56.1:3000/api/v1/kajian/${id}`
       );
       if (response.status === 200) {
         navigate("/admin/dashboard/kajian");

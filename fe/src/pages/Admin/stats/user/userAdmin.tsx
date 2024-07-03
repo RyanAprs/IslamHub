@@ -9,7 +9,7 @@ const UserAdmin = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/user`);
+      const response = await axios.get(`http://192.168.56.1:3000/api/v1/user`);
       console.log(response.data.data);
     } catch (error) {
       console.log(error);

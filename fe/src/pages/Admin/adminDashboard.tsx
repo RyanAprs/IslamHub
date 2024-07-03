@@ -28,7 +28,7 @@ const AdminDashboard = () => {
   const fetchTotalData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/v1/admin/count-data"
+        "http://192.168.56.1:3000/api/v1/admin/count-data"
       );
       if (
         response.data &&
