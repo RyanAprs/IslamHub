@@ -86,7 +86,7 @@ const SideBarAdmin = () => {
                 <div>{user && user.name}</div>
               </div >
               <div className="overflow-y-auto h-screen border-black border-t-2 ">
-                <div className="grid grid-cols-3 md:grid-cols-1">
+                <div className="flex flex-col">
                   <Link
                     to="/admin/dashboard"
                     className={`flex p-3 rounded-xl transition-all mt-1 hover:bg-white ${

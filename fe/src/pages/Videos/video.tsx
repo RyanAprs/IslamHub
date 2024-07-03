@@ -95,7 +95,7 @@ const Video = () => {
                 </div>
                 <div className="">
                   <div>
-                    <h1 className="text-2xl uppercase ">
+                    <h1 className="text-2xl ">
                       {video.title.length > 25
                         ? `${video.title.substring(0, 25)}...`
                         : video.title}

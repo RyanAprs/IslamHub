@@ -53,41 +53,44 @@ const AdminDashboard = () => {
   return (
     <div className="flex min-h-screen w-full">
       <SideBarAdmin />
-      <div className="w-full flex justify-evenly py-8">
-        <div className="shadow-lg h-48 w-80 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
-          <div className="flex flex-col gap-4 items-center text-xl font-bold">
-            <h2>{totalDataUser.title}</h2>
-            <p>{totalDataUser.total_data}</p>
+      <div className="flex flex-col p-8">
+        <div className="text-2xl font-bold">Total Data</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 py-8 gap-4">
+          <div className="shadow-lg h-48 w-80 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
+            <div className="flex flex-col gap-4 items-center text-xl font-bold">
+              <h2>{totalDataUser.title}</h2>
+              <p>{totalDataUser.total_data}</p>
+            </div>
+            <div>
+              <FaUser size={90} />
+            </div>
           </div>
-          <div>
-            <FaUser size={90} />
+          <div className="shadow-lg  w-80 h-48 cursor-pointer bg-blue-300 p-4 flex gap-6  items-center justify-around rounded-xl border-blue-400 border-[2px]">
+            <div className="flex flex-col gap-4 items-center text-xl font-bold">
+              <h2>{totalDataCommunity.title}</h2>
+              <p>{totalDataCommunity.total_data}</p>
+            </div>
+            <div>
+              <FaUsers size={90} />
+            </div>
           </div>
-        </div>
-        <div className="shadow-lg  w-80 h-48 cursor-pointer bg-blue-300 p-4 flex gap-6  items-center justify-around rounded-xl border-blue-400 border-[2px]">
-          <div className="flex flex-col gap-4 items-center text-xl font-bold">
-            <h2>{totalDataCommunity.title}</h2>
-            <p>{totalDataCommunity.total_data}</p>
+          <div className="shadow-lg  w-80 h-48 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
+            <div className="flex flex-col gap-4 items-center text-xl font-bold">
+              <h2>{totalDataVideo.title}</h2>
+              <p>{totalDataVideo.total_data}</p>
+            </div>
+            <div>
+              <FaVideo size={90} />
+            </div>
           </div>
-          <div>
-            <FaUsers size={90} />
-          </div>
-        </div>
-        <div className="shadow-lg  w-80 h-48 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
-          <div className="flex flex-col gap-4 items-center text-xl font-bold">
-            <h2>{totalDataVideo.title}</h2>
-            <p>{totalDataVideo.total_data}</p>
-          </div>
-          <div>
-            <FaVideo size={90} />
-          </div>
-        </div>
-        <div className="shadow-lg  w-80 h-48 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
-          <div className="flex flex-col gap-4 items-center text-xl font-bold">
-            <h2>{totalDataKajian.title}</h2>
-            <p>{totalDataKajian.total_data}</p>
-          </div>
-          <div>
-            <FaVideo size={90} />
+          <div className="shadow-lg  w-80 h-48 cursor-pointer bg-blue-300 p-4 flex  items-center justify-around rounded-xl border-blue-400 border-[2px]">
+            <div className="flex flex-col gap-4 items-center text-xl font-bold">
+              <h2>{totalDataKajian.title}</h2>
+              <p>{totalDataKajian.total_data}</p>
+            </div>
+            <div>
+              <FaVideo size={90} />
+            </div>
           </div>
         </div>
       </div>
