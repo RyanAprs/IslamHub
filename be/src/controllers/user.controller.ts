@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import {
   getAllUser,
+  getEmail,
   getImage,
   getUserAndDelete,
   getUserAndUpdate,
   getUserById,
 } from "../services/user.service";
 import validator from "validator";
-import { findUserByEmail, getPassword } from "../services/auth.service";
 
 export const getUsers = async (req: Request, res: Response) => {
   const id = req.params.id;
@@ -61,7 +61,6 @@ export const getUsers = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
   const id = req.params.id;
   const { name, email, bio, user_id, image } = req.body;
-  // const image = req.file ? req.file.originalname : null;
 
   let imagePrevious;
 
@@ -69,6 +68,14 @@ export const updateUser = async (req: Request, res: Response) => {
     imagePrevious = image;
   } else {
     imagePrevious = await getImage(user_id);
+  }
+
+  let emailPrev;
+
+  if (email) {
+    emailPrev = email;
+  } else {
+    emailPrev = await getEmail(user_id);
   }
 
   if (req.body.email && !validator.isEmail(req.body.email)) {
@@ -87,21 +94,12 @@ export const updateUser = async (req: Request, res: Response) => {
     });
   }
 
-  const userEmail = await findUserByEmail(email);
-  if (userEmail) {
-    return res.status(409).send({
-      status: false,
-      status_code: 409,
-      message: "Email is already registered",
-    });
-  }
-
   const userData = {
     id: id,
     user_id,
     name,
     image: imagePrevious,
-    email,
+    email: emailPrev,
     bio,
   };
 

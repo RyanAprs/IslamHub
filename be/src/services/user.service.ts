@@ -33,6 +33,12 @@ export const getName = async (user_blog_id: string) => {
   return name;
 };
 
+export const getEmail = async(user_id: string) => {
+  const user = await authModel.findOne({ user_id });
+  const email = user?.email;
+  return email;
+}
+
 export const getImageForVideo = async (user_video_id: string) => {
   const user = await authModel.findOne({ user_id: user_video_id });
   const image = user?.image;
