@@ -81,7 +81,7 @@ const CommunityAdmin = () => {
     <div className="flex min-h-screen">
       <SideBarAdmin />
       <div className="flex-1 p-4">
-        <h1 className="text-2xl font-bold mb-4">Community Page</h1>
+        <h1 className="text-2xl font-bold mb-4">Data Komunitas</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {communities.map((community) => (
             <div key={community.id} className="border p-4 rounded shadow">

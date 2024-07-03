@@ -37,16 +37,16 @@ const KajianAdmin = () => {
       {kajian.map((kajianItem, index) => (
         <div
           key={index}
-          className="flex justify-center w-full h-60 bg-main-bg shadow-xl"
+          className="flex md:flex-row flex-col justify-center w-full h-auto bg-main-bg shadow-xl"
         >
-          <div className="w-1/2 h-full">
+          <div className="w-full md:w-1/2 h-60 md:h-full p-2">
             <img
               src={kajianItem.image}
               alt="Kajian"
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="flex flex-col w-1/2 px-4 justify-evenly">
+          <div className="flex flex-col w-full md:w-1/2 px-4 py-4 justify-evenly">
             <div>
               <h1 className="text-black font-bold text-xl">
                 {kajianItem.title.length > 20
@@ -54,20 +54,20 @@ const KajianAdmin = () => {
                   : kajianItem.title}
               </h1>
               <p className="text-black text-sm">
-                {kajianItem.date}, {kajianItem.time} WIB - {kajianItem.lokasi}
+                {kajianItem.date} - {kajianItem.lokasi}
               </p>
             </div>
             <div>
-              <p className="text-black">
+              <p className="text-black mt-2">
                 {kajianItem.description.length > 100
                   ? kajianItem.description.slice(0, 100) + "..."
                   : kajianItem.description}
               </p>
             </div>
-            <div>
+            <div className="mt-4 flex md:justify-start justify-center">
               <Link
-                to={`/admin/dashboard/kajian/detail-kajian/${kajianItem.kajian_id}`}
-                className="border-2 border-black p-2 rounded-full text-sm"
+                to={`/kajian/detail-kajian/${kajianItem.kajian_id}`}
+                className="border-2 border-black p-2 rounded-full text-sm inline-block"
               >
                 Lihat Selengkapnya
               </Link>
@@ -83,7 +83,7 @@ const KajianAdmin = () => {
       <SideBarAdmin />
       <div className="flex flex-col px-12 py-8 w-full gap-4">
         <div className="text-4xl font-bold mb-4">
-          <h1>LIST KAJIAN</h1>
+          <h1>Data Kajian</h1>
         </div>
         <div className="flex justify-end mb-4">
           <Link to="/admin/dashboard/kajian/create-kajian">
